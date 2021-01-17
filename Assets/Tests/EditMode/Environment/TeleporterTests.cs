@@ -8,7 +8,7 @@ namespace Tests.Environment
     /// File to test behaviour of teleporter
     /// </summary>
     [TestFixture]
-    public class TeleporterTest
+    public class TeleporterTests
     {
         /// <summary>
         /// Our teleporter we are using for a test

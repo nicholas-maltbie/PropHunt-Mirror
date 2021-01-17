@@ -1,5 +1,6 @@
-using UnityEngine;
 using Mirror;
+using PropHunt.Utils;
+using UnityEngine;
 
 namespace PropHunt.Character
 {
@@ -9,13 +10,23 @@ namespace PropHunt.Character
     public class CameraFollow : NetworkBehaviour
     {
         /// <summary>
-        /// Position to move camera to
+        /// Network service for managing network calls
         /// </summary>
-        public Transform cameraPosition;
+        public INetworkService networkService;
 
-        void Update()
+        /// <summary>
+        /// Position and rotation to move camera to when following player
+        /// </summary>
+        public Transform cameraTransform;
+
+        public void Start()
         {
-            if (!isLocalPlayer)
+            this.networkService = new NetworkService(this);
+        }
+
+        public void Update()
+        {
+            if (!this.networkService.isLocalPlayer)
             {
                 // exit from update if this is not the local player
                 return;
@@ -29,8 +40,8 @@ namespace PropHunt.Character
 
             // Set main camera's parent to be this and set it's relative position and rotation to be zero
             GameObject mainCamera = Camera.main.gameObject;
-            mainCamera.transform.rotation = cameraPosition.rotation;
-            mainCamera.transform.position = cameraPosition.position;
+            mainCamera.transform.rotation = cameraTransform.rotation;
+            mainCamera.transform.position = cameraTransform.position;
         }
     }
 }
