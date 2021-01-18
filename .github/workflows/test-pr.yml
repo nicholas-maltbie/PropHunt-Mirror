@@ -2,7 +2,6 @@ name: Tests
 
 on:
   pull_request: {}
-  push: { branches: [master] }
 
 env:
   UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
@@ -10,7 +9,7 @@ env:
 jobs:
   testAllModes:
     name: Test in ${{ matrix.testMode }} on version ${{ matrix.unityVersion }}
-    runs-on: ubuntu-latest
+    runs-on: Ubuntu-20.04
     strategy:
       fail-fast: false
       matrix:
@@ -60,7 +59,7 @@ jobs:
             -debugCodeOptimization
             -burst-disable-compilation 
             -coverageResultsPath ${{ matrix.testMode }}-artifacts
-            -coverageOptions "generateHtmlReport;generateBadgeReport;assemblyFilters:-Assembly*,-Mirror*,-Tests*,-SimpleWebTransport,-Telepathy,-kcp2k;pathFilters:-*/Assets/Mirror/*,-*/Assets/Tests/*"
+            -coverageOptions "generateBadgeReport;assemblyFilters:-Assembly*,-Mirror*,-Tests*,-SimpleWebTransport,-Telepathy,-kcp2k;pathFilters:-*/Assets/Mirror/*,-*/Assets/Tests/*"
             -nographics
 
       # - name: Upload Results
@@ -69,19 +68,19 @@ jobs:
       #     name: Test results for ${{ matrix.testMode }}
       #     path: ${{ steps.tests.outputs.artifactsPath }}
       
-      # - name: Find Coverage
-      #   id: coverage
-      #   run: |
-      #     echo ::set-output name=COVERAGE_FILE::$(find ${{ steps.tests.outputs.artifactsPath }} -name "Summary.xml")
-      #     ls -lah .
-      #     ls -lah ${{ steps.tests.outputs.artifactsPath }}
+      - name: Find Coverage
+        id: coverage
+        run: |
+          echo ::set-output name=COVERAGE_FILE::$(find ${{ steps.tests.outputs.artifactsPath }} -name "Summary.xml")
+          ls -lah .
+          ls -lah ${{ steps.tests.outputs.artifactsPath }}
       
-      # - name: Line Coverage
-      #   id: LineCoverage
-      #   uses: QwerMike/xpath-action@v1
-      #   with:
-      #     filename: "${{ steps.coverage.outputs.COVERAGE_FILE }}"
-      #     expression: '//CoverageReport/Summary/Linecoverage/text()'
+      - name: Line Coverage
+        id: LineCoverage
+        uses: QwerMike/xpath-action@v1
+        with:
+          filename: "${{ steps.coverage.outputs.COVERAGE_FILE }}"
+          expression: '//CoverageReport/Summary/Linecoverage/text()'
       
       # - name: Branch Coverage
       #   id: branchCoverage
@@ -90,21 +89,21 @@ jobs:
       #     filename: "${{ env.COVERAGE_FILE }}"
       #     expression: '//CoverageSession/Summary/@branchCoverage'
       
-      # - name: Parse Coverage
-      #   id: ParseCoverage
-      #   run: |
-      #     echo ::set-output name=LINE_COVERAGE::$(cut -d "=" -f2- <<< ${{ steps.LineCoverage.outputs.result }})
+      - name: Parse Coverage
+        id: ParseCoverage
+        run: |
+          echo ::set-output name=LINE_COVERAGE::$(cut -d "=" -f2- <<< ${{ steps.LineCoverage.outputs.result }})
       
-      # - name: Add PR Comment
-      #   uses: mshick/add-pr-comment@v1
-      #   with:
-      #     message: |
-      #       Test Coverage Results for ${{ matrix.testMode }}:
-      #       Line Coverage: ${{ steps.ParseCoverage.outputs.LINE_COVERAGE }}%
-      #       Link to run results: [https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
-      #     repo-token: ${{ secrets.GITHUB_TOKEN }}
-      #     repo-token-user-login: 'github-actions[bot]' # The user.login for temporary GitHub tokens
-      #     allow-repeats: false # This is the default
+      - name: Add PR Comment
+        uses: mshick/add-pr-comment@v1
+        with:
+          message: |
+            Test Coverage Results for ${{ matrix.testMode }}:
+            Line Coverage: ${{ steps.ParseCoverage.outputs.LINE_COVERAGE }}%
+            Link to run results: [https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          repo-token-user-login: 'github-actions[bot]' # The user.login for temporary GitHub tokens
+          allow-repeats: false # This is the default
 
       # - name: Assert Coverage
       #   run: |
