@@ -18,37 +18,37 @@ namespace PropHunt.Utils
         /// The collider that was hit by the controller.
         /// </summary>
         Collider collider { get; }
-        
+
         /// <summary>
         /// The rigidbody that was hit by the controller.
         /// </summary>
         Rigidbody rigidbody { get; }
-        
+
         /// <summary>
         /// The game object that was hit by the controller.
         /// </summary>
         GameObject gameObject { get; }
-        
+
         /// <summary>
         /// The transform that was hit by the controller.
         /// </summary>
         Transform transform { get; }
-        
+
         /// <summary>
         /// The impact point in world space.
         /// </summary>
         Vector3 point { get; }
-        
+
         /// <summary>
         /// The normal of the surface we collided with in world space.
         /// </summary>
         Vector3 normal { get; }
-        
+
         /// <summary>
         /// The direction the CharacterController was moving in when the collision occurred.
         /// </summary>
         Vector3 moveDirection { get; }
-        
+
         /// <summary>
         /// How far the character has travelled until it hit the collider.
         /// </summary>

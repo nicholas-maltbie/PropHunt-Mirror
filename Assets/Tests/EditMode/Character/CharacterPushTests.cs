@@ -166,7 +166,7 @@ namespace Tests.Character
         public void TestSenderConnectionIsSetWhenCommandReceived()
         {
             CharacterPush hostBehaviour = CreateHostObject<CharacterPush>(true);
-            
+
             NetworkConnectionToClient connectionToClient = NetworkServer.connections[0];
             Debug.Assert(connectionToClient != null, $"connectionToClient was null, This means that the test is broken and will give the wrong results");
 
