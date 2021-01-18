@@ -73,13 +73,13 @@ namespace PropHunt.Character
         /// <value>The direction the character tried to move this frame</value>
         public Vector3 moveDirection;
 
-        void Start()
+        public void Start()
         {
             this.characterController = this.GetComponent<CharacterController>();
             this.networkService = new NetworkService(this);
         }
 
-        void Update()
+        public void Update()
         {
             if (!networkService.isLocalPlayer)
             {
@@ -122,6 +122,8 @@ namespace PropHunt.Character
             // Setup a movement vector
             // Get user input and move player if moving
             Vector3 movement = new Vector3(unityService.GetAxis("Horizontal"), 0, unityService.GetAxis("Vertical"));
+
+            UnityEngine.Debug.Log(movement);
 
             // Rotate movement vector by player yaw (rotation about vertical axis)
             Quaternion horizPlaneView = transform.rotation;
