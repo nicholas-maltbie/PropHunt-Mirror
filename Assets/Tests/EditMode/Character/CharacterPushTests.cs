@@ -1,5 +1,6 @@
 using System.Text.RegularExpressions;
 using Mirror;
+using Mirror.Tests.RemoteAttrributeTest;
 using Moq;
 using NUnit.Framework;
 using PropHunt.Character;
@@ -153,6 +154,28 @@ namespace Tests.Character
 
             // Cleanup created object
             GameObject.DestroyImmediate(hitObject);
+        }
+    }
+
+    /// <summary>
+    /// Tests to verify behaviour of commands in character push script
+    /// </summary>
+    public class CharacterPushCommandTests : RemoteTestBase
+    {
+        [Test]
+        public void TestSenderConnectionIsSetWhenCommandReceived()
+        {
+            CharacterPush hostBehaviour = CreateHostObject<CharacterPush>(true);
+            
+            NetworkConnectionToClient connectionToClient = NetworkServer.connections[0];
+            Debug.Assert(connectionToClient != null, $"connectionToClient was null, This means that the test is broken and will give the wrong results");
+
+            GameObject pushed = new GameObject();
+            pushed.AddComponent<Rigidbody>();
+            pushed.AddComponent<NetworkIdentity>();
+            NetworkServer.Spawn(pushed);
+            hostBehaviour.CmdPushWithForce(pushed, Vector3.zero, Vector3.zero);
+            GameObject.DestroyImmediate(pushed);
         }
     }
 }
