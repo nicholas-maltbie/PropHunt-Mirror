@@ -1,4 +1,5 @@
 using Mirror;
+using PropHunt.Utils;
 using UnityEngine;
 
 namespace PropHunt.Character
@@ -10,6 +11,11 @@ namespace PropHunt.Character
     [RequireComponent(typeof(CharacterMovement))]
     public class CharacterPush : NetworkBehaviour
     {
+        /// <summary>
+        /// Network service for checking client server status of object
+        /// </summary>
+        public INetworkService networkService;
+
         /// <summary>
         /// Power of the player push
         /// </summary>
@@ -28,6 +34,7 @@ namespace PropHunt.Character
         public void Start()
         {
             this.characterMovement = this.GetComponent<CharacterMovement>();
+            this.networkService = new NetworkService(this);
         }
 
         /// <summary>
@@ -53,16 +60,16 @@ namespace PropHunt.Character
             PushWithForce(hit, force, point);
         }
 
-        public void OnControllerColliderHit(ControllerColliderHit hit)
+        public void PushObject(IControllerColliderHit hit)
         {
-            if (!isLocalPlayer)
+            if (!this.networkService.isLocalPlayer)
             {
                 // exit from update if this is not the local player
                 return;
             }
 
             // Check if the thing we hit can be pushed
-            Rigidbody body = hit.collider.attachedRigidbody;
+            Rigidbody body = hit.rigidbody;
 
             // Do nothing if the object does not have a rigidbody or if
             //   the rigidbody is kinematic
@@ -90,7 +97,7 @@ namespace PropHunt.Character
             }
 
             // Apply the push
-            if (isServer)
+            if (this.networkService.isServer)
             {
                 // On the server, just push it
                 PushWithForce(hit.gameObject, force, hit.point);
@@ -100,6 +107,11 @@ namespace PropHunt.Character
                 // On client, send message to server to push the object
                 CmdPushWithForce(hit.gameObject, force, hit.point);
             }
+        }
+
+        public void OnControllerColliderHit(ControllerColliderHit hit)
+        {
+            this.PushObject(new ControllerColliderHitWrapper(hit));
         }
     }
 }
