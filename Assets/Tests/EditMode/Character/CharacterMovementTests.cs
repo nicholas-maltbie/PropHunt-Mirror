@@ -73,7 +73,7 @@ namespace Tests.Character
         public void CharacterMovementNotGrounded()
         {
             this.networkServiceMock.Setup(e => e.isLocalPlayer).Returns(true);
-            
+
             // Do a test when the character is turning, moving forward, and jumping
             this.unityServiceMock.Setup(e => e.deltaTime).Returns(1.0f);
             this.unityServiceMock.Setup(e => e.GetAxis("Horizontal")).Returns(-1.0f);
@@ -93,7 +93,7 @@ namespace Tests.Character
             BoxCollider floorCollider = floor.AddComponent<BoxCollider>();
             floor.transform.transform.position = Vector3.zero;
             this.characterMovement.gameObject.transform.position = Vector3.zero;
-            
+
             // Do a test when the character is turning, moving forward, and jumping
             this.unityServiceMock.Setup(e => e.deltaTime).Returns(1.0f);
             this.unityServiceMock.Setup(e => e.GetAxis("Horizontal")).Returns(0.0f);
