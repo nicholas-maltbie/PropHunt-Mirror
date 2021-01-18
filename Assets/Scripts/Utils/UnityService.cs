@@ -11,7 +11,7 @@ namespace PropHunt.Utils
         /// Get the current delta time in seconds between this and last frame
         /// </summary>
         /// <returns>The current delta time between this and the previous frame</returns>
-        float GetDeltaTime();
+        float deltaTime { get; }
 
         /// <summary>
         /// Get the raw axis movement for a given axis (by name)
@@ -41,10 +41,7 @@ namespace PropHunt.Utils
     public class UnityService : IUnityService
     {
         /// <inheritdoc/>
-        public float GetDeltaTime()
-        {
-            return Time.deltaTime;
-        }
+        public float deltaTime => Time.deltaTime;
 
         /// <inheritdoc/>
         public float GetAxis(string axisName)

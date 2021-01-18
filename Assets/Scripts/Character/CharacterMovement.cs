@@ -1,4 +1,5 @@
 ﻿using Mirror;
+using PropHunt.Utils;
 using UnityEngine;
 
 namespace PropHunt.Character
@@ -10,6 +11,17 @@ namespace PropHunt.Character
     [RequireComponent(typeof(CharacterController))]
     public class CharacterMovement : NetworkBehaviour
     {
+        /// <summary>
+        /// Mocked unity service for accessing inputs, delta time, and
+        /// various other static unity inputs in a testable manner.
+        /// </summary>
+        public IUnityService unityService = new UnityService();
+
+        /// <summary>
+        /// Network service for managing network calls
+        /// </summary>
+        public INetworkService networkService;
+
         /// <summary>
         /// Character controller to move character
         /// </summary>
@@ -64,20 +76,23 @@ namespace PropHunt.Character
         void Start()
         {
             this.characterController = this.GetComponent<CharacterController>();
+            this.networkService = new NetworkService(this);
         }
 
         void Update()
         {
-            if (!isLocalPlayer)
+            if (!networkService.isLocalPlayer)
             {
                 // exit from update if this is not the local player
                 return;
             }
 
+            float deltaTime = unityService.deltaTime;
+
             // If the player is not grounded, increment velocity by acceleration due to gravity
             if (!characterController.isGrounded)
             {
-                velocity += gravity * Time.deltaTime;
+                velocity += gravity * deltaTime;
             }
             // If the character is grounded, set velocity to zero
             else
@@ -87,12 +102,10 @@ namespace PropHunt.Character
 
             float yaw = transform.rotation.eulerAngles.y;
             float pitch = (cameraTransform.rotation.eulerAngles.x % 360 + 180) % 360 - 180;
-            yaw += rotationRate * Time.deltaTime * Input.GetAxis("Mouse X");
-            pitch += rotationRate * Time.deltaTime * -1 * Input.GetAxis("Mouse Y");
-            UnityEngine.Debug.Log($"Current player pitch: {pitch}");
+            yaw += rotationRate * deltaTime * unityService.GetAxis("Mouse X");
+            pitch += rotationRate * deltaTime * -1 * unityService.GetAxis("Mouse Y");
             // Clamp rotation of camera between minimum and maximum specified pitch
             pitch = Mathf.Clamp(pitch, minPitch, maxPitch);
-            UnityEngine.Debug.Log($"Pitch after Clamp: {pitch}");
 
             // Set the player's rotation to be that of the camera's yaw
             transform.rotation = Quaternion.Euler(0, yaw, 0);
@@ -100,7 +113,7 @@ namespace PropHunt.Character
             cameraTransform.localRotation = Quaternion.Euler(pitch, 0, 0);
 
             // Give the player some vertical velocity if they are jumping
-            if (this.characterController.isGrounded && Input.GetButton("Jump"))
+            if (this.characterController.isGrounded && unityService.GetButton("Jump"))
             {
                 velocity = new Vector3(0, this.jumpVelocity, 0);
             }
@@ -108,7 +121,7 @@ namespace PropHunt.Character
             // handle player input for movement (but only on local player)
             // Setup a movement vector
             // Get user input and move player if moving
-            Vector3 movement = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+            Vector3 movement = new Vector3(unityService.GetAxis("Horizontal"), 0, unityService.GetAxis("Vertical"));
 
             // Rotate movement vector by player yaw (rotation about vertical axis)
             Quaternion horizPlaneView = transform.rotation;
@@ -119,8 +132,7 @@ namespace PropHunt.Character
             // Set how this character intended to move this frame
             this.moveDirection = (movementVelocity + velocity);
             // Move player by displacement
-            this.characterController.Move(this.moveDirection * Time.deltaTime);
-
+            this.characterController.Move(this.moveDirection * deltaTime);
         }
     }
 }

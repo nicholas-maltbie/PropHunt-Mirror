@@ -13,7 +13,7 @@ namespace Tests.Utils
             unityService.GetAxis("Horizontal");
             unityService.GetButton("Jump");
             unityService.GetButtonDown("Jump");
-            Assert.IsTrue(unityService.GetDeltaTime() >= 0.0f);
+            Assert.IsTrue(unityService.deltaTime >= 0.0f);
         }
     }
 }

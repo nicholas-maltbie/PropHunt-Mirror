@@ -158,7 +158,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  cameraPosition: {fileID: 8130394144415267709}
+  cameraTransform: {fileID: 8130394144415267709}
 --- !u!114 &4483632544835906298
 MonoBehaviour:
   m_ObjectHideFlags: 0
