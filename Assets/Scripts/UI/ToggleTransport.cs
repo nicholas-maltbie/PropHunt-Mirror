@@ -16,8 +16,8 @@ namespace PropHunt.UI
     public enum MultiplayerMode
     {
         None = 0,
-        KcpTransport        = 1,
-        FizzySteamworks     = 2
+        KcpTransport = 1,
+        FizzySteamworks = 2
     }
 
     /// <summary>
