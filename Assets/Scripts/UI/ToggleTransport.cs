@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using kcp2k;
 using Mirror;
 using Mirror.FizzySteam;
+using PropHunt.Utils;
 using UnityEngine;
 
 namespace PropHunt.UI
@@ -44,6 +45,11 @@ namespace PropHunt.UI
         /// </summary>
         public Dictionary<MultiplayerMode, Transport> transportSettingsLookup;
 
+        /// <summary>
+        /// Network service to check if connected to the server
+        /// </summary>
+        public INetworkService networkService = new NetworkService(null);
+
         public void Start()
         {
             // setup a lookup table to link the currently available multiplayer modes
@@ -78,8 +84,13 @@ namespace PropHunt.UI
 
         public void OnGUI()
         {
-            // Disable this GUI when in game, figure out how to do this
+            // Disable this GUI when in game, or connecting
+            if (this.networkService.activeNetworkClient)
+            {
+                return;
+            }
 
+            // Display buttons to set multiplayer mode
             if (GUI.Button(new Rect(10, 115, 200, 20), "Steam Networking"))
             {
                 this.SetMultiplayerMode(MultiplayerMode.FizzySteamworks);
