@@ -15,15 +15,15 @@ namespace PropHunt.UI
     /// </summary>
     public enum MultiplayerMode
     {
-        KcpTransport        = 0,
-        FizzySteamworks     = 1
+        None = 0,
+        KcpTransport        = 1,
+        FizzySteamworks     = 2
     }
 
     /// <summary>
     /// Class to toggle various types of transport for a network manager
     /// </summary>
-    [RequireComponent(typeof(NetworkManager))]
-    public class ToggleTransport : NetworkBehaviour
+    public class ToggleTransport : MonoBehaviour
     {
         /// <summary>
         /// Current mode we have selected
@@ -50,6 +50,11 @@ namespace PropHunt.UI
         /// </summary>
         public INetworkService networkService = new NetworkService(null);
 
+        /// <summary>
+        /// Links to the game objects for control buttons
+        /// </summary>
+        public GameObject controlButtons;
+
         public void Start()
         {
             // setup a lookup table to link the currently available multiplayer modes
@@ -62,6 +67,20 @@ namespace PropHunt.UI
             SetMultiplayerMode(this.currentMode, forceUpdate: true);
         }
 
+        /// <summary>
+        /// Set multiplayer mode
+        /// </summary>
+        /// <param name="mode">String name of a multiplayer game mode</param>
+        public void SetMultiplayerMode(string mode)
+        {
+            this.SetMultiplayerMode((MultiplayerMode)System.Enum.Parse(typeof(MultiplayerMode), mode));
+        }
+
+        /// <summary>
+        /// Set multiplayer mode via enum
+        /// </summary>
+        /// <param name="mode">Enum of mode to change to</param>
+        /// <param name="forceUpdate">Force update even if mode has not changed</param>
         public void SetMultiplayerMode(MultiplayerMode mode, bool forceUpdate = false)
         {
             if (!forceUpdate && mode == this.currentMode)
@@ -82,22 +101,16 @@ namespace PropHunt.UI
             Transport.activeTransport = currentTransport;
         }
 
-        public void OnGUI()
+        public void Update()
         {
             // Disable this GUI when in game, or connecting
             if (this.networkService.activeNetworkClient)
             {
-                return;
+                controlButtons.SetActive(false);
             }
-
-            // Display buttons to set multiplayer mode
-            if (GUI.Button(new Rect(10, 115, 200, 20), "Steam Networking"))
+            else
             {
-                this.SetMultiplayerMode(MultiplayerMode.FizzySteamworks);
-            }
-            if (GUI.Button(new Rect(10, 140, 200, 20), "Kcp Networking"))
-            {
-                this.SetMultiplayerMode(MultiplayerMode.KcpTransport);
+                controlButtons.SetActive(true);
             }
         }
     }
