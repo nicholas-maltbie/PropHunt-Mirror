@@ -1,4 +1,3 @@
-using Mirror;
 using Moq;
 using NUnit.Framework;
 using PropHunt.Character;
@@ -9,58 +8,30 @@ using UnityEngine.TestTools;
 
 namespace Tests.PlayMode.Character
 {
-    [TestFixture]
     public class CharacterMovementIntegrationTests : NetworkIntegrationTest
     {
         [UnityTest]
-        public IEnumerator TestCharacterMovement()
+        public IEnumerator TestPlayerMoveForward()
         {
-            // Setup the camera transform
-            GameObject cameraObject = new GameObject();
-            // Setup the playerGo
-            NetworkIdentity identity = new GameObject().AddComponent<NetworkIdentity>();
-            CharacterController controller = identity.gameObject.AddComponent<CharacterController>();
-            CharacterMovement movementControls = identity.gameObject.AddComponent<CharacterMovement>();
-            movementControls.cameraTransform = cameraObject.transform;
-            movementControls.movementSpeed = 5.0f;
+            CharacterMovement characterMovement = GameObject.FindObjectOfType<CharacterMovement>();
+            Vector3 forward = characterMovement.transform.forward;
+            Vector3 start = characterMovement.transform.position;
 
-            // Put a large floor below the player
-            GameObject floor = new GameObject();
-            floor.transform.position = new Vector3(0, -1, 0);
-            // Make the floor large (25 units by 25 units)
-            // BoxCollider collider = floor.AddComponent<BoxCollider>();
-            // collider.size = new Vector3(25, 1, 25);
-    
-            // Wait one frame for the game to setup
-            yield return null;
+            // Simulate the movement of the character
+            Mock<IUnityService> unityServiceMock = new Mock<IUnityService>();
+            unityServiceMock.Setup(e => e.GetAxis("Vertical")).Returns(1.0f);
+            unityServiceMock.Setup(e => e.deltaTime).Returns(() => Time.deltaTime);
+            characterMovement.unityService = unityServiceMock.Object;
 
-            SpawnMessage msg = new SpawnMessage
-            {
-                netId = NetworkConnection.LocalConnectionId,
-                isLocalPlayer = true,
-                isOwner = true,
-            };
-
-            // Fake the character moving forward for 3 seconds
-            Mock<IUnityService> mockInputs = new Mock<IUnityService>();
-            movementControls.unityService = mockInputs.Object;
-            mockInputs.Setup(e => e.GetAxis("Vertical")).Returns(1.0f);
-            // Fake the player being controlled locally
-            Mock<INetworkService> mockNetwork = new Mock<INetworkService>();
-            mockNetwork.Setup(e => e.isLocalPlayer).Returns(true);
-            movementControls.networkService = mockNetwork.Object;
-
-            // Allow for 3 seconds of time to pass
+            // Move the character forward for 1 seconds
             yield return new WaitForSeconds(1.0f);
 
-            // Assert that the player has moved some distance
-            UnityEngine.Debug.Log(identity.gameObject.transform.position);
-            Assert.IsTrue(identity.gameObject.transform.position == new Vector3(0, 0, 5));
+            // Assert that there is some positive movement along the forward axis
+            Vector3 movement = characterMovement.transform.position - start;
+            Assert.IsTrue(Vector3.Project(movement, forward).magnitude > 0);
 
-            // Cleanup objects
-            GameObject.DestroyImmediate(identity.gameObject);
-            GameObject.DestroyImmediate(floor);
-            GameObject.DestroyImmediate(cameraObject);
+            // Move the character forward for 3 more seconds (have it hit the teleport box)
+            yield return new WaitForSeconds(3.0f);
         }
     }
 }

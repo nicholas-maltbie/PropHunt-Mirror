@@ -1,59 +1,48 @@
-using kcp2k;
 using Mirror;
-using System.Collections.Generic;
+using NUnit.Framework;
+using System.Collections;
+using Tests.PlayMode.Utils;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
 
 namespace Tests.PlayMode
 {
-    /// <summary>
-    /// Tests that involve connecting to the server
-    /// </summary>
     public class NetworkIntegrationTest
     {
-        protected readonly List<GameObject> _createdObjects = new List<GameObject>();
+        NetworkManager manager;
 
         [UnitySetUp]
-        public void Setup()
+        public IEnumerator UnitySetup()
         {
-            Transport.activeTransport = new GameObject().AddComponent<KcpTransport>();
+            SceneManager.LoadScene("TestRoom", LoadSceneMode.Single);
+            yield return new WaitForSceneLoaded("TestRoom", newTimeout: 10);
+            yield return null;
+            // Get Network Manager from scene
+            manager = GameObject.FindObjectOfType<NetworkManager>();
+            // Simulate starting the host
+            manager.StartHost();
 
-            // start server/client
-            NetworkServer.Listen(1);
-            NetworkClient.ConnectHost();
-            NetworkServer.SpawnObjects();
-            NetworkServer.ActivateHostScene();
-            NetworkClient.ConnectLocalServer();
+            yield return null;
 
-            NetworkServer.localConnection.isAuthenticated = true;
-            NetworkClient.connection.isAuthenticated = true;
+            // Wait for connected
+            yield return new WaitForConnected();
 
-            ClientScene.Ready(NetworkClient.connection);
+            // Assert that we are now connected
+            Assert.IsTrue(NetworkClient.isConnected);
         }
 
         [UnityTearDown]
-        public void TearDown()
+        public IEnumerator UnityTearDown()
         {
-            // stop server/client
-            NetworkClient.DisconnectLocalServer();
+            // now disconnect, wait until we are connected
+            manager.StopHost();
 
-            NetworkClient.Disconnect();
-            NetworkClient.Shutdown();
+            // Wait until we disconnect
+            yield return new WaitForConnected(state: false);
 
-            NetworkServer.Shutdown();
-
-            foreach (GameObject item in _createdObjects)
-            {
-                if (item != null)
-                {
-                    GameObject.DestroyImmediate(item);
-                }
-            }
-            _createdObjects.Clear();
-
-            NetworkIdentity.spawned.Clear();
-
-            GameObject.DestroyImmediate(Transport.activeTransport.gameObject);
+            // Assert that we are not connected
+            Assert.IsFalse(NetworkClient.isConnected);
         }
     }
 }

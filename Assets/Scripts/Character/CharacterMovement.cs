@@ -130,7 +130,6 @@ namespace PropHunt.Character
             movement = movement.magnitude > 1 ? movement / movement.magnitude : movement;
             // Set how this character intended to move this frame
             this.moveDirection = (movementVelocity + velocity);
-            // UnityEngine.Debug.Log(this.moveDirection + " " + unityService.GetAxis("Vertical"));
             // Move player by displacement
             this.characterController.Move(this.moveDirection * deltaTime);
         }
