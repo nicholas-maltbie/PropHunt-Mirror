@@ -11,7 +11,7 @@ namespace PropHunt.Character
         /// <summary>Network service for managing network calls</summary>
         public INetworkService networkService;
         ///<summary>Create sphere radius variable -J</summary>
-        public float sphereRadius;
+        public float sphereRadius = 0.1f;
         /// <summary>Determines how far the player can look</summary>
         public float viewDistance = 5.0f;
         ///<summary>Create layermask I guess -J</summary>
@@ -39,8 +39,8 @@ namespace PropHunt.Character
                 return;
             }
             //Update origin -J
-            origin =  cameraTransform.position;
-            direction = cameraTransform.forward;
+            Vector3 origin =  cameraTransform.position;
+            Vector3 direction = cameraTransform.forward;
             RaycastHit hit;
             //if spherecast hits something, update the player's focus and distance variables -J
             if (Physics.SphereCast(origin,sphereRadius,direction,out hit, viewDistance)) {
