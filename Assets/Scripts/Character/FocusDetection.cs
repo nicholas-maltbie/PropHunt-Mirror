@@ -39,16 +39,18 @@ namespace PropHunt.Character
                 return;
             }
             //Update origin -J
-            Vector3 origin =  cameraTransform.position;
+            Vector3 origin = cameraTransform.position;
             Vector3 direction = cameraTransform.forward;
             RaycastHit hit;
             //if spherecast hits something, update the player's focus and distance variables -J
-            if (Physics.SphereCast(origin,sphereRadius,direction,out hit, viewDistance)) {
+            if (Physics.SphereCast(origin, sphereRadius, direction, out hit, viewDistance))
+            {
                 focus = hit.transform.gameObject;
                 currentHitDistance = hit.distance;
             }
             //otherwise change the variables to the non-hit state -J
-            else {
+            else
+            {
                 focus = null;
                 currentHitDistance = viewDistance;
             }

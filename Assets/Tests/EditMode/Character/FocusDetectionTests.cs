@@ -17,7 +17,7 @@ namespace Tests.Character
         /// <summary>
         /// Focus detection object being tested
         /// </summary>
-        FocusDetection  focusDetection;
+        FocusDetection focusDetection;
 
         /// <summary>
         /// Mock of network service attached to cameraFollow script
