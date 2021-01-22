@@ -23,9 +23,6 @@ namespace PropHunt.Character
         /// <summary>How far away the hit from the spherecast is</summary>
         public float currentHitDistance;
 
-        private Vector3 origin;
-        private Vector3 direction;
-
         /// <summary> Start is called before the first frame update</summary>
         public void Start()
         {
@@ -45,11 +42,12 @@ namespace PropHunt.Character
             origin =  cameraTransform.position;
             direction = cameraTransform.forward;
             RaycastHit hit;
+            //if spherecast hits something, update the player's focus and distance variables -J
             if (Physics.SphereCast(origin,sphereRadius,direction,out hit, viewDistance)) {
-                //Update focus and distance variables of camera
                 focus = hit.transform.gameObject;
                 currentHitDistance = hit.distance;
             }
+            //otherwise change the variables to the non-hit state -J
             else {
                 focus = null;
                 currentHitDistance = viewDistance;
