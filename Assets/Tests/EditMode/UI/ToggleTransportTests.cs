@@ -10,7 +10,7 @@ using Mirror;
 namespace Tests.EditMode.UI
 {
     /// <summary>
-    /// Tests the behaviour of the toggle transport for changing transport types
+    /// Tests the behaviour of the network action for manipulating the network manager
     /// </summary>
     [TestFixture]
     public class ToggleTransportTests
@@ -34,6 +34,13 @@ namespace Tests.EditMode.UI
             KcpTransport kcpTransport = go.AddComponent<KcpTransport>();
             FizzySteamworks fizzySteamworks = go.AddComponent<FizzySteamworks>();
 
+            // Attach fake settings for transports to our toggle object
+            toggle.kcpTransportSettings = kcpTransport;
+            toggle.fizzySteamworksSettings = fizzySteamworks;
+
+            // Test the start method for initial setup
+            toggle.Start();
+
             // Assert that the current mode matches the selected transport
             Assert.IsTrue(Transport.activeTransport == kcpTransport);
 
@@ -47,7 +54,7 @@ namespace Tests.EditMode.UI
             Assert.IsTrue(Transport.activeTransport == fizzySteamworks);
 
             // Set multiplayer mode to KCP from string command
-            toggle.SetMultiplayerMode(MultiplayerMode.KcpTransport.ToString());
+            toggle.SetMultiplayerMode(MultiplayerMode.KcpTransport, true);
             Assert.IsTrue(toggle.currentMode == MultiplayerMode.KcpTransport);
             Assert.IsTrue(Transport.activeTransport == kcpTransport);
 

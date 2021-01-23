@@ -1,6 +1,9 @@
+using Moq;
 using NUnit.Framework;
 using PropHunt.UI;
+using PropHunt.Utils;
 using UnityEngine;
+using static PropHunt.UI.MenuController;
 
 namespace Tests.EditMode.UI
 {
@@ -55,6 +58,28 @@ namespace Tests.EditMode.UI
 
             this.menuController.SetScreen("NewScreen");
             Assert.IsTrue(this.currentScreen == "NewScreen");
+
+            GameObject.DestroyImmediate(holderObject);
+        }
+
+        [Test]
+        public void TestSetScreenOnInput()
+        {
+            GameObject holderObject = new GameObject();
+            holderObject.name = "default_screen";
+            this.menuController.SetScreen(holderObject);
+            holderObject.name = "input_change_screen";
+
+            InputScreenChange change = new InputScreenChange();
+            change.input = "Cancel";
+            change.menu = holderObject;
+            this.menuController.screenChangeInputs.Add(change);
+            
+            Mock<IUnityService> unityServiceMock = new Mock<IUnityService>();
+            menuController.unityService = unityServiceMock.Object;
+            unityServiceMock.Setup(e => e.GetButtonDown("Cancel")).Returns(true);
+            this.menuController.Update();
+            Assert.IsTrue(this.currentScreen == "input_change_screen");
 
             GameObject.DestroyImmediate(holderObject);
         }

@@ -13,12 +13,12 @@ namespace PropHunt.UI
         /// <summary>
         /// Network service for checking network state and interactions
         /// </summary>
-        private INetworkService networkService = new NetworkService(null);
+        public INetworkService networkService = new NetworkService(null);
 
         /// <summary>
         /// Network manager to control network state
         /// </summary>
-        private NetworkManager manager;
+        public NetworkManager manager { get; private set; }
 
         /// <summary>
         /// Address to connect to
@@ -92,11 +92,6 @@ namespace PropHunt.UI
             if (!Initialized())
             {
                 manager = GameObject.FindObjectOfType<NetworkManager>();
-                // If no manager was found, skip for now
-                if (!Initialized())
-                {
-                    return;
-                }
             }
         }
 

@@ -27,7 +27,7 @@ namespace PropHunt.UI
         /// <summary>
         /// Public instance for controlling transport
         /// </summary>
-        public static ToggleTransport Instance { get; private set; }
+        public static ToggleTransport Instance;
 
         /// <summary>
         /// Current mode we have selected

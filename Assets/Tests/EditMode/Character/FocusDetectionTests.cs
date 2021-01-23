@@ -4,7 +4,6 @@ using PropHunt.Character;
 using PropHunt.Utils;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
 
 namespace Tests.EditMode.Character
