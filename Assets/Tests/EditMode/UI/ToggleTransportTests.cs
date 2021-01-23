@@ -34,12 +34,9 @@ namespace Tests.EditMode.UI
             KcpTransport kcpTransport = go.AddComponent<KcpTransport>();
             FizzySteamworks fizzySteamworks = go.AddComponent<FizzySteamworks>();
 
-            // Attach fake settings for transports to our toggle object
-            toggle.kcpTransportSettings = kcpTransport;
-            toggle.fizzySteamworksSettings = fizzySteamworks;
-
             // Test the start method for initial setup
             toggle.Start();
+            toggle.Update();
 
             // Assert that the current mode matches the selected transport
             Assert.IsTrue(Transport.activeTransport == toggle.transportSettingsLookup[toggle.currentMode]);
@@ -51,12 +48,12 @@ namespace Tests.EditMode.UI
             // Assert that mode can change when we chant to a new mode
             toggle.SetMultiplayerMode(MultiplayerMode.FizzySteamworks);
             Assert.IsTrue(toggle.currentMode == MultiplayerMode.FizzySteamworks);
-            Assert.IsTrue(Transport.activeTransport == toggle.fizzySteamworksSettings);
+            Assert.IsTrue(Transport.activeTransport == fizzySteamworks);
 
             // Set multiplayer mode to KCP from string command
             toggle.SetMultiplayerMode(MultiplayerMode.KcpTransport.ToString());
             Assert.IsTrue(toggle.currentMode == MultiplayerMode.KcpTransport);
-            Assert.IsTrue(Transport.activeTransport == toggle.kcpTransportSettings);
+            Assert.IsTrue(Transport.activeTransport == kcpTransport);
 
             // Cleanup created game objects
             GameObject.DestroyImmediate(go);

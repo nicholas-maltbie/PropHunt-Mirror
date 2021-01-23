@@ -31,19 +31,9 @@ namespace PropHunt.UI
         public MultiplayerMode currentMode = MultiplayerMode.KcpTransport;
 
         /// <summary>
-        /// Settings selected for KcpTransport
-        /// </summary>
-        public KcpTransport kcpTransportSettings;
-
-        /// <summary>
-        /// Settings selected for FizzySteamworks
-        /// </summary>
-        public FizzySteamworks fizzySteamworksSettings;
-
-        /// <summary>
         /// Lookup from transport type to transport settings
         /// </summary>
-        public Dictionary<MultiplayerMode, Transport> transportSettingsLookup;
+        public Dictionary<MultiplayerMode, Transport> transportSettingsLookup = new Dictionary<MultiplayerMode, Transport>();
 
         /// <summary>
         /// Network service to check if connected to the server
@@ -52,14 +42,33 @@ namespace PropHunt.UI
 
         public void Start()
         {
-            // setup a lookup table to link the currently available multiplayer modes
-            //  to their enum type in code
-            this.transportSettingsLookup = new Dictionary<MultiplayerMode, Transport>();
-            this.transportSettingsLookup[MultiplayerMode.FizzySteamworks] = this.fizzySteamworksSettings;
-            this.transportSettingsLookup[MultiplayerMode.KcpTransport] = this.kcpTransportSettings;
+            // Setup transports
+            FindTransports();
 
             // Setup initial mode
             SetMultiplayerMode(this.currentMode, forceUpdate: true);
+        }
+
+        public void Update()
+        {
+            FindTransports();
+        }
+
+        /// <summary>
+        /// Find the transports for this project if they are not setup
+        /// </summary>
+        public void FindTransports()
+        {
+            // setup a lookup table to link the currently available multiplayer modes
+            //  to their enum type in code
+            if (!this.transportSettingsLookup.ContainsKey(MultiplayerMode.FizzySteamworks))
+            {
+                this.transportSettingsLookup[MultiplayerMode.FizzySteamworks] = GameObject.FindObjectOfType<FizzySteamworks>();
+            }
+            if (!this.transportSettingsLookup.ContainsKey(MultiplayerMode.KcpTransport))
+            {
+                this.transportSettingsLookup[MultiplayerMode.KcpTransport] = GameObject.FindObjectOfType<KcpTransport>();
+            }
         }
 
         /// <summary>
