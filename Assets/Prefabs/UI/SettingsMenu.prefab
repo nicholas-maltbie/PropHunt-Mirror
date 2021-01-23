@@ -175,7 +175,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6637053135914170324
 RectTransform:
   m_ObjectHideFlags: 0
@@ -392,7 +392,7 @@ MonoBehaviour:
         m_MethodName: SetScreen
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 7730172942395422524, guid: d7e0cec9d46eff341ad598031aeba302,
+          m_ObjectArgument: {fileID: 8543157476786906886, guid: d7e0cec9d46eff341ad598031aeba302,
             type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0

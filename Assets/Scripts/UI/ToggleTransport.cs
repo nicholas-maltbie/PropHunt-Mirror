@@ -1,4 +1,3 @@
-
 using System.Collections.Generic;
 using kcp2k;
 using Mirror;
@@ -26,14 +25,29 @@ namespace PropHunt.UI
     public class ToggleTransport : MonoBehaviour
     {
         /// <summary>
+        /// Public instance for controlling transport
+        /// </summary>
+        public static ToggleTransport Instance { get; private set; }
+
+        /// <summary>
         /// Current mode we have selected
         /// </summary>
         public MultiplayerMode currentMode = MultiplayerMode.KcpTransport;
 
         /// <summary>
+        /// Settings selected for KcpTransport
+        /// </summary>
+        public KcpTransport kcpTransportSettings;
+
+        /// <summary>
+        /// Settings selected for FizzySteamworks
+        /// </summary>
+        public FizzySteamworks fizzySteamworksSettings;
+
+        /// <summary>
         /// Lookup from transport type to transport settings
         /// </summary>
-        public Dictionary<MultiplayerMode, Transport> transportSettingsLookup = new Dictionary<MultiplayerMode, Transport>();
+        public Dictionary<MultiplayerMode, Transport> transportSettingsLookup;
 
         /// <summary>
         /// Network service to check if connected to the server
@@ -42,33 +56,20 @@ namespace PropHunt.UI
 
         public void Start()
         {
-            // Setup transports
-            FindTransports();
+            // Set main instance
+            ToggleTransport.Instance = this;
+
+            // setup a lookup table to link the currently available multiplayer modes
+            //  to their enum type in code
+            this.transportSettingsLookup = new Dictionary<MultiplayerMode, Transport>();
+            this.transportSettingsLookup[MultiplayerMode.FizzySteamworks] = this.fizzySteamworksSettings;
+            this.transportSettingsLookup[MultiplayerMode.KcpTransport] = this.kcpTransportSettings;
+
+            // Un-parent fizzy steamworks because it leads to warning if not
+            this.fizzySteamworksSettings.transform.parent = null;
 
             // Setup initial mode
             SetMultiplayerMode(this.currentMode, forceUpdate: true);
-        }
-
-        public void Update()
-        {
-            FindTransports();
-        }
-
-        /// <summary>
-        /// Find the transports for this project if they are not setup
-        /// </summary>
-        public void FindTransports()
-        {
-            // setup a lookup table to link the currently available multiplayer modes
-            //  to their enum type in code
-            if (!this.transportSettingsLookup.ContainsKey(MultiplayerMode.FizzySteamworks))
-            {
-                this.transportSettingsLookup[MultiplayerMode.FizzySteamworks] = GameObject.FindObjectOfType<FizzySteamworks>();
-            }
-            if (!this.transportSettingsLookup.ContainsKey(MultiplayerMode.KcpTransport))
-            {
-                this.transportSettingsLookup[MultiplayerMode.KcpTransport] = GameObject.FindObjectOfType<KcpTransport>();
-            }
         }
 
         /// <summary>
@@ -99,6 +100,7 @@ namespace PropHunt.UI
             // Enable new mode
             this.currentMode = mode;
             Transport currentTransport = transportSettingsLookup[this.currentMode];
+            Transport.activeTransport = currentTransport;
             currentTransport.gameObject.SetActive(true);
 
             // Attach this game mode to our network manager

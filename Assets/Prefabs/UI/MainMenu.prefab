@@ -615,7 +615,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2074993308577158495}
+      - m_Target: {fileID: 1266098897875397016}
         m_MethodName: SetMultiplayerMode
         m_Mode: 5
         m_Arguments:
@@ -983,7 +983,7 @@ MonoBehaviour:
         m_MethodName: SetScreen
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 7730172942395422524, guid: de594f0ca0c7e164fbcaade84840570f,
+          m_ObjectArgument: {fileID: 6637053135914170328, guid: de594f0ca0c7e164fbcaade84840570f,
             type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
@@ -1318,7 +1318,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2074993308577158495}
+      - m_Target: {fileID: 1266098897875397016}
         m_MethodName: SetMultiplayerMode
         m_Mode: 5
         m_Arguments:
@@ -1639,7 +1639,7 @@ GameObject:
   - component: {fileID: 8543157476786906889}
   - component: {fileID: 3003935440252356647}
   - component: {fileID: 532220257149872790}
-  - component: {fileID: 2074993308577158495}
+  - component: {fileID: 1266098897875397016}
   m_Layer: 5
   m_Name: MainMenu
   m_TagString: Untagged
@@ -1759,7 +1759,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75bac7e8f23212441911f4b09b5b630c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2074993308577158495
+--- !u!114 &1266098897875397016
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1768,10 +1768,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 8543157476786906886}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1cfe481634257194495b3632112dce18, type: 3}
+  m_Script: {fileID: 11500000, guid: 5658fb5ece8ec5549a8cae0dd3cf21b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentMode: 1
 --- !u!1 &8857033994187956672
 GameObject:
   m_ObjectHideFlags: 0

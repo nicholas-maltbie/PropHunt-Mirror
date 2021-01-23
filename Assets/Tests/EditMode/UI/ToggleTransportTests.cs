@@ -34,16 +34,12 @@ namespace Tests.EditMode.UI
             KcpTransport kcpTransport = go.AddComponent<KcpTransport>();
             FizzySteamworks fizzySteamworks = go.AddComponent<FizzySteamworks>();
 
-            // Test the start method for initial setup
-            toggle.Start();
-            toggle.Update();
-
             // Assert that the current mode matches the selected transport
-            Assert.IsTrue(Transport.activeTransport == toggle.transportSettingsLookup[toggle.currentMode]);
+            Assert.IsTrue(Transport.activeTransport == kcpTransport);
 
             // Assert that the mode does not change when we update the mode to the current mode
             toggle.SetMultiplayerMode(toggle.currentMode);
-            Assert.IsTrue(Transport.activeTransport == toggle.transportSettingsLookup[toggle.currentMode]);
+            Assert.IsTrue(Transport.activeTransport == kcpTransport);
 
             // Assert that mode can change when we chant to a new mode
             toggle.SetMultiplayerMode(MultiplayerMode.FizzySteamworks);
