@@ -6,8 +6,6 @@ using UnityEngine;
 using kcp2k;
 using Mirror.FizzySteam;
 using Mirror;
-using UnityEngine.TestTools;
-using System.Collections;
 
 namespace Tests.EditMode.UI
 {
@@ -20,14 +18,11 @@ namespace Tests.EditMode.UI
         [Test]
         public void TestToggleTransportSettingsChanges()
         {
-            GameObject uiElements = new GameObject();
             // Create game object to hold our toggle transporter
             GameObject go = new GameObject();
             ToggleTransport toggle = go.AddComponent<ToggleTransport>();
             // Set default mode to kcp
             toggle.currentMode = MultiplayerMode.KcpTransport;
-            // Connect fake UI elements to toggle element
-            toggle.controlButtons = uiElements;
 
             // Setup mocked data for toggle to do unit testing
             // Create a mock network service for passing network service data
@@ -63,22 +58,7 @@ namespace Tests.EditMode.UI
             Assert.IsTrue(toggle.currentMode == MultiplayerMode.KcpTransport);
             Assert.IsTrue(Transport.activeTransport == toggle.kcpTransportSettings);
 
-            // Test to ensure buttons display or do not via update function with the network client
-            // Ensure elements are not displayed when connected
-            // Fake connecting to server
-            networkServiceMock.Setup(nms => nms.activeNetworkClient).Returns(true);
-            // Update then assert that elements are disabled
-            toggle.Update();
-            Assert.IsTrue(uiElements.activeSelf == false);
-            // Fake not connecting to server
-            networkServiceMock.Setup(nms => nms.activeNetworkClient).Returns(false);
-            // Update then assert that elements are NOT disabled
-            toggle.Update();
-            Assert.IsTrue(uiElements.activeSelf == true);
-
-
             // Cleanup created game objects
-            GameObject.DestroyImmediate(uiElements);
             GameObject.DestroyImmediate(go);
         }
     }

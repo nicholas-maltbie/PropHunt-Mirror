@@ -50,11 +50,6 @@ namespace PropHunt.UI
         /// </summary>
         public INetworkService networkService = new NetworkService(null);
 
-        /// <summary>
-        /// Links to the game objects for control buttons
-        /// </summary>
-        public GameObject controlButtons;
-
         public void Start()
         {
             // setup a lookup table to link the currently available multiplayer modes
@@ -99,19 +94,6 @@ namespace PropHunt.UI
 
             // Attach this game mode to our network manager
             Transport.activeTransport = currentTransport;
-        }
-
-        public void Update()
-        {
-            // Disable this GUI when in game, or connecting
-            if (this.networkService.activeNetworkClient)
-            {
-                controlButtons.SetActive(false);
-            }
-            else
-            {
-                controlButtons.SetActive(true);
-            }
         }
     }
 }
