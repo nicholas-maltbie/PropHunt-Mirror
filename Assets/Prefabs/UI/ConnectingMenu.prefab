@@ -143,6 +143,7 @@ GameObject:
   - component: {fileID: 5674224039144228345}
   - component: {fileID: 5674224039144228344}
   - component: {fileID: 3564265319080918651}
+  - component: {fileID: -3259061909783027214}
   m_Layer: 5
   m_Name: ConnectingMenu
   m_TagString: Untagged
@@ -244,6 +245,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectAddress: {fileID: 0}
+--- !u!114 &-3259061909783027214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5674224039144228343}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21739b2dd23d46847b42bf0f7019c199, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cursorLockMode: 0
+  cursorVisible: 1
 --- !u!1 &7587180217208483878
 GameObject:
   m_ObjectHideFlags: 0

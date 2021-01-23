@@ -222,6 +222,8 @@ GameObject:
   - component: {fileID: 3816567771485690123}
   - component: {fileID: 200191516500400226}
   - component: {fileID: 3608294491291543743}
+  - component: {fileID: -1407876555020766783}
+  - component: {fileID: 726321752621885108}
   m_Layer: 5
   m_Name: InGameMenu
   m_TagString: Untagged
@@ -335,6 +337,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75bac7e8f23212441911f4b09b5b630c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  screenChangeInputs:
+  - input: Cancel
+    menu: {fileID: 6101108449083475876, guid: a6b724ce986920c46859b833b6f1bc83, type: 3}
+--- !u!114 &-1407876555020766783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3816567771485690116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21739b2dd23d46847b42bf0f7019c199, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cursorLockMode: 0
+  cursorVisible: 1
+--- !u!114 &726321752621885108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3816567771485690116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c35e17e5dbc08b94485dbc393e8333b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerInputState: 1
 --- !u!1 &4874382769312172081
 GameObject:
   m_ObjectHideFlags: 0
@@ -412,7 +444,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: Back To Game
 --- !u!1 &7406679972498455620
 GameObject:
   m_ObjectHideFlags: 0
@@ -426,7 +458,7 @@ GameObject:
   - component: {fileID: 5540490783183729692}
   - component: {fileID: 7274832659428958116}
   m_Layer: 5
-  m_Name: BackToMenu
+  m_Name: BackToGame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
