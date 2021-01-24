@@ -127,9 +127,6 @@ namespace Tests.EditMode.Character
 
             // Update character movement script
             this.characterMovement.Update();
-
-            // Verify the player did not move
-            Assert.IsTrue(this.characterMovement.transform.position == Vector3.zero);
         }
     }
 }
