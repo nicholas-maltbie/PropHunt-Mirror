@@ -43,7 +43,7 @@ namespace PropHunt.UI
         /// <summary>
         /// Network service to detect changes in network state
         /// </summary>
-        public INetworkService networkservice = new NetworkService(null);
+        public INetworkService networkService = new NetworkService(null);
 
         /// <summary>
         /// Previous network state for detecting changes in network infomation
@@ -56,23 +56,22 @@ namespace PropHunt.UI
         /// <returns>Network state based on the network client information</returns>
         public NetworkState GetCurrentNetworkState()
         {
-            if (!networkservice.activeNetworkClient && !networkservice.activeNetworkServer)
+            if (!networkService.activeNetworkClient && !networkService.activeNetworkServer)
             {
                 return NetworkState.Offline;
             }
-            else if (networkservice.activeNetworkClient && !networkservice.isConnectedNetworkClient)
+            else if (networkService.activeNetworkClient && !networkService.isConnectedNetworkClient)
             {
                 return NetworkState.Connecting;
             }
-            else if (networkservice.activeNetworkClient && networkservice.isConnectedNetworkClient)
+            else if (networkService.activeNetworkClient && networkService.isConnectedNetworkClient)
             {
                 return NetworkState.Online;
             }
-            else if (networkservice.activeNetworkServer)
+            else // if (networkService.activeNetworkServer)
             {
                 return NetworkState.ServerOnly;
             }
-            return NetworkState.Unloaded;
         }
 
         public void Update()
