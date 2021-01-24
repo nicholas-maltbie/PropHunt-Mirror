@@ -67,7 +67,7 @@ namespace Tests.EditMode.UI
         public void ToggleTransportActionTests()
         {
             // Setup toggle transport action
-            ToggleTransportAction toggleTransportAction = this.uiHolder.AddComponent<ToggleTransportAction >();
+            ToggleTransportAction toggleTransportAction = this.uiHolder.AddComponent<ToggleTransportAction>();
             // Setup default toggle transport
             ToggleTransport.Instance = this.uiHolder.AddComponent<ToggleTransport>();
             ToggleTransport.Instance.currentMode = MultiplayerMode.None;

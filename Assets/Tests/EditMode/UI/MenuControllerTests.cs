@@ -74,7 +74,7 @@ namespace Tests.EditMode.UI
             change.input = "Cancel";
             change.menu = holderObject;
             this.menuController.screenChangeInputs.Add(change);
-            
+
             Mock<IUnityService> unityServiceMock = new Mock<IUnityService>();
             menuController.unityService = unityServiceMock.Object;
             unityServiceMock.Setup(e => e.GetButtonDown("Cancel")).Returns(true);

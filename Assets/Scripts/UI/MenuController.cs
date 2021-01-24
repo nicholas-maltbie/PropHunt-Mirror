@@ -37,7 +37,7 @@ namespace PropHunt.UI
 
         public void Update()
         {
-            foreach(InputScreenChange change in this.screenChangeInputs)
+            foreach (InputScreenChange change in this.screenChangeInputs)
             {
                 if (unityService.GetButtonDown(change.input))
                 {

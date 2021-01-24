@@ -55,7 +55,7 @@ namespace Tests.EditMode.Character
             // Move it to position (0, 0, 2), which is 2 units in front of the player
             box.transform.position = new Vector3(0, 0, 2);
             focusTarget.name = "Box";
-            
+
             yield return null;
         }
 
