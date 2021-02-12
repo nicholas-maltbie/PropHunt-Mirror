@@ -26,7 +26,7 @@ namespace PropHunt.Character
         /// Network service for managing network calls
         /// </summary>
         public INetworkService networkService;
-        
+
         /// <summary>
         /// Character movement for getting character motion information
         /// </summary>
@@ -55,8 +55,8 @@ namespace PropHunt.Character
             {
                 return;
             }
-            
-            bool jumping = movement.moveDirection.y >=  0.1f;
+
+            bool jumping = movement.moveDirection.y >= 0.1f;
             bool falling = movement.fallingTime >= fallingThreshold;
             bool jumpingOrFalling = jumping || falling;
             bool moving = !jumpingOrFalling && movement.movementInput.magnitude > this.movementDeadZone;
