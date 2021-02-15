@@ -51,7 +51,6 @@ namespace PropHunt.Character
                 if (Input.GetButtonDown("Interact"))
                 {
                     focus.SendMessage("Interact", gameObject, SendMessageOptions.DontRequireReceiver);
-                    UnityEngine.Debug.Log("Player interacting with " + focus.name);
                 }
             }
             // otherwise change the variables to the non-hit state -J

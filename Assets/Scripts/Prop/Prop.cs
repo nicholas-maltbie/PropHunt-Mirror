@@ -1,12 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using Mirror;
-using PropHunt.Utils;
 using UnityEngine;
 
 namespace PropHunt.Prop
 {
-    public class Prop : MonoBehaviour
+    public class Prop : NetworkBehaviour
     {
         public string propName;
 
