@@ -35,20 +35,26 @@ namespace PropHunt.Character
             // Only upadte if IsLocalPlayer is true
             if (!this.networkService.isLocalPlayer)
             {
-                /// exit from update if this is not the local player
+                // exit from update if this is not the local player
                 return;
             }
             //Update origin -J
             Vector3 origin = cameraTransform.position;
             Vector3 direction = cameraTransform.forward;
             RaycastHit hit;
-            //if spherecast hits something, update the player's focus and distance variables -J
+            // if spherecast hits something, update the player's focus and distance variables -J
             if (Physics.SphereCast(origin, sphereRadius, direction, out hit, viewDistance))
             {
                 focus = hit.transform.gameObject;
                 currentHitDistance = hit.distance;
+                // If player interacts with what they're looking at
+                if (Input.GetButtonDown("Interact"))
+                {
+                    focus.SendMessage("Interact", gameObject, SendMessageOptions.DontRequireReceiver);
+                    UnityEngine.Debug.Log("Player interacting with " + focus.name);
+                }
             }
-            //otherwise change the variables to the non-hit state -J
+            // otherwise change the variables to the non-hit state -J
             else
             {
                 focus = null;
