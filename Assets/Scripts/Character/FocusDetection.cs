@@ -29,6 +29,24 @@ namespace PropHunt.Character
             this.networkService = new NetworkService(this);
         }
 
+        public void InteractWithObject(GameObject target, GameObject source)
+        {
+            if (networkService.isServer)
+            {
+                target.SendMessage("Interact", source, SendMessageOptions.DontRequireReceiver);
+            }
+            else
+            {
+                CmdInteractWithObject(target, source);
+            }
+        }
+
+        [Command]
+        public void CmdInteractWithObject(GameObject target, GameObject source)
+        {
+            InteractWithObject(target, source);
+        }
+
         /// <summary>Update is called once per frame</summary>
         public void Update()
         {
@@ -50,7 +68,7 @@ namespace PropHunt.Character
                 // If player interacts with what they're looking at
                 if (Input.GetButtonDown("Interact"))
                 {
-                    focus.SendMessage("Interact", gameObject, SendMessageOptions.DontRequireReceiver);
+                    InteractWithObject(focus, gameObject);
                 }
             }
             // otherwise change the variables to the non-hit state -J

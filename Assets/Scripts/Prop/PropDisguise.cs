@@ -70,8 +70,7 @@ namespace PropHunt.Prop
             }
         }
 
-        [Command]
-        public void CmdSetDisguise(GameObject targetProp)
+        public void SetSelectedDisguise(GameObject targetProp)
         {
             Prop prop = targetProp.GetComponent<Prop>();
             if (prop != null)

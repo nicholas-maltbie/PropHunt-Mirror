@@ -26,7 +26,7 @@ namespace PropHunt.Prop
             PropDisguise disguise = source.GetComponent<PropDisguise>();
             if (disguise != null)
             {
-                disguise.CmdSetDisguise(gameObject);
+                disguise.SetSelectedDisguise(gameObject);
             }
         }
     }
