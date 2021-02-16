@@ -50,7 +50,7 @@ namespace Tests.EditMode.Prop
         public void TearDown()
         {
             GameObject.DestroyImmediate(this.propDisguise.gameObject);
-            foreach(Disguise disguise in disguises)
+            foreach (Disguise disguise in disguises)
             {
                 GameObject.DestroyImmediate(disguise.disguiseVisual);
             }
@@ -66,7 +66,7 @@ namespace Tests.EditMode.Prop
             yield return null;
             yield return null;
             UnityEngine.Debug.Log(propDisguise.transform.GetChild(0).name);
-            Assert.IsTrue(propDisguise.transform.GetChild(0).name == disguises[0].disguiseVisual.name+"(Clone)");
+            Assert.IsTrue(propDisguise.transform.GetChild(0).name == disguises[0].disguiseVisual.name + "(Clone)");
         }
 
         [UnityTest]
@@ -80,7 +80,7 @@ namespace Tests.EditMode.Prop
             yield return null;
             yield return null;
             UnityEngine.Debug.Log(propDisguise.transform.GetChild(0).name);
-            Assert.IsTrue(propDisguise.transform.GetChild(0).name == disguises[0].disguiseVisual.name+"(Clone)");
+            Assert.IsTrue(propDisguise.transform.GetChild(0).name == disguises[0].disguiseVisual.name + "(Clone)");
             propDisguise.selectedDisguise = "1";
             propDisguise.SetDisguise("0", "1");
             // Wait a frame for disguise to change

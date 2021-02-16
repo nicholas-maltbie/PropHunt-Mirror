@@ -17,7 +17,7 @@ namespace Tests.EditMode.Utils
             Assert.IsTrue(contactPoint.normal == Vector3.zero);
             Assert.IsTrue(contactPoint.thisCollider == null);
             Assert.IsTrue(contactPoint.otherCollider == null);
-            Assert.IsTrue(contactPoint.separation  == 0.0f);
+            Assert.IsTrue(contactPoint.separation == 0.0f);
         }
 
         [Test]

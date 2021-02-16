@@ -102,7 +102,7 @@ namespace Tests.EditMode.Prop
         [UnityTest]
         public IEnumerator TestGrounded()
         {
-            
+
             // Create a floor below the player
             GameObject floor = new GameObject();
             BoxCollider floorCollider = floor.AddComponent<BoxCollider>();
