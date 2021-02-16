@@ -48,15 +48,23 @@ namespace PropHunt.Prop
         /// </summary>
         public IUnityService unityService = new UnityService();
 
+        /// <summary>
+        /// Network service for managing network calls
+        /// </summary>
+        public INetworkService networkService;
+
         public float maxWalkAngle = 60f;
 
         public bool collidingGround;
 
-        public void OnCollisionEnter(Collision other)
+        public void Start()
         {
-            collidingGround = true;
-            currentAngle = 90f;
-            foreach (ContactPoint contact in other.contacts)
+            this.networkService = new NetworkService(this);
+        }
+
+        public void UpdateContactPoint(IContactPoint[] contactPoints)
+        {
+            foreach (IContactPoint contact in contactPoints)
             {
                 float contactAngle = Vector3.Angle(Vector3.up, contact.normal);
                 if (contactAngle < currentAngle)
@@ -68,7 +76,15 @@ namespace PropHunt.Prop
                     break;
                 }
             }
+        }
+
+        public void OnCollisionEnter(Collision other)
+        {
+            collidingGround = true;
+            currentAngle = 90f;
             distanceToGround = 0;
+            ContactPoint[] contacts = new ContactPoint[other.contactCount];
+            UpdateContactPoint(ContactPointWrapper.ConvertContactPoints(contacts));
         }
 
         public void OnCollisionExit(Collision other)
@@ -79,7 +95,7 @@ namespace PropHunt.Prop
 
         public void FixedUpdate()
         {
-            if (!isLocalPlayer)
+            if (!networkService.isLocalPlayer)
             {
                 // exit from update if this is not the local player
                 return;

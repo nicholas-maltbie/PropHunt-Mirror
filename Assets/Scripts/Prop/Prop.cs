@@ -1,9 +1,9 @@
-using Mirror;
+using PropHunt.Environment;
 using UnityEngine;
 
 namespace PropHunt.Prop
 {
-    public class Prop : NetworkBehaviour
+    public class Prop : Interactable
     {
         public string propName;
 
@@ -21,7 +21,7 @@ namespace PropHunt.Prop
             );
         }
 
-        public void Interact(GameObject source)
+        public override void Interact(GameObject source)
         {
             PropDisguise disguise = source.GetComponent<PropDisguise>();
             if (disguise != null)

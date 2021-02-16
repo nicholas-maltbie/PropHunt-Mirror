@@ -8,6 +8,11 @@ namespace PropHunt.Character
     public class CameraController : NetworkBehaviour
     {
         /// <summary>
+        /// Network service for managing network calls
+        /// </summary>
+        public INetworkService networkService;
+
+        /// <summary>
         /// Mocked unity service for accessing inputs, delta time, and
         /// various other static unity inputs in a testable manner.
         /// </summary>
@@ -43,9 +48,14 @@ namespace PropHunt.Character
         /// </summary>
         public bool pitchBody = false;
 
+        public void Start()
+        {
+            this.networkService = new NetworkService(this);
+        }
+
         public void Update()
         {
-            if (!isLocalPlayer)
+            if (!networkService.isLocalPlayer)
             {
                 // exit from update if this is not the local player
                 return;

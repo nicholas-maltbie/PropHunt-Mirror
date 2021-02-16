@@ -29,6 +29,11 @@ namespace PropHunt.Prop
     {
         private static Dictionary<string, Disguise> disguiseLookup = new Dictionary<string, Disguise>();
 
+        public static void ClearDisguises()
+        {
+            disguiseLookup.Clear();
+        }
+
         public static Disguise GetDisguise(string name)
         {
             return disguiseLookup[name];
@@ -93,7 +98,11 @@ namespace PropHunt.Prop
             Collider currentCollider = gameObject.GetComponent<Collider>();
             if (currentCollider != null)
             {
+#if UNITY_EDITOR
+                GameObject.DestroyImmediate(currentCollider);
+#else
                 GameObject.Destroy(currentCollider);
+#endif
                 yield return null;
             }
             // Setup new collider data
@@ -105,7 +114,11 @@ namespace PropHunt.Prop
             // Clear out old disguise
             while(disguiseBase.childCount > 0)
             {
-                GameObject.Destroy(disguiseBase.GetChild(0).gameObject);
+#if UNITY_EDITOR
+                GameObject.DestroyImmediate(disguiseBase.GetChild(0));
+#else
+                GameObject.Destroy(currentCollider);
+#endif
                 yield return null;
             }
 

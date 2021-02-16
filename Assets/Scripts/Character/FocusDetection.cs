@@ -1,13 +1,14 @@
 ﻿using Mirror;
 using PropHunt.Utils;
-using System.Collections;
-using System.Collections.Generic;
+using PropHunt.Environment;
 using UnityEngine;
 
 namespace PropHunt.Character
 {
     public class FocusDetection : NetworkBehaviour
     {
+        /// <summary>Unity service for getting player inputs</summary>
+        public IUnityService unityService = new UnityService();
         /// <summary>Network service for managing network calls</summary>
         public INetworkService networkService;
         ///<summary>Create sphere radius variable -J</summary>
@@ -33,7 +34,7 @@ namespace PropHunt.Character
         {
             if (networkService.isServer)
             {
-                target.SendMessage("Interact", source, SendMessageOptions.DontRequireReceiver);
+                target.GetComponent<Interactable>().Interact(source);
             }
             else
             {
@@ -44,7 +45,7 @@ namespace PropHunt.Character
         [Command]
         public void CmdInteractWithObject(GameObject target, GameObject source)
         {
-            InteractWithObject(target, source);
+            target.GetComponent<Interactable>().Interact(source);
         }
 
         /// <summary>Update is called once per frame</summary>
@@ -66,7 +67,7 @@ namespace PropHunt.Character
                 focus = hit.transform.gameObject;
                 currentHitDistance = hit.distance;
                 // If player interacts with what they're looking at
-                if (Input.GetButtonDown("Interact"))
+                if (unityService.GetButtonDown("Interact") && focus.GetComponent<Interactable>() != null)
                 {
                     InteractWithObject(focus, gameObject);
                 }
