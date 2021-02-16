@@ -8,27 +8,27 @@ namespace PropHunt.Utils
         /// <summary>
         /// The point of contact.
         /// </summary>
-        Vector3 point {get;}
-        
+        Vector3 point { get; }
+
         /// <summary>
         /// Normal of the contact point.
         /// </summary>
-        Vector3 normal {get;}
-        
+        Vector3 normal { get; }
+
         /// <summary>
         /// The first collider in contact at the point.
         /// </summary>
-        Collider thisCollider {get;}
-        
+        Collider thisCollider { get; }
+
         /// <summary>
         /// The other collider in contact at the point.
         /// </summary>
-        Collider otherCollider {get;}
-        
+        Collider otherCollider { get; }
+
         /// <summary>
         /// The distance between the colliders at the contact point.
         /// </summary>
-        float separation {get;}
+        float separation { get; }
     }
 
     public class ContactPointWrapper : IContactPoint
@@ -54,22 +54,22 @@ namespace PropHunt.Utils
         /// The point of contact.
         /// </summary>
         public Vector3 point => contact.point;
-        
+
         /// <summary>
         /// Normal of the contact point.
         /// </summary>
         public Vector3 normal => contact.normal;
-        
+
         /// <summary>
         /// The first collider in contact at the point.
         /// </summary>
         public Collider thisCollider => contact.thisCollider;
-        
+
         /// <summary>
         /// The other collider in contact at the point.
         /// </summary>
         public Collider otherCollider => contact.otherCollider;
-        
+
         /// <summary>
         /// The distance between the colliders at the contact point.
         /// </summary>

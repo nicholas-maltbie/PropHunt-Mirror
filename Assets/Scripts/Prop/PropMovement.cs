@@ -133,7 +133,7 @@ namespace PropHunt.Prop
             {
                 distanceToGround = Mathf.Infinity;
             }
-            
+
             Vector3 movementVelocity = rigidbody.velocity;
             if (IsGrounded && unityService.GetButton("Jump"))
             {

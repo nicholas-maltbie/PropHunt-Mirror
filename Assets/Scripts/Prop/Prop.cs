@@ -14,7 +14,8 @@ namespace PropHunt.Prop
         public void Start()
         {
             PropDatabase.AddDisguiseIfNonExists(propName,
-                new Disguise {
+                new Disguise
+                {
                     disguiseVisual = disguiseVisual,
                     disguiseCollider = disguiseCollider
                 }

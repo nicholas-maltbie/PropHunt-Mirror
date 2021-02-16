@@ -15,7 +15,7 @@ namespace PropHunt.Prop
         /// Game object prefab for player disguise
         /// </summary>
         public GameObject disguiseVisual;
-        
+
         /// <summary>
         /// Collider associated with the disguise
         /// </summary>
@@ -112,7 +112,7 @@ namespace PropHunt.Prop
         public IEnumerator ChangeDisguise(GameObject disguise)
         {
             // Clear out old disguise
-            while(disguiseBase.childCount > 0)
+            while (disguiseBase.childCount > 0)
             {
 #if UNITY_EDITOR
                 GameObject.DestroyImmediate(disguiseBase.GetChild(0));
