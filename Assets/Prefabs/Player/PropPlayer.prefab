@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: -6989314143880944393}
   - component: {fileID: 5068185544392948995}
   - component: {fileID: -4329039560205243657}
+  - component: {fileID: 6442824621798150539}
   m_Layer: 8
   m_Name: PropPlayer
   m_TagString: Untagged
@@ -199,7 +200,10 @@ MonoBehaviour:
   groundedDistance: 0.01
   groundCheckDistance: 10
   distanceToGround: 0
+  currentAngle: 0
   jumpVelocity: 5
+  maxWalkAngle: 60
+  collidingGround: 0
 --- !u!114 &-4329039560205243657
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -216,6 +220,21 @@ MonoBehaviour:
   syncInterval: 0.1
   selectedDisguise: 
   disguiseBase: {fileID: 4775831964603035018}
+--- !u!114 &6442824621798150539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 245587927565386927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79830135f57205c468671a3e44a7d6b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  playerTeam: prop
 --- !u!1 &457463035878123438
 GameObject:
   m_ObjectHideFlags: 0
