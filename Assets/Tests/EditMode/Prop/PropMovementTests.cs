@@ -33,9 +33,13 @@ namespace Tests.EditMode.Prop
         /// </summary>
         Mock<IUnityService> unityServiceMock;
 
-        [SetUp]
-        public void Setup()
+        [UnitySetUp]
+        public IEnumerator UnitySetUp()
         {
+#if UNITY_EDITOR
+            var scene = UnityEditor.SceneManagement.EditorSceneManager.NewScene(UnityEditor.SceneManagement.NewSceneSetup.EmptyScene, UnityEditor.SceneManagement.NewSceneMode.Single);
+#endif
+
             // Setup character movement player
             GameObject characterGo = new GameObject();
             this.collider = characterGo.AddComponent<SphereCollider>();
@@ -46,13 +50,15 @@ namespace Tests.EditMode.Prop
             this.networkServiceMock = new Mock<INetworkService>();
             this.propMovement.unityService = this.unityServiceMock.Object;
             this.propMovement.networkService = this.networkServiceMock.Object;
+            yield return null;
         }
 
-        [TearDown]
-        public void TearDown()
+        [UnityTearDown]
+        public IEnumerator TearDown()
         {
             GameObject.DestroyImmediate(this.propMovement.gameObject);
             PropDatabase.ClearDisguises();
+            yield return null;
         }
 
         [Test]
@@ -102,26 +108,35 @@ namespace Tests.EditMode.Prop
         [UnityTest]
         public IEnumerator TestGrounded()
         {
+            int maxAttempts = 1000;
+            for (int i = 0; i < maxAttempts; i++)
+            {
+                // Create a floor below the player
+                GameObject floor = new GameObject();
+                BoxCollider floorCollider = floor.AddComponent<BoxCollider>();
+                floor.transform.transform.position = new Vector3(0, -2f, 0);
+                this.propMovement.gameObject.transform.position = new Vector3(0, 0, 0);
+                yield return null;
+                // UnityEngine.Debug.Log(rigidbody.transform.position + " " + collider.bounds + " " + floor.transform.position + " " + floorCollider.bounds);
+                // bool hit = rigidbody.SweepTest(Vector3.down, out RaycastHit hitInfo, Mathf.Infinity, QueryTriggerInteraction.UseGlobal);
+                // UnityEngine.Debug.Log(hit);
+                // UnityEngine.Debug.Log(hitInfo.distance);
+                // yield return null;
+                this.propMovement.groundCheckDistance = Mathf.Infinity;
+                this.propMovement.groundedDistance = 10.0f;
 
-            // Create a floor below the player
-            GameObject floor = new GameObject();
-            BoxCollider floorCollider = floor.AddComponent<BoxCollider>();
-            floor.transform.transform.position = new Vector3(0, -1.1f, 0);
-            this.propMovement.gameObject.transform.position = Vector3.zero;
-            yield return null;
-            UnityEngine.Debug.Log(rigidbody.transform.position + " " + collider.bounds + " " + floor.transform.position + " " + floorCollider.bounds);
-            bool hit = rigidbody.SweepTest(Vector3.down, out RaycastHit hitInfo, Mathf.Infinity, QueryTriggerInteraction.UseGlobal);
-            UnityEngine.Debug.Log(hit);
-            UnityEngine.Debug.Log(hitInfo.distance);
-            yield return null;
-            this.propMovement.groundCheckDistance = Mathf.Infinity;
-            this.propMovement.groundedDistance = 1.0f;
-
-            // Do a test when the character is turning, moving forward, and jumping
-            this.unityServiceMock.Setup(e => e.deltaTime).Returns(1.0f);
-            this.networkServiceMock.Setup(e => e.isLocalPlayer).Returns(true);
-            this.propMovement.FixedUpdate();
-            GameObject.DestroyImmediate(floor);
+                // Do a test when the character is turning, moving forward, and jumping
+                this.unityServiceMock.Setup(e => e.deltaTime).Returns(1.0f);
+                this.networkServiceMock.Setup(e => e.isLocalPlayer).Returns(true);
+                this.propMovement.FixedUpdate();
+                if (this.propMovement.IsGrounded)
+                {
+                    GameObject.DestroyImmediate(floor);
+                    break;
+                }
+                this.UnitySetUp();
+            }
+            Assert.IsTrue(this.propMovement.IsGrounded);
             yield return null;
         }
 

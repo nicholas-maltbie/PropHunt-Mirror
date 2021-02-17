@@ -115,9 +115,9 @@ namespace PropHunt.Prop
             while (disguiseBase.childCount > 0)
             {
 #if UNITY_EDITOR
-                GameObject.DestroyImmediate(disguiseBase.GetChild(0));
+                GameObject.DestroyImmediate(disguiseBase.GetChild(0).gameObject);
 #else
-                GameObject.Destroy(currentCollider);
+                GameObject.Destroy(disguiseBase.GetChild(0).gameObject);
 #endif
                 yield return null;
             }
