@@ -42,7 +42,8 @@ namespace PropHunt.Utils
                 distance = closest.distance,
                 pointHit = closest.point,
                 normal = closest.normal,
-                fraction = closest.distance / distance
+                fraction = closest.distance / distance,
+                collider = closest.collider
             };
         }
 
@@ -73,7 +74,8 @@ namespace PropHunt.Utils
                         distance = 0,
                         fraction = 0,
                         normal = hit.normal,
-                        pointHit = hit.point
+                        pointHit = hit.point,
+                        collider = hit.collider
                     });
                 }
             }

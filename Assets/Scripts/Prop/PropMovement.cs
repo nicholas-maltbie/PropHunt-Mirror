@@ -109,9 +109,6 @@ namespace PropHunt.Prop
 
             float deltaTime = unityService.deltaTime;
 
-            // Push character out of overlapping objects
-            PushOutOverlapping();
-
             // If player is not allowed to move, stop player movement
             if (PlayerInputManager.playerMovementState == PlayerInputState.Deny)
             {
@@ -147,35 +144,36 @@ namespace PropHunt.Prop
             GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
         }
 
-        public void PushOutOverlapping()
-        {
-            float deltaTime = unityService.deltaTime;
+        // public void PushOutOverlapping()
+        // {
+        //     float deltaTime = unityService.deltaTime;
 
-            // Collider cast to move player
-            ColliderCast colliderCast = GetComponent<ColliderCast>();
-            Collider collider = GetComponent<Collider>();
+        //     // Collider cast to move player
+            // ColliderCast colliderCast = GetComponent<ColliderCast>();
+            // Collider collider = GetComponent<Collider>();
 
-            if (collider == null)
-            {
-                return;
-            }
+        //     if (collider == null)
+        //     {
+        //         return;
+        //     }
 
-            Vector3 center = collider.bounds.center + transform.position;
+        //     Vector3 center = collider.bounds.center + transform.position;
 
-            foreach (ColliderCastHit overlap in colliderCast.GetOverlappingDirectional())
-            {
-                Vector3 overlapVector = overlap.pointHit - center;
-                bool hitSomething = Physics.Raycast(center, overlapVector, out RaycastHit hit, collider.bounds.extents.magnitude, 0, QueryTriggerInteraction.Ignore);
-                // Push our character by that overlap * max push speed * time
-                Vector3 pushMovement = hit.normal * maxPushSpeed * deltaTime;
-                // If the push movement is longer than the overlap, use overlap instead
-                Vector3 boundedPush = pushMovement.magnitude > hit.distance ? overlapVector : pushMovement;
-                // Move character by push
-                transform.position += boundedPush;
-                UnityEngine.Debug.Log(transform.position + " " + overlap.pointHit);
-                UnityEngine.Debug.DrawLine(transform.position, overlap.pointHit, Color.red);
-            }
-        }
+        //     foreach (ColliderCastHit overlap in colliderCast.GetOverlappingDirectional())
+        //     {
+        //         Vector3 overlapPoint = Physics.ClosestPoint(overlap.collider.bounds.center, collider, transform.position, transform.rotation);
+        //         Vector3 overlapVector = overlapPoint - center;
+        //         bool hitSomething = Physics.Raycast(center, overlapVector, out RaycastHit hit, collider.bounds.extents.magnitude, 0, QueryTriggerInteraction.Ignore);
+        //         // Push our character by that overlap * max push speed * time
+        //         Vector3 pushMovement = hit.normal * maxPushSpeed * deltaTime;
+        //         // If the push movement is longer than the overlap, use overlap instead
+        //         Vector3 boundedPush = pushMovement.magnitude > hit.distance ? overlapVector : pushMovement;
+        //         // Move character by push
+        //         transform.position += boundedPush;
+        //         UnityEngine.Debug.Log(transform.position + " " + overlapPoint);
+        //         UnityEngine.Debug.DrawLine(transform.position, overlapPoint, Color.red);
+        //     }
+        // }
 
         public bool CheckGrounded()
         {

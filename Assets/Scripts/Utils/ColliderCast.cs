@@ -27,6 +27,10 @@ namespace PropHunt.Utils
         /// Should be between 0 (for no movement) and 1 (didn't hit anything)
         /// </summary>
         public float fraction;
+        /// <summary>
+        /// Collider that was hit by this cast
+        /// </summary>
+        public Collider collider;
     }
 
     public interface IColliderCast

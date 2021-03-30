@@ -32,7 +32,7 @@ namespace PropHunt.Utils
             else if (boxCollider != null)
             {
                 hits = Physics.BoxCastAll(transform.position + boxCollider.center,
-                    boxCollider.size, direction, transform.rotation, distance,
+                    boxCollider.size / 2, direction, transform.rotation, distance,
                     layerMask, queryTriggerInteraction);
             }
             else
@@ -66,7 +66,8 @@ namespace PropHunt.Utils
                 distance = closest.distance,
                 pointHit = closest.point,
                 normal = closest.normal,
-                fraction = closest.distance / distance
+                fraction = closest.distance / distance,
+                collider = closest.collider
             };
         }
 
@@ -82,7 +83,8 @@ namespace PropHunt.Utils
                         distance = 0,
                         fraction = 0,
                         normal = hit.normal,
-                        pointHit = hit.point
+                        pointHit = hit.point,
+                        collider = hit.collider
                     });
                 }
             }
