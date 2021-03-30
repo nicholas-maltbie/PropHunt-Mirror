@@ -24,10 +24,12 @@ namespace PropHunt.Utils
             }
             else if (capsuleCollider != null)
             {
-                Vector3 p1 = transform.position + capsuleCollider.center + Vector3.up * -capsuleCollider.height * 0.5f;
-                hits = Physics.CapsuleCastAll(p1, p1 + Vector3.up * capsuleCollider.height,
+                Vector3 p1 = transform.position + capsuleCollider.center + transform.rotation * Vector3.down * (capsuleCollider.height * 0.5f - capsuleCollider.radius);
+                Vector3 p2 = transform.position + capsuleCollider.center + transform.rotation * Vector3.up * (capsuleCollider.height * 0.5f - capsuleCollider.radius);
+                hits = Physics.CapsuleCastAll(p1, p2,
                     capsuleCollider.radius, direction, distance, layerMask,
                     queryTriggerInteraction);
+                // UnityEngine.Debug.DrawLine(p1, p2, Color.blue);
             }
             else if (boxCollider != null)
             {
