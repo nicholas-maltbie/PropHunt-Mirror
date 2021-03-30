@@ -45,6 +45,10 @@ namespace PropHunt.Character
         /// <param name="point">Point at which point is applied</param>
         public void PushWithForce(GameObject hit, Vector3 force, Vector3 point)
         {
+            if (hit.GetComponent<Rigidbody>() == null)
+            {
+                return;
+            }
             hit.GetComponent<Rigidbody>().AddForceAtPosition(force, point);
         }
 
