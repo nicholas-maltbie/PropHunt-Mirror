@@ -97,7 +97,7 @@ namespace PropHunt.Prop
 
             // Get other movemen inputs
             this.attemptingJump = unityService.GetButton("Jump");
-        }        
+        }
 
         public void FixedUpdate()
         {
@@ -114,6 +114,9 @@ namespace PropHunt.Prop
             {
                 inputMovement = Vector3.zero;
             }
+
+            // push out of overlapping objects
+            PushOutOverlapping();
 
             // Rotate movement vector by player yaw (rotation about vertical axis)
             Quaternion horizPlaneView = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
@@ -144,36 +147,35 @@ namespace PropHunt.Prop
             GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
         }
 
-        // public void PushOutOverlapping()
-        // {
-        //     float deltaTime = unityService.deltaTime;
+        public void PushOutOverlapping()
+        {
+            float deltaTime = unityService.deltaTime;
 
-        //     // Collider cast to move player
-            // ColliderCast colliderCast = GetComponent<ColliderCast>();
-            // Collider collider = GetComponent<Collider>();
+            // Collider cast to move player
+            ColliderCast colliderCast = GetComponent<ColliderCast>();
+            Collider collider = GetComponent<Collider>();
 
-        //     if (collider == null)
-        //     {
-        //         return;
-        //     }
+            if (collider == null)
+            {
+                return;
+            }
 
-        //     Vector3 center = collider.bounds.center + transform.position;
-
-        //     foreach (ColliderCastHit overlap in colliderCast.GetOverlappingDirectional())
-        //     {
-        //         Vector3 overlapPoint = Physics.ClosestPoint(overlap.collider.bounds.center, collider, transform.position, transform.rotation);
-        //         Vector3 overlapVector = overlapPoint - center;
-        //         bool hitSomething = Physics.Raycast(center, overlapVector, out RaycastHit hit, collider.bounds.extents.magnitude, 0, QueryTriggerInteraction.Ignore);
-        //         // Push our character by that overlap * max push speed * time
-        //         Vector3 pushMovement = hit.normal * maxPushSpeed * deltaTime;
-        //         // If the push movement is longer than the overlap, use overlap instead
-        //         Vector3 boundedPush = pushMovement.magnitude > hit.distance ? overlapVector : pushMovement;
-        //         // Move character by push
-        //         transform.position += boundedPush;
-        //         UnityEngine.Debug.Log(transform.position + " " + overlapPoint);
-        //         UnityEngine.Debug.DrawLine(transform.position, overlapPoint, Color.red);
-        //     }
-        // }
+            foreach (ColliderCastHit overlap in colliderCast.GetOverlappingDirectional())
+            {
+                Physics.ComputePenetration(
+                    collider, transform.position, transform.rotation,
+                    overlap.collider, overlap.collider.transform.position, overlap.collider.transform.rotation,
+                    out Vector3 direction, out float distance
+                );
+                distance += Epsilon;
+                float maxPushDistance = maxPushSpeed * unityService.deltaTime;
+                if (distance > maxPushDistance)
+                {
+                    distance = maxPushDistance;
+                }
+                transform.position += direction.normalized * maxPushDistance;
+            }
+        }
 
         public bool CheckGrounded()
         {
@@ -188,7 +190,7 @@ namespace PropHunt.Prop
         {
             // Save current momentum
             Vector3 momentum = movement;
-            
+
             // Collider cast to move player
             ColliderCast colliderCast = GetComponent<ColliderCast>();
             // current number of bounces
@@ -240,16 +242,16 @@ namespace PropHunt.Prop
                 // Only apply angular change if hitting something
                 // else
                 // {
-                    // Get angle between surface normal and remaining movement
-                    float angleBetween = Vector3.Angle(hit.normal, momentum);
-                    // Normalize angle between to be between 0 and 1
-                    // 0 means no angle, 1 means 90 degree angle
-                    angleBetween = Mathf.Min(MaxAngleShoveRadians, Mathf.Abs(angleBetween));
-                    float normalizedAngle = angleBetween / MaxAngleShoveRadians;
-                    // Create angle factor using 1 / (1 + normalizedAngle)
-                    float angleFactor = 1.0f / (1.0f + normalizedAngle);
-                    // Reduce the momentum by the remaining movement that ocurred
-                    momentum *= Mathf.Pow(angleFactor, 1.1f);
+                // Get angle between surface normal and remaining movement
+                float angleBetween = Vector3.Angle(hit.normal, momentum);
+                // Normalize angle between to be between 0 and 1
+                // 0 means no angle, 1 means 90 degree angle
+                angleBetween = Mathf.Min(MaxAngleShoveRadians, Mathf.Abs(angleBetween));
+                float normalizedAngle = angleBetween / MaxAngleShoveRadians;
+                // Create angle factor using 1 / (1 + normalizedAngle)
+                float angleFactor = 1.0f / (1.0f + normalizedAngle);
+                // Reduce the momentum by the remaining movement that ocurred
+                momentum *= Mathf.Pow(angleFactor, 1.1f);
                 // }
                 // Rotate the remaining remaining movement to be projected along the plane 
                 // of the surface hit (emulate pushing against the object)
