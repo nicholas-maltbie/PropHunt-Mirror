@@ -7,8 +7,6 @@ namespace PropHunt.Character
     /// <summary>
     /// Have a character controller push any dynamic rigidbody it hits
     /// </summary>
-    [RequireComponent(typeof(CharacterController))]
-    [RequireComponent(typeof(CharacterMovement))]
     public class CharacterPush : NetworkBehaviour
     {
         /// <summary>
@@ -26,14 +24,8 @@ namespace PropHunt.Character
         /// </summary>    
         public float weight = 10.0f;
 
-        /// <summary>
-        /// Movement for this player, things like gravity and velocity
-        /// </summary>
-        private CharacterMovement characterMovement;
-
         public void Start()
         {
-            this.characterMovement = this.GetComponent<CharacterMovement>();
             this.networkService = new NetworkService(this);
         }
 
@@ -89,15 +81,15 @@ namespace PropHunt.Character
             {
                 // If below us, push down
                 // Only take the movement component associated with gravity
-                force = Vector3.Scale(characterMovement.gravity.normalized, characterMovement.moveDirection) * pushPower;
+                force = Vector3.Scale(Vector3.down, hit.moveDirection) * pushPower;
                 // Also add some force from gravity in case we're not moving down now
-                force += characterMovement.gravity.normalized * weight;
+                force += Vector3.down * weight;
             }
             else
             {
                 // If to the side, use the controller velocity
                 // Project movement vector onto plane defined by gravity normal (horizontal plane)
-                force = Vector3.ProjectOnPlane(characterMovement.moveDirection, characterMovement.gravity) * pushPower;
+                force = Vector3.ProjectOnPlane(hit.moveDirection, Vector3.down) * pushPower;
             }
 
             // Apply the push
@@ -111,11 +103,6 @@ namespace PropHunt.Character
                 // On client, send message to server to push the object
                 CmdPushWithForce(hit.gameObject, force, hit.point);
             }
-        }
-
-        public void OnControllerColliderHit(ControllerColliderHit hit)
-        {
-            this.PushObject(new ControllerColliderHitWrapper(hit));
         }
     }
 }

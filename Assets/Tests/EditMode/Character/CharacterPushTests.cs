@@ -67,15 +67,6 @@ namespace Tests.EditMode.Character
         }
 
         /// <summary>
-        /// Test what happenes when a character we don't control hits an object
-        /// </summary>
-        [Test]
-        public void TestCharacterNotLocal()
-        {
-            this.characterPush.OnControllerColliderHit(new ControllerColliderHit());
-        }
-
-        /// <summary>
         /// Test what happenes when the character hits something it can't push
         /// </summary>
         [Test]

@@ -196,6 +196,10 @@ MonoBehaviour:
   jumpVelocity: 5
   attemptingJump: 0
   maxPushSpeed: 1
+  pushDecay: 0.9
+  anglePower: 0.5
+  verticalSnapUp: 0
+  isGrounded: 0
 --- !u!114 &-4329039560205243657
 MonoBehaviour:
   m_ObjectHideFlags: 0

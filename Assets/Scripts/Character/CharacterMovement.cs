@@ -135,5 +135,14 @@ namespace PropHunt.Character
             // Move player by displacement
             this.characterController.Move(this.moveDirection * deltaTime);
         }
+
+        public void OnControllerColliderHit(ControllerColliderHit hit)
+        {
+            CharacterPush push = GetComponent<CharacterPush>();
+            if(push != null)
+            {
+                push.PushObject(new ControllerColliderHitWrapper(hit, this.moveDirection));
+            }
+        }
     }
 }

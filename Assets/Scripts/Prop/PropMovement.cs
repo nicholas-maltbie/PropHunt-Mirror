@@ -81,7 +81,36 @@ namespace PropHunt.Prop
         /// <summary>
         /// Maximum distance the player can be pushed out of overlapping objects in units per second
         /// </summary>
-        public float maxPushSpeed = 10.0f;
+        public float maxPushSpeed = 1.0f;
+
+        /// <summary>
+        /// Decay value of momentum when hitting another object.
+        /// Should be between [0, 1]
+        /// </summary>
+        public float pushDecay = 0.9f;
+
+        /// <summary>
+        /// Decrease in momentum factor due to angle change when walking.
+        /// Should be a positive float value. It's an exponential applied to 
+        /// values between [0, 1] so values smaller than 1 create a positive
+        /// curve and grater than 1 for a negative curve.
+        /// </summary>
+        public float anglePower = 0.5f;
+
+        /// <summary>
+        /// Distance that the character can "snap up" vertical steps
+        /// </summary>
+        public float verticalSnapUp = 0.2f;
+
+        /// <summary>
+        /// Distance that the character can "snap down" vertical steps
+        /// </summary>
+        public float verticalSnapDown = 0.2f;
+
+        /// <summary>
+        /// Was the player grounded this frame
+        /// </summary>
+        public bool isGrounded;
 
         public void Start()
         {
@@ -125,7 +154,7 @@ namespace PropHunt.Prop
             Vector3 movement = playerMovementDirection * movementSpeed;
 
             // Update grounded state and increase velocity if falling
-            bool isGrounded = CheckGrounded();
+            isGrounded = CheckGrounded();
             if (isGrounded && !attemptingJump)
             {
                 velocity = Vector3.zero;
@@ -143,8 +172,26 @@ namespace PropHunt.Prop
 
             MovePlayer((movement + velocity) * deltaTime);
 
+            if (isGrounded && !attemptingJump)
+            {
+                SnapPlayerDown();
+            }
+
             GetComponent<Rigidbody>().velocity = Vector3.zero;
             GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+        }
+
+        public void SnapPlayerDown()
+        {
+            // Collider cast to move player
+            ColliderCast colliderCast = GetComponent<ColliderCast>();
+
+            // Cast current character collider down
+            ColliderCastHit hit = colliderCast.CastSelf(Vector3.down, verticalSnapDown);
+            if (hit.hit && hit.distance > Epsilon)
+            {
+                transform.position += Vector3.down * (hit.distance - Epsilon);
+            }
         }
 
         public void PushOutOverlapping()
@@ -191,10 +238,14 @@ namespace PropHunt.Prop
             // Save current momentum
             Vector3 momentum = movement;
 
+            Collider selfCollider = GetComponent<Collider>();
             // Collider cast to move player
             ColliderCast colliderCast = GetComponent<ColliderCast>();
             // current number of bounces
             int bounces = 0;
+
+            // Character ability to push objects
+            CharacterPush push = GetComponent<CharacterPush>();
 
             // Continue computing while there is momentum and bounces remaining
             while (momentum.magnitude > Epsilon && bounces <= maxBounces)
@@ -211,6 +262,17 @@ namespace PropHunt.Prop
                     break;
                 }
 
+                // Apply some force to the object hit if it is moveable, Apply force on entity hit
+                if (push != null && hit.collider.attachedRigidbody != null && hit.collider.attachedRigidbody.isKinematic)
+                {
+                    push.PushObject(new KinematicCharacterControllerHit(
+                        hit.collider, hit.collider.attachedRigidbody, hit.collider.gameObject,
+                        hit.collider.transform, hit.pointHit, hit.normal, momentum, momentum.magnitude
+                    ));
+                    // If pushing something, reduce remaining force significantly
+                    momentum *= pushDecay;
+                }
+
                 // Set the fraction of remaining movement (minus some small value)
                 transform.position += momentum * (hit.fraction);
                 // Push slightly along normal to stop from getting caught in walls
@@ -218,45 +280,40 @@ namespace PropHunt.Prop
                 // Decrease remaining momentum by fraction of movement remaining
                 momentum *= (1 - hit.fraction);
 
-                // Apply some force to the object hit if it is moveable, Apply force on entity hit
-                // bool isKinematic = physicsMassGetter.HasComponent(hit.Entity) && IsKinematic(physicsMassGetter[hit.Entity]);
-                // if (hit.RigidBodyIndex < collisionWorld.NumDynamicBodies && !isKinematic)
-                // {
-                //     commandBuffer.AddBuffer<PushForce>(jobIndex, hit.Entity);
-                //     commandBuffer.AppendToBuffer(jobIndex, hit.Entity, new PushForce() { force = movement * pushPower, point = hit.Position });
-                //     // If pushing something, reduce remaining force significantly
-                //     remaining *= pushDecay;
-                // }
+                // Plane to project rest of movement onto
+                Vector3 planeNormal = hit.normal;
 
                 // Snap character vertically up if they hit something
                 //  close enough to their feet
-                float distanceToFeet = hit.pointHit.y - transform.position.y;
-                // if (distanceToFeet > 0 && distanceToFeet < verticalSnapUp)
-                // {
-                //     // Increment vertical (y) value of new position by
-                //     //  the distance to the feet of the character
-                //     from = from - distanceToFeet * math.normalizesafe(gravityDirection);
-                //     // Project rest of movement onto plane perpendicular to gravity
-                //     planeNormal = -gravityDirection;
-                // }
-                // Only apply angular change if hitting something
-                // else
-                // {
+                float distanceToFeet = hit.pointHit.y - (transform.position - selfCollider.bounds.extents).y;
                 // Get angle between surface normal and remaining movement
                 float angleBetween = Vector3.Angle(hit.normal, momentum);
-                // Normalize angle between to be between 0 and 1
-                // 0 means no angle, 1 means 90 degree angle
-                angleBetween = Mathf.Min(MaxAngleShoveRadians, Mathf.Abs(angleBetween));
-                float normalizedAngle = angleBetween / MaxAngleShoveRadians;
-                // Create angle factor using 1 / (1 + normalizedAngle)
-                float angleFactor = 1.0f / (1.0f + normalizedAngle);
-                // Reduce the momentum by the remaining movement that ocurred
-                momentum *= Mathf.Pow(angleFactor, 1.1f);
-                // }
+                // Don't act if overlapping with object, then point hit is incorrect
+                if (angleBetween <= maxWalkAngle && hit.distance > Epsilon && distanceToFeet < verticalSnapUp && distanceToFeet > 0)
+                {
+                    UnityEngine.Debug.Log(distanceToFeet);
+                    // Increment vertical (y) value of new position by
+                    //  the distance to the feet of the character
+                    transform.position += Vector3.up * distanceToFeet;
+                    // Project rest of movement onto plane perpendicular to gravity
+                    planeNormal = Vector3.up;
+                }
+                // Only apply angular change if hitting something
+                else
+                {
+                    // Normalize angle between to be between 0 and 1
+                    // 0 means no angle, 1 means 90 degree angle
+                    angleBetween = Mathf.Min(MaxAngleShoveRadians, Mathf.Abs(angleBetween));
+                    float normalizedAngle = angleBetween / MaxAngleShoveRadians;
+                    // Create angle factor using 1 / (1 + normalizedAngle)
+                    float angleFactor = 1.0f / (1.0f + normalizedAngle);
+                    // Reduce the momentum by the remaining movement that ocurred
+                    momentum *= Mathf.Pow(angleFactor, anglePower);
+                }
                 // Rotate the remaining remaining movement to be projected along the plane 
                 // of the surface hit (emulate pushing against the object)
                 float momentumLeft = momentum.magnitude;
-                momentum = Vector3.ProjectOnPlane(momentum, hit.normal);
+                momentum = Vector3.ProjectOnPlane(momentum, planeNormal);
                 momentum = momentum.normalized * momentumLeft;
 
                 // Track number of times the character has bounced
