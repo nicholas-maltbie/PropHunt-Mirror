@@ -9,6 +9,8 @@ namespace PropHunt.Character
     /// </summary>
     public class CharacterPush : NetworkBehaviour
     {
+        public IUnityService unityService = new UnityService();
+
         /// <summary>
         /// Network service for checking client server status of object
         /// </summary>
@@ -37,11 +39,11 @@ namespace PropHunt.Character
         /// <param name="point">Point at which point is applied</param>
         public void PushWithForce(GameObject hit, Vector3 force, Vector3 point)
         {
-            if (hit.GetComponent<Rigidbody>() == null)
+            Rigidbody rigidbody = hit.GetComponent<Rigidbody>();
+            if (rigidbody != null)
             {
-                return;
+                rigidbody.AddForceAtPosition(force, point, ForceMode.Impulse);
             }
-            hit.GetComponent<Rigidbody>().AddForceAtPosition(force, point);
         }
 
         /// <summary>
@@ -96,12 +98,12 @@ namespace PropHunt.Character
             if (this.networkService.isServer)
             {
                 // On the server, just push it
-                PushWithForce(hit.gameObject, force, hit.point);
+                PushWithForce(hit.gameObject, force * unityService.deltaTime, hit.point);
             }
             else
             {
                 // On client, send message to server to push the object
-                CmdPushWithForce(hit.gameObject, force, hit.point);
+                CmdPushWithForce(hit.gameObject, force * unityService.deltaTime, hit.point);
             }
         }
     }

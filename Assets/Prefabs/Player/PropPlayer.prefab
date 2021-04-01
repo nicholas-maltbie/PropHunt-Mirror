@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 8169163611564138093}
   - component: {fileID: -316765144373666350}
   - component: {fileID: 5592021185975902138}
+  - component: {fileID: -4343623551026766709}
   m_Layer: 8
   m_Name: PropPlayer
   m_TagString: Untagged
@@ -287,6 +288,22 @@ MonoBehaviour:
   syncAngularVelocity: 1
   clearAngularVelocity: 0
   angularVelocitySensitivity: 0.1
+--- !u!114 &-4343623551026766709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 245587927565386927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b301a6bc1a0227847b8629c05ae166ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  pushPower: 30
+  weight: 20
 --- !u!1 &457463035878123438
 GameObject:
   m_ObjectHideFlags: 0

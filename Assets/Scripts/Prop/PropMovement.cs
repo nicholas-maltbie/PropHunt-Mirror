@@ -308,11 +308,11 @@ namespace PropHunt.Prop
                 }
 
                 // Apply some force to the object hit if it is moveable, Apply force on entity hit
-                if (push != null && hit.collider.attachedRigidbody != null && hit.collider.attachedRigidbody.isKinematic)
+                if (push != null && hit.collider.attachedRigidbody != null && !hit.collider.attachedRigidbody.isKinematic)
                 {
                     push.PushObject(new KinematicCharacterControllerHit(
                         hit.collider, hit.collider.attachedRigidbody, hit.collider.gameObject,
-                        hit.collider.transform, hit.pointHit, hit.normal, momentum, momentum.magnitude
+                        hit.collider.transform, hit.pointHit, hit.normal, momentum.normalized, movement.magnitude
                     ));
                     // If pushing something, reduce remaining force significantly
                     momentum *= pushDecay;
