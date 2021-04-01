@@ -107,18 +107,46 @@ namespace PropHunt.Prop
         /// </summary>
         public bool onGround;
 
+        /// <summary>
+        /// Minimum depth of a stair for a user to climb up
+        /// (thinner steps than this value will not let the player climb)
+        /// </summary>
         public float stepUpDepth = 0.1f;
 
+        /// <summary>
+        /// Distance that the player can snap up when moving up stairs or vertical steps in terrain
+        /// </summary>
         public float verticalSnapUp = 0.3f;
 
+        /// <summary>
+        /// Current distance the player is from the ground
+        /// </summary>
         public float distanceToGround;
 
+        /// <summary>
+        /// The surface normal vector of the ground the player is standing on
+        /// </summary>
         public Vector3 surfaceNormal;
 
+        /// <summary>
+        /// Angle between the ground and the player
+        /// </summary>
         public float angle;
 
+        /// <summary>
+        /// Is the player currently standing on the ground?
+        /// Will be true if the hit the ground and the distance to the ground is less than
+        /// the grounded threshold. NOTE, will be false if the player is overlapping with the
+        /// ground or another object as it is difficult to tell whether they are stuck in a wall
+        /// (and would therefore not be on the ground) versus when they are stuck in the floor.
+        /// </summary>
         public bool StandingOnGround => onGround && distanceToGround <= groundedDistance && distanceToGround > 0;
 
+        /// <summary>
+        /// Is the player currently falling? this is true if they are either not standing on 
+        /// the ground or if the angle between them and the ground is grater than the player's
+        /// ability to walk.
+        /// </summary>
         public bool Falling => !StandingOnGround || angle > maxWalkAngle;
 
         public void Start()
@@ -153,7 +181,7 @@ namespace PropHunt.Prop
                 inputMovement = Vector3.zero;
             }
 
-            // push out of overlapping objects
+            // Push out of overlapping objects
             PushOutOverlapping();
 
             // Rotate movement vector by player yaw (rotation about vertical axis)
@@ -185,18 +213,28 @@ namespace PropHunt.Prop
             {
                 movement = Vector3.ProjectOnPlane(movement, surfaceNormal).normalized * movement.magnitude;
             }
+            // These are broken into two steps so the player's world velocity (usually due to falling)
+            //    does not interfere with their ability to walk around according to inputs
+            // Move the player according to their movement
             MovePlayer(movement * deltaTime);
+            // Move the player according to their world velocity
             MovePlayer(velocity * deltaTime);
 
+            // if the player was standing on the ground at the start of the frame and is not 
+            //    trying to jump right now, snap them down to the ground
             if (StandingOnGround && !attemptingJump)
             {
                 SnapPlayerDown();
             }
 
+            // make sure the rigidbody doesn't move according to velocity or angular velocity
             GetComponent<Rigidbody>().velocity = Vector3.zero;
             GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
         }
 
+        /// <summary>
+        /// Snap the player down onto the ground
+        /// </summary>
         public void SnapPlayerDown()
         {
             // Collider cast to move player
@@ -210,6 +248,11 @@ namespace PropHunt.Prop
             }
         }
 
+        /// <summary>
+        /// Push the player out of any overlapping objects. This will constrain movement to only 
+        /// pushing the player at maxPushSpeed out of overlapping objects as to not violently teleport
+        /// the player when they overlap with another object.
+        /// </summary>
         public void PushOutOverlapping()
         {
             float deltaTime = unityService.deltaTime;
@@ -240,6 +283,9 @@ namespace PropHunt.Prop
             }
         }
 
+        /// <summary>
+        /// Update the current grounded state of this prop class
+        /// </summary>
         public void CheckGrounded()
         {
             // Collider cast to move player
@@ -252,6 +298,19 @@ namespace PropHunt.Prop
             this.surfaceNormal = hit.normal;
         }
 
+        /// <summary>
+        /// Attempt to snap the player up some distance. This will check if there
+        /// is available space on the ledge above the point that the player collided with.
+        /// If there is space, the player will be teleported up some distance. If
+        /// there is not enough space on the ledge above, then this will move the player back to where
+        /// they were before the attempt was made.
+        /// </summary>
+        /// <param name="distanceToSnap">Distance that the player is teleported up</param>
+        /// <param name="hit">Wall/step that the player ran into</param>
+        /// <param name="colliderCast">Collider cast component to check if the player can be moved</param>
+        /// <param name="momentum">The remaining momentum of the player</param>
+        /// <returns>True if the player had space on the ledge and was able to move, false if
+        /// there was not enough room the player is moved back to their original position</returns>
         public bool AttemptSnapUp(float distanceToSnap, ColliderCastHit hit, ColliderCast colliderCast, Vector3 momentum)
         {
             // If we were to snap the player up and they moved forward, would they hit something?
@@ -260,7 +319,7 @@ namespace PropHunt.Prop
             transform.position += snapUp;
 
             Vector3 directionAfterSnap = Vector3.ProjectOnPlane(Vector3.Project(momentum, -hit.normal), Vector3.up).normalized * momentum.magnitude;
-            ColliderCastHit snapHit = colliderCast.CastSelf(directionAfterSnap.normalized, Mathf.Max(1, momentum.magnitude));
+            ColliderCastHit snapHit = colliderCast.CastSelf(directionAfterSnap.normalized, Mathf.Max(stepUpDepth, momentum.magnitude));
 
             // If they can move without instantly hitting something, then snap them up
             if (!Falling && snapHit.distance > Epsilon && (!snapHit.hit || snapHit.distance > stepUpDepth))
@@ -333,8 +392,12 @@ namespace PropHunt.Prop
                 float distanceToFeet = hit.pointHit.y - (transform.position - selfCollider.bounds.extents).y;
                 if (hit.distance > 0 && !attemptingJump && distanceToFeet < verticalSnapUp && distanceToFeet > 0)
                 {
+                    // Sometimes snapping up the exact distance leads to odd behaviour around steps and walls.
+                    // It's good to check the maximum and minimum snap distances and take whichever one works.
+                    // Attempt to snap up the maximum vertical distance
                     if(!AttemptSnapUp(verticalSnapUp, hit, colliderCast, momentum))
                     {
+                        // If that movement doesn't work, snap them up the minimum vertical distance
                         AttemptSnapUp(distanceToFeet + Epsilon * 2, hit, colliderCast, momentum);
                     }
                 }
@@ -353,9 +416,7 @@ namespace PropHunt.Prop
                     momentum *= Mathf.Pow(angleFactor, anglePower);
                     // Rotate the remaining remaining movement to be projected along the plane 
                     // of the surface hit (emulate pushing against the object)
-                    float momentumLeft = momentum.magnitude;
-                    momentum = Vector3.ProjectOnPlane(momentum, planeNormal);
-                    momentum = momentum.normalized * momentumLeft;
+                    momentum = Vector3.ProjectOnPlane(momentum, planeNormal).normalized * momentum.magnitude;
                 }
 
                 // Track number of times the character has bounced
