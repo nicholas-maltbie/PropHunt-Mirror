@@ -80,19 +80,12 @@ namespace PropHunt.Utils
         }
 
         public Collider collider {get; private set;}
-
         public Rigidbody rigidbody {get; private set;}
-
         public GameObject gameObject {get; private set;}
-
         public Transform transform {get; private set;}
-
         public Vector3 point {get; private set;}
-
         public Vector3 normal {get; private set;}
-
         public Vector3 moveDirection {get; private set;}
-
         public float moveLength {get; private set;}
 
     }
@@ -112,31 +105,13 @@ namespace PropHunt.Utils
             this.moveVector = moveVector;
         }
 
-        /// <inheritdoc/>
-        public CharacterController controller => colliderHit.controller;
-
-        /// <inheritdoc/>
         public Collider collider => colliderHit.collider;
-
-        /// <inheritdoc/>
         public Rigidbody rigidbody => colliderHit.rigidbody;
-
-        /// <inheritdoc/>
         public GameObject gameObject => colliderHit.gameObject;
-
-        /// <inheritdoc/>
         public Transform transform => colliderHit.transform;
-
-        /// <inheritdoc/>
         public Vector3 point => colliderHit.point;
-
-        /// <inheritdoc/>
         public Vector3 normal => colliderHit.normal;
-
-        /// <inheritdoc/>
         public Vector3 moveDirection => moveVector.normalized;
-
-        /// <inheritdoc/>
         public float moveLength => moveVector.magnitude;
     }
 }
