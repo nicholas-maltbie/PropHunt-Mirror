@@ -98,11 +98,6 @@ namespace PropHunt.Prop
         public float anglePower = 0.5f;
 
         /// <summary>
-        /// Distance that the character can "snap up" vertical steps
-        /// </summary>
-        public float verticalSnapUp = 0.2f;
-
-        /// <summary>
         /// Distance that the character can "snap down" vertical steps
         /// </summary>
         public float verticalSnapDown = 0.2f;
@@ -110,7 +105,21 @@ namespace PropHunt.Prop
         /// <summary>
         /// Was the player grounded this frame
         /// </summary>
-        public bool isGrounded;
+        public bool onGround;
+
+        public float stepUpDepth = 0.1f;
+
+        public float verticalSnapUp = 0.3f;
+
+        public float distanceToGround;
+
+        public Vector3 surfaceNormal;
+
+        public float angle;
+
+        public bool StandingOnGround => onGround && distanceToGround <= groundedDistance && distanceToGround > 0;
+
+        public bool Falling => !StandingOnGround || angle > maxWalkAngle;
 
         public void Start()
         {
@@ -154,25 +163,32 @@ namespace PropHunt.Prop
             Vector3 movement = playerMovementDirection * movementSpeed;
 
             // Update grounded state and increase velocity if falling
-            isGrounded = CheckGrounded();
-            if (isGrounded && !attemptingJump)
+            CheckGrounded();
+            if (!Falling && !attemptingJump)
             {
                 velocity = Vector3.zero;
             }
-            else if (!isGrounded)
+            else if (Falling)
             {
                 velocity += gravity * deltaTime;
             }
 
             // Give the player some vertical velocity if they are jumping and grounded
-            if (isGrounded && attemptingJump)
+            if (!Falling && attemptingJump)
             {
                 velocity = this.jumpVelocity * -gravity.normalized;
             }
 
-            MovePlayer((movement + velocity) * deltaTime);
+            // If the player is standing on the ground, project their movement onto the ground plane
+            // This allows them to walk up gradual slopes without facing a hit in movement speed
+            if (!Falling)
+            {
+                movement = Vector3.ProjectOnPlane(movement, surfaceNormal).normalized * movement.magnitude;
+            }
+            MovePlayer(movement * deltaTime);
+            MovePlayer(velocity * deltaTime);
 
-            if (isGrounded && !attemptingJump)
+            if (StandingOnGround && !attemptingJump)
             {
                 SnapPlayerDown();
             }
@@ -224,13 +240,42 @@ namespace PropHunt.Prop
             }
         }
 
-        public bool CheckGrounded()
+        public void CheckGrounded()
         {
             // Collider cast to move player
             ColliderCast colliderCast = GetComponent<ColliderCast>();
 
             ColliderCastHit hit = colliderCast.CastSelf(Vector3.down, groundCheckDistance);
-            return hit.hit && hit.distance <= groundedDistance && Vector3.Angle(hit.normal, -gravity) <= maxWalkAngle;
+            this.angle = Vector3.Angle(hit.normal, -gravity);
+            this.distanceToGround = hit.distance;
+            this.onGround = hit.hit;
+            this.surfaceNormal = hit.normal;
+        }
+
+        public bool AttemptSnapUp(float distanceToSnap, ColliderCastHit hit, ColliderCast colliderCast, Vector3 momentum)
+        {
+            // If we were to snap the player up and they moved forward, would they hit something?
+            Vector3 currentPosition = transform.position;
+            Vector3 snapUp = distanceToSnap * Vector3.up;
+            transform.position += snapUp;
+
+            Vector3 directionAfterSnap = Vector3.ProjectOnPlane(Vector3.Project(momentum, -hit.normal), Vector3.up).normalized * momentum.magnitude;
+            ColliderCastHit snapHit = colliderCast.CastSelf(directionAfterSnap.normalized, Mathf.Max(1, momentum.magnitude));
+
+            // If they can move without instantly hitting something, then snap them up
+            if (!Falling && snapHit.distance > Epsilon && (!snapHit.hit || snapHit.distance > stepUpDepth))
+            {
+                // Project rest of movement onto plane perpendicular to gravity
+                transform.position = currentPosition;
+                transform.position += distanceToSnap * Vector3.up;
+                return true;
+            }
+            else
+            {
+                // Otherwise move the player back down
+                transform.position = currentPosition;
+                return false;
+            }
         }
 
         public void MovePlayer(Vector3 movement)
@@ -286,21 +331,18 @@ namespace PropHunt.Prop
                 // Snap character vertically up if they hit something
                 //  close enough to their feet
                 float distanceToFeet = hit.pointHit.y - (transform.position - selfCollider.bounds.extents).y;
-                // Get angle between surface normal and remaining movement
-                float angleBetween = Vector3.Angle(hit.normal, momentum);
-                // Don't act if overlapping with object, then point hit is incorrect
-                if (angleBetween <= maxWalkAngle && hit.distance > Epsilon && distanceToFeet < verticalSnapUp && distanceToFeet > 0)
+                if (hit.distance > 0 && !attemptingJump && distanceToFeet < verticalSnapUp && distanceToFeet > 0)
                 {
-                    UnityEngine.Debug.Log(distanceToFeet);
-                    // Increment vertical (y) value of new position by
-                    //  the distance to the feet of the character
-                    transform.position += Vector3.up * distanceToFeet;
-                    // Project rest of movement onto plane perpendicular to gravity
-                    planeNormal = Vector3.up;
+                    if(!AttemptSnapUp(verticalSnapUp, hit, colliderCast, momentum))
+                    {
+                        AttemptSnapUp(distanceToFeet + Epsilon * 2, hit, colliderCast, momentum);
+                    }
                 }
-                // Only apply angular change if hitting something
                 else
                 {
+                    // Only apply angular change if hitting something
+                    // Get angle between surface normal and remaining movement
+                    float angleBetween = Vector3.Angle(hit.normal, momentum);
                     // Normalize angle between to be between 0 and 1
                     // 0 means no angle, 1 means 90 degree angle
                     angleBetween = Mathf.Min(MaxAngleShoveRadians, Mathf.Abs(angleBetween));
@@ -309,12 +351,12 @@ namespace PropHunt.Prop
                     float angleFactor = 1.0f / (1.0f + normalizedAngle);
                     // Reduce the momentum by the remaining movement that ocurred
                     momentum *= Mathf.Pow(angleFactor, anglePower);
+                    // Rotate the remaining remaining movement to be projected along the plane 
+                    // of the surface hit (emulate pushing against the object)
+                    float momentumLeft = momentum.magnitude;
+                    momentum = Vector3.ProjectOnPlane(momentum, planeNormal);
+                    momentum = momentum.normalized * momentumLeft;
                 }
-                // Rotate the remaining remaining movement to be projected along the plane 
-                // of the surface hit (emulate pushing against the object)
-                float momentumLeft = momentum.magnitude;
-                momentum = Vector3.ProjectOnPlane(momentum, planeNormal);
-                momentum = momentum.normalized * momentumLeft;
 
                 // Track number of times the character has bounced
                 bounces++;

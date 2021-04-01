@@ -29,7 +29,6 @@ namespace PropHunt.Utils
                 hits = Physics.CapsuleCastAll(p1, p2,
                     capsuleCollider.radius, direction, distance, layerMask,
                     queryTriggerInteraction);
-                // UnityEngine.Debug.DrawLine(p1, p2, Color.blue);
             }
             else if (boxCollider != null)
             {

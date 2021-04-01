@@ -198,8 +198,13 @@ MonoBehaviour:
   maxPushSpeed: 1
   pushDecay: 0.9
   anglePower: 0.5
-  verticalSnapUp: 0
-  isGrounded: 0
+  verticalSnapDown: 0.35
+  onGround: 0
+  stepUpDepth: 0.05
+  verticalSnapUp: 0.3
+  distanceToGround: 0
+  surfaceNormal: {x: 0, y: 0, z: 0}
+  angle: 0
 --- !u!114 &-4329039560205243657
 MonoBehaviour:
   m_ObjectHideFlags: 0
