@@ -130,10 +130,6 @@ namespace PropHunt.Prop
                 MeshCollider newCollider = ComponentUtils.CopyComponent<MeshCollider>(baseCollider, gameObject);
                 newCollider.sharedMesh = baseCollider.sharedMesh;
             }
-            else
-            {
-                ComponentUtils.CopyComponent<Collider>(collider, gameObject);
-            }
         }
 
         public IEnumerator ChangeDisguise(GameObject disguise)

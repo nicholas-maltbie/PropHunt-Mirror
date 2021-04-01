@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 3398146232548734459}
   - component: {fileID: 8738540330072658556}
   m_Layer: 0
-  m_Name: TestCapsuel
+  m_Name: TestCapsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -65,7 +65,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d80f787604153a44bbb67fb1797a2197, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  propName: TestCapsuel
+  propName: TestCapsule
   disguiseVisual: {fileID: 8009201142137579652, guid: 85a25f4fe2d924b4f8988b9ef1d26a38,
     type: 3}
   disguiseCollider: {fileID: 3398146232548734459}

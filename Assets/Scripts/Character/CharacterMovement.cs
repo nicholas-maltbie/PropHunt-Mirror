@@ -139,10 +139,11 @@ namespace PropHunt.Character
         public void OnControllerColliderHit(ControllerColliderHit hit)
         {
             CharacterPush push = GetComponent<CharacterPush>();
-            if(push != null)
+            if(push == null)
             {
-                push.PushObject(new ControllerColliderHitWrapper(hit, this.moveDirection));
+                return;
             }
+            push.PushObject(new ControllerColliderHitWrapper(hit, this.moveDirection));
         }
     }
 }
