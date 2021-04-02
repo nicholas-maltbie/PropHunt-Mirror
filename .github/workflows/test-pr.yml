@@ -61,6 +61,7 @@ jobs:
             -burst-disable-compilation 
             -coverageResultsPath ${{ matrix.testMode }}-artifacts
             -coverageOptions "generateBadgeReport;assemblyFilters:-Assembly*,-Mirror*,-Tests*,-SimpleWebTransport,-Telepathy,-kcp2k;pathFilters:-*/Assets/Mirror/*,-*/Assets/Tests/*"
+            -nographics
 
       # - name: Upload Results
       #   uses: actions/upload-artifact@v1
