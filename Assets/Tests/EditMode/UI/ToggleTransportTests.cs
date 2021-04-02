@@ -4,7 +4,7 @@ using PropHunt.UI;
 using PropHunt.Utils;
 using UnityEngine;
 using kcp2k;
-using Mirror.FizzySteam;
+// using Mirror.FizzySteam;
 using Mirror;
 
 namespace Tests.EditMode.UI
@@ -32,11 +32,11 @@ namespace Tests.EditMode.UI
 
             // Setup values for KCP Transport and Fizzy Steamworks settings
             KcpTransport kcpTransport = go.AddComponent<KcpTransport>();
-            FizzySteamworks fizzySteamworks = go.AddComponent<FizzySteamworks>();
+            // FizzySteamworks fizzySteamworks = go.AddComponent<FizzySteamworks>();
 
             // Attach fake settings for transports to our toggle object
             toggle.kcpTransportSettings = kcpTransport;
-            toggle.fizzySteamworksSettings = fizzySteamworks;
+            // toggle.fizzySteamworksSettings = fizzySteamworks;
 
             // Test the start method for initial setup
             toggle.Start();
@@ -51,7 +51,7 @@ namespace Tests.EditMode.UI
             // Assert that mode can change when we chant to a new mode
             toggle.SetMultiplayerMode(MultiplayerMode.FizzySteamworks);
             Assert.IsTrue(toggle.currentMode == MultiplayerMode.FizzySteamworks);
-            Assert.IsTrue(Transport.activeTransport == fizzySteamworks);
+            // Assert.IsTrue(Transport.activeTransport == fizzySteamworks);
 
             // Set multiplayer mode to KCP from string command
             toggle.SetMultiplayerMode(MultiplayerMode.KcpTransport, true);

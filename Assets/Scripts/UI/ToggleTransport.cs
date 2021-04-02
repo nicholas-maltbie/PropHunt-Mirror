@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using kcp2k;
 using Mirror;
-using Mirror.FizzySteam;
+// using Mirror.FizzySteam;
 using PropHunt.Utils;
 using UnityEngine;
 
@@ -42,7 +42,7 @@ namespace PropHunt.UI
         /// <summary>
         /// Settings selected for FizzySteamworks
         /// </summary>
-        public FizzySteamworks fizzySteamworksSettings;
+        // public FizzySteamworks fizzySteamworksSettings;
 
         /// <summary>
         /// Lookup from transport type to transport settings
@@ -62,11 +62,11 @@ namespace PropHunt.UI
             // setup a lookup table to link the currently available multiplayer modes
             //  to their enum type in code
             this.transportSettingsLookup = new Dictionary<MultiplayerMode, Transport>();
-            this.transportSettingsLookup[MultiplayerMode.FizzySteamworks] = this.fizzySteamworksSettings;
+            // this.transportSettingsLookup[MultiplayerMode.FizzySteamworks] = this.fizzySteamworksSettings;
             this.transportSettingsLookup[MultiplayerMode.KcpTransport] = this.kcpTransportSettings;
 
             // Un-parent fizzy steamworks because it leads to warning if not
-            this.fizzySteamworksSettings.transform.parent = null;
+            // this.fizzySteamworksSettings.transform.parent = null;
 
             // Setup initial mode
             SetMultiplayerMode(this.currentMode, forceUpdate: true);
