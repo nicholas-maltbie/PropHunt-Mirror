@@ -6,7 +6,6 @@ using NUnit.Framework;
 using PropHunt.Character;
 using PropHunt.Utils;
 using UnityEngine;
-using UnityEngine.TestTools;
 
 namespace Tests.EditMode.Character
 {
@@ -166,7 +165,6 @@ namespace Tests.EditMode.Character
         [Test]
         public void TestSenderConnectionIsSetWhenCommandReceived()
         {
-            LogAssert.ignoreFailingMessages = true;
             CharacterPush hostBehaviour = CreateHostObject<CharacterPush>(true);
 
             NetworkConnectionToClient connectionToClient = NetworkServer.connections[0];
@@ -177,7 +175,6 @@ namespace Tests.EditMode.Character
             pushed.AddComponent<NetworkIdentity>();
             NetworkServer.Spawn(pushed);
             hostBehaviour.CmdPushWithForce(pushed, Vector3.zero, Vector3.zero);
-            GameObject.DestroyImmediate(pushed);
         }
     }
 }

@@ -149,8 +149,8 @@ namespace Tests.EditMode.Character
     [TestFixture]
     public class FocusDetectionCommandTests : RemoteTestBase
     {
-        [Test]
-        public void TestObjectInteractWhenCommandSentToServer()
+        [UnityTest]
+        public IEnumerator TestObjectInteractWhenCommandSentToServer()
         {
             LogAssert.ignoreFailingMessages = true;
 
@@ -167,14 +167,16 @@ namespace Tests.EditMode.Character
             focus.AddComponent<NetworkIdentity>();
             NetworkServer.Spawn(focus);
             hostBehaviour.CmdInteractWithObject(focus, hostBehaviour.gameObject);
+            yield return null;
             // Assert that the object was interacted with
             Assert.IsTrue(testInteract.timesInteracted == 1);
             Assert.IsTrue(testInteract.lastInteraction = hostBehaviour.gameObject);
             GameObject.DestroyImmediate(focus);
+            yield return null;
         }
 
-        [Test]
-        public void TestObjectInteractWhenCommandSentFromServer()
+        [UnityTest]
+        public IEnumerator TestObjectInteractWhenCommandSentFromServer()
         {
             LogAssert.ignoreFailingMessages = true;
 
@@ -192,10 +194,12 @@ namespace Tests.EditMode.Character
             focus.AddComponent<NetworkIdentity>();
             NetworkServer.Spawn(focus);
             hostBehaviour.InteractWithObject(focus, hostBehaviour.gameObject);
+            yield return null;
             // Assert that the object was interacted with
             // Assert.IsTrue(testInteract.timesInteracted == 1);
             // Assert.IsTrue(testInteract.lastInteraction = hostBehaviour.gameObject);
             GameObject.DestroyImmediate(focus);
+            yield return null;
         }
     }
 }
