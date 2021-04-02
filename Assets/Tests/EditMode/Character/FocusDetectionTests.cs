@@ -152,6 +152,8 @@ namespace Tests.EditMode.Character
         [Test]
         public void TestObjectInteractWhenCommandSentToServer()
         {
+            LogAssert.ignoreFailingMessages = true;
+
             Mock<INetworkService> networkServiceMock = new Mock<INetworkService>();
             FocusDetection hostBehaviour = CreateHostObject<FocusDetection>(true);
             hostBehaviour.networkService = networkServiceMock.Object;
@@ -174,6 +176,8 @@ namespace Tests.EditMode.Character
         [Test]
         public void TestObjectInteractWhenCommandSentFromServer()
         {
+            LogAssert.ignoreFailingMessages = true;
+
             Mock<INetworkService> networkServiceMock = new Mock<INetworkService>();
             FocusDetection hostBehaviour = CreateHostObject<FocusDetection>(true);
             hostBehaviour.networkService = networkServiceMock.Object;

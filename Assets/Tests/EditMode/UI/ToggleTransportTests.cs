@@ -49,8 +49,8 @@ namespace Tests.EditMode.UI
             Assert.IsTrue(Transport.activeTransport == kcpTransport);
 
             // Assert that mode can change when we chant to a new mode
-            toggle.SetMultiplayerMode(MultiplayerMode.FizzySteamworks);
-            Assert.IsTrue(toggle.currentMode == MultiplayerMode.FizzySteamworks);
+            // toggle.SetMultiplayerMode(MultiplayerMode.FizzySteamworks);
+            // Assert.IsTrue(toggle.currentMode == MultiplayerMode.FizzySteamworks);
             // Assert.IsTrue(Transport.activeTransport == fizzySteamworks);
 
             // Set multiplayer mode to KCP from string command
