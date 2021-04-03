@@ -49,6 +49,7 @@ namespace PropHunt.Utils
         {
             RaycastHit closest = new RaycastHit(){distance = Mathf.Infinity};
             bool hitSomething = false;
+            UnityEngine.Debug.Log(GetHits(direction, distance).Length);
             foreach (RaycastHit hit in GetHits(direction, distance))
             {
                 if (hit.collider.gameObject.transform != gameObject.transform)

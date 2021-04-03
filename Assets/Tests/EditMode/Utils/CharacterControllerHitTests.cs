@@ -1,6 +1,6 @@
-using System;
 using NUnit.Framework;
 using PropHunt.Utils;
+using System.Collections;
 using UnityEngine;
 
 namespace Tests.EditMode.Utils
@@ -9,16 +9,16 @@ namespace Tests.EditMode.Utils
     public class CharacterControllerHitTests
     {
         [Test]
-        public void VerifyCopyComponent()
+        public void VerifyKinematicCharacterControllerHit()
         {
             GameObject gameObject = new GameObject();
             KinematicCharacterControllerHit hit = new KinematicCharacterControllerHit(
-                gameObject.AddComponent<BoxCollider>(), gameObject.AddComponent<Rigidbody>(),
+                null, null,
                 gameObject, gameObject.transform, Vector3.zero, Vector3.zero, Vector3.zero, 2.5f
             );
 
-            Assert.IsTrue(hit.collider == gameObject.GetComponent<BoxCollider>());
-            Assert.IsTrue(hit.rigidbody == gameObject.GetComponent<Rigidbody>());
+            Assert.IsTrue(hit.collider == null);
+            Assert.IsTrue(hit.rigidbody == null);
             Assert.IsTrue(hit.gameObject == gameObject);
             Assert.IsTrue(hit.transform == gameObject.transform);
             Assert.IsTrue(hit.point == Vector3.zero);

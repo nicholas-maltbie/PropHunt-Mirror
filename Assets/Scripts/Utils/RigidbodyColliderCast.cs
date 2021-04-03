@@ -65,17 +65,22 @@ namespace PropHunt.Utils
         public override IEnumerable<ColliderCastHit> GetOverlappingDirectional()
         {
             List<ColliderCastHit> hits = new List<ColliderCastHit>();
-            foreach (RaycastHit hit in GetHits(Vector3.down, 0.001f))
+            Collider collider = GetComponent<Collider>();
+            var boundingBox = collider.bounds;
+            foreach (Collider otherCollider in Physics.OverlapBox(transform.position + boundingBox.center, boundingBox.size/2, Quaternion.identity, ~0, queryTriggerInteraction))
             {
-                if (hit.collider.gameObject.transform != gameObject.transform && hit.distance == 0)
+                Physics.ComputePenetration(collider,
+                    collider.transform.position, collider.transform.rotation, otherCollider,
+                    otherCollider.transform.position, otherCollider.transform.rotation, out Vector3 direction, out float distance);
+                if (otherCollider.gameObject != gameObject && distance > 0)
                 {
                     hits.Add(new ColliderCastHit{
                         hit = true,
                         distance = 0,
                         fraction = 0,
-                        normal = hit.normal,
-                        pointHit = hit.point,
-                        collider = hit.collider
+                        normal = direction.normalized,
+                        pointHit = Vector3.zero,
+                        collider = otherCollider
                     });
                 }
             }
