@@ -55,7 +55,7 @@ namespace Tests.EditMode.Utils
             GameObject.DestroyImmediate(this.hitGo);
         }
 
-        private void VerifyOverlapping(ColliderCast cast, int minimum = 1)
+        private void VerifyOverlapping(ColliderCast cast, int minimum)
         {
             int count = 0;
             foreach (var h in cast.GetOverlappingDirectional())
@@ -78,25 +78,25 @@ namespace Tests.EditMode.Utils
             // Simulate hitting an object
             var collision = new Collision();
             this.rigidbodyColliderCast.OnCollisionEnter(collision);
-            this.VerifyOverlapping(this.primitiveColliderCast);
-            this.VerifyOverlapping(this.rigidbodyColliderCast);
+            this.VerifyOverlapping(this.primitiveColliderCast, 1);
+            this.VerifyOverlapping(this.rigidbodyColliderCast, 1);
             this.rigidbodyColliderCast.OnCollisionExit(collision);
 
             // Try with each kind of collider
             // No collider
             GameObject.DestroyImmediate(this.go.GetComponent<Collider>());
-            this.VerifyOverlapping(this.primitiveColliderCast, minimum: -1);
+            this.VerifyOverlapping(this.primitiveColliderCast, -1);
             // Box Collider
             this.go.AddComponent<BoxCollider>();
-            this.VerifyOverlapping(this.primitiveColliderCast);
+            this.VerifyOverlapping(this.primitiveColliderCast, 1);
             GameObject.DestroyImmediate(this.go.GetComponent<Collider>());
             // Sphere Collider
             this.go.AddComponent<SphereCollider>();
-            this.VerifyOverlapping(this.primitiveColliderCast);
+            this.VerifyOverlapping(this.primitiveColliderCast, 1);
             GameObject.DestroyImmediate(this.go.GetComponent<Collider>());
             // Capsule Collider
             this.go.AddComponent<CapsuleCollider>();
-            this.VerifyOverlapping(this.primitiveColliderCast);
+            this.VerifyOverlapping(this.primitiveColliderCast, 1);
             GameObject.DestroyImmediate(this.go.GetComponent<Collider>());
         }
 
