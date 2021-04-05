@@ -399,7 +399,7 @@ namespace PropHunt.Prop
                     // Sometimes snapping up the exact distance leads to odd behaviour around steps and walls.
                     // It's good to check the maximum and minimum snap distances and take whichever one works.
                     // Attempt to snap up the maximum vertical distance
-                    if(!AttemptSnapUp(verticalSnapUp, hit, momentum))
+                    if (!AttemptSnapUp(verticalSnapUp, hit, momentum))
                     {
                         // If that movement doesn't work, snap them up the minimum vertical distance
                         AttemptSnapUp(distanceToFeet + Epsilon * 2, hit, momentum);

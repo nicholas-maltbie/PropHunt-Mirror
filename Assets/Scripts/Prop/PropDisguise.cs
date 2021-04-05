@@ -104,21 +104,21 @@ namespace PropHunt.Prop
             // Setup new collider data
             if (collider is BoxCollider)
             {
-                BoxCollider baseCollider = (BoxCollider) collider;
+                BoxCollider baseCollider = (BoxCollider)collider;
                 BoxCollider newCollider = ComponentUtils.CopyComponent<BoxCollider>(baseCollider, gameObject);
                 newCollider.center = baseCollider.center;
                 newCollider.size = baseCollider.size;
             }
             else if (collider is SphereCollider)
             {
-                SphereCollider baseCollider = (SphereCollider) collider;
-                SphereCollider newCollider = ComponentUtils.CopyComponent<SphereCollider>( baseCollider, gameObject);
+                SphereCollider baseCollider = (SphereCollider)collider;
+                SphereCollider newCollider = ComponentUtils.CopyComponent<SphereCollider>(baseCollider, gameObject);
                 newCollider.radius = baseCollider.radius;
                 newCollider.center = baseCollider.center;
             }
             else if (collider is CapsuleCollider)
             {
-                CapsuleCollider baseCollider = (CapsuleCollider) collider;
+                CapsuleCollider baseCollider = (CapsuleCollider)collider;
                 CapsuleCollider newCollider = ComponentUtils.CopyComponent<CapsuleCollider>(baseCollider, gameObject);
                 newCollider.height = baseCollider.height;
                 newCollider.radius = baseCollider.radius;
@@ -126,7 +126,7 @@ namespace PropHunt.Prop
             }
             else if (collider is MeshCollider)
             {
-                MeshCollider baseCollider = (MeshCollider) collider;
+                MeshCollider baseCollider = (MeshCollider)collider;
                 MeshCollider newCollider = ComponentUtils.CopyComponent<MeshCollider>(baseCollider, gameObject);
                 newCollider.sharedMesh = baseCollider.sharedMesh;
             }

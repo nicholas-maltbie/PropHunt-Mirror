@@ -79,14 +79,14 @@ namespace PropHunt.Utils
             this.moveLength = moveLength;
         }
 
-        public Collider collider {get; private set;}
-        public Rigidbody rigidbody {get; private set;}
-        public GameObject gameObject {get; private set;}
-        public Transform transform {get; private set;}
-        public Vector3 point {get; private set;}
-        public Vector3 normal {get; private set;}
-        public Vector3 moveDirection {get; private set;}
-        public float moveLength {get; private set;}
+        public Collider collider { get; private set; }
+        public Rigidbody rigidbody { get; private set; }
+        public GameObject gameObject { get; private set; }
+        public Transform transform { get; private set; }
+        public Vector3 point { get; private set; }
+        public Vector3 normal { get; private set; }
+        public Vector3 moveDirection { get; private set; }
+        public float moveLength { get; private set; }
 
     }
 

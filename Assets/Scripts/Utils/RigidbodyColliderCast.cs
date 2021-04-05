@@ -22,7 +22,7 @@ namespace PropHunt.Utils
 
         public override ColliderCastHit CastSelf(Vector3 direction, float distance)
         {
-            RaycastHit closest = new RaycastHit(){distance = Mathf.Infinity};
+            RaycastHit closest = new RaycastHit() { distance = Mathf.Infinity };
             bool hitSomething = false;
             foreach (RaycastHit hit in GetHits(direction, distance))
             {
@@ -67,14 +67,15 @@ namespace PropHunt.Utils
             List<ColliderCastHit> hits = new List<ColliderCastHit>();
             Collider collider = GetComponent<Collider>();
             var boundingBox = collider.bounds;
-            foreach (Collider otherCollider in Physics.OverlapBox(transform.position + boundingBox.center, boundingBox.size/2, Quaternion.identity, ~0, queryTriggerInteraction))
+            foreach (Collider otherCollider in Physics.OverlapBox(transform.position + boundingBox.center, boundingBox.size / 2, Quaternion.identity, ~0, queryTriggerInteraction))
             {
                 Physics.ComputePenetration(collider,
                     collider.transform.position, collider.transform.rotation, otherCollider,
                     otherCollider.transform.position, otherCollider.transform.rotation, out Vector3 direction, out float distance);
                 if (otherCollider.gameObject != gameObject && distance > 0)
                 {
-                    hits.Add(new ColliderCastHit{
+                    hits.Add(new ColliderCastHit
+                    {
                         hit = true,
                         distance = 0,
                         fraction = 0,

@@ -5,7 +5,7 @@ namespace PropHunt.Utils
 {
     public class PrimitiveColliderCast : ColliderCast
     {
-        private static Collider[] Empty  = new Collider[]{};
+        private static Collider[] Empty = new Collider[] { };
 
         public LayerMask layerMask = 0;
 
@@ -47,7 +47,7 @@ namespace PropHunt.Utils
 
         public override ColliderCastHit CastSelf(Vector3 direction, float distance)
         {
-            RaycastHit closest = new RaycastHit(){distance = Mathf.Infinity};
+            RaycastHit closest = new RaycastHit() { distance = Mathf.Infinity };
             bool hitSomething = false;
             foreach (RaycastHit hit in GetHits(direction, distance))
             {
@@ -79,7 +79,8 @@ namespace PropHunt.Utils
             {
                 if (hit.collider.gameObject.transform != gameObject.transform && hit.distance == 0)
                 {
-                    hits.Add(new ColliderCastHit{
+                    hits.Add(new ColliderCastHit
+                    {
                         hit = true,
                         distance = 0,
                         fraction = 0,
