@@ -55,16 +55,16 @@ namespace Tests.EditMode.Utils
             GameObject.DestroyImmediate(this.hitGo);
         }
 
-        private void VerifyOverlapping(ColliderCast cast, int minimum=1)
+        private void VerifyOverlapping(ColliderCast cast, int minimum = 1)
         {
             int count = 0;
-            foreach(var h in cast.GetOverlappingDirectional())
+            foreach (var h in cast.GetOverlappingDirectional())
             {
                 count++;
             }
             Assert.IsTrue(count >= minimum);
             count = 0;
-            foreach(var h in cast.GetOverlapping())
+            foreach (var h in cast.GetOverlapping())
             {
                 count++;
             }

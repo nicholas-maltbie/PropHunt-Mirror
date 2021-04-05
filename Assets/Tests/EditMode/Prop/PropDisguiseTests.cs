@@ -25,7 +25,8 @@ namespace Tests.EditMode.Prop
             disguise.name = name;
             Collider disguiseCollider = disguise.AddComponent<E>();
 
-            return new Disguise{
+            return new Disguise
+            {
                 disguiseVisual = disguise,
                 disguiseCollider = disguiseCollider
             };
