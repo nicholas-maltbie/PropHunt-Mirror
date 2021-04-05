@@ -149,13 +149,24 @@ namespace PropHunt.Prop
         /// </summary>
         public bool Falling => !StandingOnGround || angle > maxWalkAngle;
 
+        /// <summary>
+        /// Collider cast component to abstract movement of player
+        /// </summary>
+        public IColliderCast colliderCast;
+
         public void Start()
         {
             this.networkService = new NetworkService(this);
+            this.colliderCast = GetComponent<ColliderCast>();
         }
 
         public void Update()
         {
+            if (!networkService.isLocalPlayer)
+            {
+                // exit from update if this is not the local player
+                return;
+            }
             // Get palyer input on a frame by frame basis
             inputMovement = new Vector3(unityService.GetAxis("Horizontal"), 0, unityService.GetAxis("Vertical"));
             // Normalize movement vector to be a max of 1 if greater than one
@@ -228,8 +239,12 @@ namespace PropHunt.Prop
             }
 
             // make sure the rigidbody doesn't move according to velocity or angular velocity
-            GetComponent<Rigidbody>().velocity = Vector3.zero;
-            GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+            Rigidbody rigidbody = GetComponent<Rigidbody>();
+            if (rigidbody != null)
+            {
+                rigidbody.velocity = Vector3.zero;
+                rigidbody.angularVelocity = Vector3.zero;
+            }
         }
 
         /// <summary>
@@ -237,9 +252,6 @@ namespace PropHunt.Prop
         /// </summary>
         public void SnapPlayerDown()
         {
-            // Collider cast to move player
-            ColliderCast colliderCast = GetComponent<ColliderCast>();
-
             // Cast current character collider down
             ColliderCastHit hit = colliderCast.CastSelf(Vector3.down, verticalSnapDown);
             if (hit.hit && hit.distance > Epsilon)
@@ -257,8 +269,6 @@ namespace PropHunt.Prop
         {
             float deltaTime = unityService.deltaTime;
 
-            // Collider cast to move player
-            ColliderCast colliderCast = GetComponent<ColliderCast>();
             Collider collider = GetComponent<Collider>();
 
             if (collider == null)
@@ -288,9 +298,6 @@ namespace PropHunt.Prop
         /// </summary>
         public void CheckGrounded()
         {
-            // Collider cast to move player
-            ColliderCast colliderCast = GetComponent<ColliderCast>();
-
             ColliderCastHit hit = colliderCast.CastSelf(Vector3.down, groundCheckDistance);
             this.angle = Vector3.Angle(hit.normal, -gravity);
             this.distanceToGround = hit.distance;
@@ -307,11 +314,10 @@ namespace PropHunt.Prop
         /// </summary>
         /// <param name="distanceToSnap">Distance that the player is teleported up</param>
         /// <param name="hit">Wall/step that the player ran into</param>
-        /// <param name="colliderCast">Collider cast component to check if the player can be moved</param>
         /// <param name="momentum">The remaining momentum of the player</param>
         /// <returns>True if the player had space on the ledge and was able to move, false if
         /// there was not enough room the player is moved back to their original position</returns>
-        public bool AttemptSnapUp(float distanceToSnap, ColliderCastHit hit, ColliderCast colliderCast, Vector3 momentum)
+        public bool AttemptSnapUp(float distanceToSnap, ColliderCastHit hit, Vector3 momentum)
         {
             // If we were to snap the player up and they moved forward, would they hit something?
             Vector3 currentPosition = transform.position;
@@ -343,8 +349,6 @@ namespace PropHunt.Prop
             Vector3 momentum = movement;
 
             Collider selfCollider = GetComponent<Collider>();
-            // Collider cast to move player
-            ColliderCast colliderCast = GetComponent<ColliderCast>();
             // current number of bounces
             int bounces = 0;
 
@@ -395,10 +399,10 @@ namespace PropHunt.Prop
                     // Sometimes snapping up the exact distance leads to odd behaviour around steps and walls.
                     // It's good to check the maximum and minimum snap distances and take whichever one works.
                     // Attempt to snap up the maximum vertical distance
-                    if(!AttemptSnapUp(verticalSnapUp, hit, colliderCast, momentum))
+                    if(!AttemptSnapUp(verticalSnapUp, hit, momentum))
                     {
                         // If that movement doesn't work, snap them up the minimum vertical distance
-                        AttemptSnapUp(distanceToFeet + Epsilon * 2, hit, colliderCast, momentum);
+                        AttemptSnapUp(distanceToFeet + Epsilon * 2, hit, momentum);
                     }
                 }
                 else
