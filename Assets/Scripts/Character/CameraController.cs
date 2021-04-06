@@ -131,15 +131,8 @@ namespace PropHunt.Character
             if (PhysicsUtils.RaycastFirstHitIgnore(gameObject, cameraSource, cameraDirection, cameraDirection.magnitude,
                 this.cameraRaycastMask, QueryTriggerInteraction.Ignore, out RaycastHit hit))
             {
-                // UnityEngine.Debug.DrawRay(transform.TransformDirection(this.baseCameraOffset) + transform.position, cameraDirection.normalized * hit.distance, Color.red);
-                // UnityEngine.Debug.DrawRay(transform.TransformDirection(this.baseCameraOffset) + transform.position + cameraDirection.normalized * hit.distance,
-                //     cameraDirection * (this.currentDistance - hit.distance), Color.blue);
                 // limit the movement by that hit
                 cameraDirection = cameraDirection.normalized * hit.distance;
-            }
-            else
-            {
-                UnityEngine.Debug.DrawRay(transform.TransformDirection(this.baseCameraOffset) + transform.position, cameraDirection);
             }
 
             cameraTransform.position = cameraSource + cameraDirection;
