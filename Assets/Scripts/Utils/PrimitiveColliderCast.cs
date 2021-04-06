@@ -117,7 +117,7 @@ namespace PropHunt.Utils
             }
             else
             {
-                return new Collider[]{};
+                return new Collider[] { };
             }
         }
     }

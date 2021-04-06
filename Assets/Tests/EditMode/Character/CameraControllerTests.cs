@@ -33,7 +33,7 @@ namespace Tests.EditMode.Character
             GameObject wall = new GameObject();
             wall.transform.position = Vector3.back;
             wall.AddComponent<BoxCollider>();
-            
+
             yield return null;
         }
 

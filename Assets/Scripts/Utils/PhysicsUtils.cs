@@ -16,8 +16,8 @@ namespace PropHunt.Utils
         public static bool FilterForFirstHitIgnore(GameObject ignore, RaycastHit[] hits, out RaycastHit closest)
         {
             bool hitSomething = false;
-            closest = new RaycastHit{distance = Mathf.Infinity};
-            foreach(RaycastHit hit in hits)
+            closest = new RaycastHit { distance = Mathf.Infinity };
+            foreach (RaycastHit hit in hits)
             {
                 if (hit.collider.gameObject != ignore && hit.distance < closest.distance)
                 {
