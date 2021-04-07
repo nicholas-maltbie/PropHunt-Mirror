@@ -157,6 +157,7 @@ MonoBehaviour:
   frameRotation: 0
   cameraTransform: {fileID: 8130394144415267709}
   pitchBody: 1
+  baseCameraOffset: {x: 0, y: 0, z: 0}
   minCameraDistance: 0
   maxCameraDistance: 4
   currentDistance: 0
@@ -164,8 +165,8 @@ MonoBehaviour:
   cameraRaycastMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  shadowOnlyDistance: 0.2
-  ditherDistance: 0.75
+  shadowOnlyDistance: 0.35
+  ditherDistance: 1.5
   thirdPersonCharacterBase: {fileID: 245587927565386927}
   transitionTime: 0.1
 --- !u!114 &-6989314143880944393
@@ -381,7 +382,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 886816266439757742}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.8, z: 0}
+  m_LocalPosition: {x: 0, y: 0.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2691377025762807458}
@@ -446,7 +447,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 1d6d20ca6d3177846bd2a38eeb6f0b16, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -52,7 +52,7 @@ namespace PropHunt.Character
         /// <summary>
         /// Camera offset from character center
         /// </summary>        
-        private Vector3 baseCameraOffset;
+        public Vector3 baseCameraOffset;
 
         /// <summary>
         /// Minimum distance (closest zoom) of player camera
