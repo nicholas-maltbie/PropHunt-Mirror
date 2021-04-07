@@ -78,9 +78,20 @@ namespace PropHunt.Character
         /// </summary>
         public LayerMask cameraRaycastMask = ~0;
 
+        /// <summary>
+        /// Distance in which the third person character will be completely transparent and only cast shadows
+        /// </summary>
         public float shadowOnlyDistance = 0.5f;
 
+        /// <summary>
+        /// Distance where the player object will dither but still be visible
+        /// </summary>
         public float ditherDistance = 1.0f;
+
+        /// <summary>
+        /// Base object where all the third person character is stored.
+        /// </summary>
+        public GameObject thirdPersonCharacterBase;
 
         public void Start()
         {
@@ -141,26 +152,29 @@ namespace PropHunt.Character
 
             cameraTransform.position = cameraSource + cameraDirection;
 
-            float actualDistance = cameraDirection.magnitude;
+            bool hittingSelf = PhysicsUtils.SphereCastAllow(gameObject, cameraTransform.position, 0.1f, -cameraDirection.normalized,
+                cameraDirection.magnitude, ~0, QueryTriggerInteraction.Ignore, out RaycastHit selfHit);
+
+            float actualDistance = hittingSelf ? selfHit.distance : cameraDirection.magnitude;
 
             if (actualDistance < shadowOnlyDistance)
             {
-                MaterialUtils.RecursiveSetShadowCasingMode(gameObject, UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly);
+                MaterialUtils.RecursiveSetShadowCasingMode(thirdPersonCharacterBase, UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly);
             }
             else
             {
-                MaterialUtils.RecursiveSetShadowCasingMode(gameObject, UnityEngine.Rendering.ShadowCastingMode.On);
+                MaterialUtils.RecursiveSetShadowCasingMode(thirdPersonCharacterBase, UnityEngine.Rendering.ShadowCastingMode.On);
             }
 
             if (actualDistance > shadowOnlyDistance && actualDistance < ditherDistance)
             {
                 // Set opacity of character based on how close the camera is
-                MaterialUtils.RecursiveSetFloatProperty(gameObject, "_Opacity", (actualDistance - minCameraDistance) / (ditherDistance - minCameraDistance));
+                MaterialUtils.RecursiveSetFloatProperty(thirdPersonCharacterBase, "_Opacity", (actualDistance - minCameraDistance) / (ditherDistance - minCameraDistance));
             }
             else
             {
                 // Set opacity of character based on how close the camera is
-                MaterialUtils.RecursiveSetFloatProperty(gameObject, "_Opacity", 1);
+                MaterialUtils.RecursiveSetFloatProperty(thirdPersonCharacterBase, "_Opacity", 1);
             }
         }
     }

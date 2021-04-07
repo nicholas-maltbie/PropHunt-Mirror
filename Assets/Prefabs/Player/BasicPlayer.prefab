@@ -223,12 +223,13 @@ MonoBehaviour:
   syncInterval: 0.1
   sphereRadius: 0.1
   viewDistance: 5
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 0
   cameraTransform: {fileID: 8130394144415267709}
   focus: {fileID: 0}
   currentHitDistance: 0
+  viewLayermask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  focusTriggerInteraction: 0
 --- !u!114 &8022354081219173697
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -289,6 +290,12 @@ MonoBehaviour:
   maxCameraDistance: 4
   currentDistance: 0
   zoomSpeed: 100
+  cameraRaycastMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  shadowOnlyDistance: 0.1
+  ditherDistance: 0.5
+  thirdPersonCharacterBase: {fileID: 8756352209484338735}
 --- !u!114 &1509629139552447915
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -411,6 +418,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2fe50b90de0f56b429fe6e254cc0441e, type: 3}
+--- !u!1 &8756352209484338735 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 2fe50b90de0f56b429fe6e254cc0441e, type: 3}
+  m_PrefabInstance: {fileID: 8450342936939883390}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8272865522181541013 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2fe50b90de0f56b429fe6e254cc0441e, type: 3}

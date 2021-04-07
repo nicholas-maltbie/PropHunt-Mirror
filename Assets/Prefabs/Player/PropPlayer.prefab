@@ -161,6 +161,12 @@ MonoBehaviour:
   maxCameraDistance: 4
   currentDistance: 0
   zoomSpeed: 100
+  cameraRaycastMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  shadowOnlyDistance: 0.1
+  ditherDistance: 0.5
+  thirdPersonCharacterBase: {fileID: 245587927565386927}
 --- !u!114 &-6989314143880944393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -177,12 +183,13 @@ MonoBehaviour:
   syncInterval: 0.1
   sphereRadius: 0.1
   viewDistance: 5
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 256
   cameraTransform: {fileID: 8130394144415267709}
   focus: {fileID: 0}
   currentHitDistance: 0
+  viewLayermask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  focusTriggerInteraction: 0
 --- !u!114 &5068185544392948995
 MonoBehaviour:
   m_ObjectHideFlags: 0
