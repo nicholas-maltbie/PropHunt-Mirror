@@ -168,28 +168,31 @@ namespace PropHunt.Character
             // float actualDistance = Mathf.Cos(Mathf.Deg2Rad * pitch) * cameraDirection.magnitude;
             float actualDistance = hittingSelf ? selfHit.distance : cameraDirection.magnitude;
 
-            if (actualDistance < shadowOnlyDistance)
+            if (thirdPersonCharacterBase != null)
             {
-                MaterialUtils.RecursiveSetShadowCasingMode(thirdPersonCharacterBase, UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly);
-            }
-            else
-            {
-                MaterialUtils.RecursiveSetShadowCasingMode(thirdPersonCharacterBase, UnityEngine.Rendering.ShadowCastingMode.On);
-            }
+                if (actualDistance < shadowOnlyDistance)
+                {
+                    MaterialUtils.RecursiveSetShadowCasingMode(thirdPersonCharacterBase, UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly);
+                }
+                else
+                {
+                    MaterialUtils.RecursiveSetShadowCasingMode(thirdPersonCharacterBase, UnityEngine.Rendering.ShadowCastingMode.On);
+                }
 
-            if (actualDistance > shadowOnlyDistance && actualDistance < ditherDistance)
-            {
-                float newOpacity = (actualDistance - shadowOnlyDistance) / (ditherDistance - minCameraDistance);
-                float lerpPosition = transitionTime > 0 ? deltaTime * 1/transitionTime : 1;
-                previousOpacity = Mathf.Lerp(previousOpacity, newOpacity, lerpPosition);
-                // Set opacity of character based on how close the camera is
-                MaterialUtils.RecursiveSetFloatProperty(thirdPersonCharacterBase, "_Opacity", previousOpacity);
-            }
-            else
-            {
-                // Set opacity of character based on how close the camera is
-                MaterialUtils.RecursiveSetFloatProperty(thirdPersonCharacterBase, "_Opacity", 1);
-                previousOpacity = actualDistance > shadowOnlyDistance ? 1 : 0;
+                if (actualDistance > shadowOnlyDistance && actualDistance < ditherDistance)
+                {
+                    float newOpacity = (actualDistance - shadowOnlyDistance) / (ditherDistance - minCameraDistance);
+                    float lerpPosition = transitionTime > 0 ? deltaTime * 1/transitionTime : 1;
+                    previousOpacity = Mathf.Lerp(previousOpacity, newOpacity, lerpPosition);
+                    // Set opacity of character based on how close the camera is
+                    MaterialUtils.RecursiveSetFloatProperty(thirdPersonCharacterBase, "_Opacity", previousOpacity);
+                }
+                else
+                {
+                    // Set opacity of character based on how close the camera is
+                    MaterialUtils.RecursiveSetFloatProperty(thirdPersonCharacterBase, "_Opacity", 1);
+                    previousOpacity = actualDistance > shadowOnlyDistance ? 1 : 0;
+                }
             }
         }
     }
