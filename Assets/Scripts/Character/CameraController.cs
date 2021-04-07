@@ -78,6 +78,10 @@ namespace PropHunt.Character
         /// </summary>
         public LayerMask cameraRaycastMask = ~0;
 
+        public float shadowOnlyDistance = 0.5f;
+
+        public float ditherDistance = 1.0f;
+
         public void Start()
         {
             this.networkService = new NetworkService(this);
@@ -136,6 +140,28 @@ namespace PropHunt.Character
             }
 
             cameraTransform.position = cameraSource + cameraDirection;
+
+            float actualDistance = cameraDirection.magnitude;
+
+            if (actualDistance < shadowOnlyDistance)
+            {
+                MaterialUtils.RecursiveSetShadowCasingMode(gameObject, UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly);
+            }
+            else
+            {
+                MaterialUtils.RecursiveSetShadowCasingMode(gameObject, UnityEngine.Rendering.ShadowCastingMode.On);
+            }
+
+            if (actualDistance > shadowOnlyDistance && actualDistance < ditherDistance)
+            {
+                // Set opacity of character based on how close the camera is
+                MaterialUtils.RecursiveSetFloatProperty(gameObject, "_Opacity", (actualDistance - minCameraDistance) / (ditherDistance - minCameraDistance));
+            }
+            else
+            {
+                // Set opacity of character based on how close the camera is
+                MaterialUtils.RecursiveSetFloatProperty(gameObject, "_Opacity", 1);
+            }
         }
     }
 }
