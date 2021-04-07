@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 3398146232548734459}
   - component: {fileID: 8738540330072658556}
   m_Layer: 0
-  m_Name: TestCapsule
+  m_Name: TestCapsuel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -66,8 +66,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   propName: TestCapsule
-  disguiseVisual: {fileID: 8009201142137579652, guid: 85a25f4fe2d924b4f8988b9ef1d26a38,
-    type: 3}
+  disguiseVisual: {fileID: 8009201142137579652, guid: 85a25f4fe2d924b4f8988b9ef1d26a38, type: 3}
   disguiseCollider: {fileID: 3398146232548734459}
 --- !u!114 &2435120839595836137
 MonoBehaviour:
@@ -83,6 +82,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneId: 0
   serverOnly: 0
+  visible: 0
   m_AssetId: 
   hasSpawned: 0
 --- !u!114 &1056656595796686933
@@ -122,10 +122,11 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 309c46694339ded4ea6d37d58eda5b85, type: 2}
+  - {fileID: 2100000, guid: 1d6d20ca6d3177846bd2a38eeb6f0b16, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -146,6 +147,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!136 &3398146232548734459
 CapsuleCollider:
   m_ObjectHideFlags: 0

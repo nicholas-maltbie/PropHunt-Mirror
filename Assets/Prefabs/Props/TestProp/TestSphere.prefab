@@ -66,8 +66,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   propName: TestSphere
-  disguiseVisual: {fileID: 7768427415145440261, guid: 93ca935b4ae79f0419a388e0b61f3c41,
-    type: 3}
+  disguiseVisual: {fileID: 7768427415145440261, guid: 93ca935b4ae79f0419a388e0b61f3c41, type: 3}
   disguiseCollider: {fileID: 5172308136022080726}
 --- !u!114 &535994576491328819
 MonoBehaviour:
@@ -83,6 +82,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneId: 0
   serverOnly: 0
+  visible: 0
   m_AssetId: 
   hasSpawned: 0
 --- !u!114 &2887522220232871823
@@ -143,10 +143,11 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 309c46694339ded4ea6d37d58eda5b85, type: 2}
+  - {fileID: 2100000, guid: 1d6d20ca6d3177846bd2a38eeb6f0b16, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -167,3 +168,4 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}

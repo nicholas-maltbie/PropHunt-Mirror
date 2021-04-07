@@ -150,7 +150,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.2138955
+  m_Radius: 0.45
   m_Height: 1.8
   m_Direction: 1
   m_Center: {x: 0, y: 0.9, z: 0}
@@ -293,9 +293,10 @@ MonoBehaviour:
   cameraRaycastMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  shadowOnlyDistance: 0.1
-  ditherDistance: 0.5
+  shadowOnlyDistance: 0.4
+  ditherDistance: 0.6
   thirdPersonCharacterBase: {fileID: 8756352209484338735}
+  transitionTime: 0.1
 --- !u!114 &1509629139552447915
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -335,7 +336,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 886816266439757742}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.8000001, z: 0}
+  m_LocalPosition: {x: 0, y: 1.65, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2691377025762807458}
@@ -407,6 +408,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 2fe50b90de0f56b429fe6e254cc0441e, type: 3}
       propertyPath: m_Name
       value: SpacePerson
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 2fe50b90de0f56b429fe6e254cc0441e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 2fe50b90de0f56b429fe6e254cc0441e, type: 3}
       propertyPath: m_Controller

@@ -48,14 +48,14 @@ namespace Tests.EditMode.Character
         public void TestCameraFollowNotLocal()
         {
             this.networkServiceMock.Setup(e => e.isLocalPlayer).Returns(false);
-            this.cameraController.Update();
+            this.cameraController.FixedUpdate();
         }
 
         [Test]
         public void TestCameraFollowLocal()
         {
             this.networkServiceMock.Setup(e => e.isLocalPlayer).Returns(true);
-            this.cameraController.Update();
+            this.cameraController.FixedUpdate();
         }
 
         [Test]
@@ -64,7 +64,7 @@ namespace Tests.EditMode.Character
             this.cameraController.maxCameraDistance = 2.0f;
             this.cameraController.currentDistance = 2.0f;
             this.networkServiceMock.Setup(e => e.isLocalPlayer).Returns(true);
-            this.cameraController.Update();
+            this.cameraController.FixedUpdate();
         }
     }
 }

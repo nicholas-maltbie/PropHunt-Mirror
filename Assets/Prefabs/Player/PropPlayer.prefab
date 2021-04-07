@@ -164,9 +164,10 @@ MonoBehaviour:
   cameraRaycastMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  shadowOnlyDistance: 0.1
-  ditherDistance: 0.5
+  shadowOnlyDistance: 0.5
+  ditherDistance: 0.75
   thirdPersonCharacterBase: {fileID: 245587927565386927}
+  transitionTime: 0.1
 --- !u!114 &-6989314143880944393
 MonoBehaviour:
   m_ObjectHideFlags: 0
