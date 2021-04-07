@@ -111,7 +111,7 @@ namespace PropHunt.Character
             this.currentDistance = minCameraDistance;
         }
 
-        public void FixedUpdate()
+        public void Update()
         {
             if (!networkService.isLocalPlayer)
             {
