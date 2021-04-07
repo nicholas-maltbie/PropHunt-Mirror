@@ -182,7 +182,7 @@ namespace PropHunt.Character
                 if (actualDistance > shadowOnlyDistance && actualDistance < ditherDistance)
                 {
                     float newOpacity = (actualDistance - shadowOnlyDistance) / (ditherDistance - minCameraDistance);
-                    float lerpPosition = transitionTime > 0 ? deltaTime * 1/transitionTime : 1;
+                    float lerpPosition = transitionTime > 0 ? deltaTime * 1 / transitionTime : 1;
                     previousOpacity = Mathf.Lerp(previousOpacity, newOpacity, lerpPosition);
                     // Set opacity of character based on how close the camera is
                     MaterialUtils.RecursiveSetFloatProperty(thirdPersonCharacterBase, "_Opacity", previousOpacity);

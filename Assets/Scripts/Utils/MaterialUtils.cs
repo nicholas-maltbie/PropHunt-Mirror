@@ -8,7 +8,7 @@ namespace PropHunt.Utils
     {
         public static void RecursiveSetShadowCasingMode(GameObject original, ShadowCastingMode shadowCastingMode)
         {
-            foreach(Renderer renderer in original.GetComponentsInChildren<Renderer>())
+            foreach (Renderer renderer in original.GetComponentsInChildren<Renderer>())
             {
                 renderer.shadowCastingMode = shadowCastingMode;
             }
@@ -16,7 +16,7 @@ namespace PropHunt.Utils
 
         public static void RecursiveSetFloatProperty(GameObject original, string property, float value)
         {
-            foreach(Renderer renderer in original.GetComponentsInChildren<Renderer>())
+            foreach (Renderer renderer in original.GetComponentsInChildren<Renderer>())
             {
                 foreach (Material mat in renderer.materials)
                 {
