@@ -16,13 +16,13 @@ GameObject:
   - component: {fileID: -749921916936975090}
   - component: {fileID: 4402717801493103246}
   - component: {fileID: -6989314143880944393}
-  - component: {fileID: 5068185544392948995}
   - component: {fileID: -4329039560205243657}
   - component: {fileID: 6442824621798150539}
   - component: {fileID: 8169163611564138093}
   - component: {fileID: -316765144373666350}
   - component: {fileID: 5592021185975902138}
   - component: {fileID: -4343623551026766709}
+  - component: {fileID: 5348990939057730075}
   m_Layer: 8
   m_Name: PropPlayer
   m_TagString: Untagged
@@ -164,7 +164,7 @@ MonoBehaviour:
   cameraRaycastMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  shadowOnlyDistance: 0.3
+  shadowOnlyDistance: 0.2
   ditherDistance: 0.75
   thirdPersonCharacterBase: {fileID: 245587927565386927}
   transitionTime: 0.1
@@ -191,40 +191,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   focusTriggerInteraction: 0
---- !u!114 &5068185544392948995
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 245587927565386927}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47afaa0ab7e2cf945a2104438a91eb2e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  movementSpeed: 5
-  groundedDistance: 0.01
-  groundCheckDistance: 2
-  maxWalkAngle: 60
-  maxBounces: 5
-  gravity: {x: 0, y: -9.807, z: 0}
-  inputMovement: {x: 0, y: 0, z: 0}
-  velocity: {x: 0, y: 0, z: 0}
-  jumpVelocity: 5
-  attemptingJump: 0
-  maxPushSpeed: 10
-  pushDecay: 0.9
-  anglePower: 0.5
-  verticalSnapDown: 0.35
-  onGround: 0
-  stepUpDepth: 0.05
-  verticalSnapUp: 0.3
-  distanceToGround: 0
-  surfaceNormal: {x: 0, y: 0, z: 0}
-  angle: 0
 --- !u!114 &-4329039560205243657
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -323,6 +289,43 @@ MonoBehaviour:
   syncInterval: 0.1
   pushPower: 30
   weight: 20
+--- !u!114 &5348990939057730075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 245587927565386927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73555907382235c47a34fbf6dbc0d484, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  groundedDistance: 0.01
+  groundCheckDistance: 10
+  maxWalkAngle: 60
+  maxBounces: 5
+  gravity: {x: 0, y: -9.807, z: 0}
+  velocity: {x: 0, y: 0, z: 0}
+  jumpVelocity: 5
+  attemptingJump: 0
+  maxPushSpeed: 10
+  pushDecay: 0.9
+  anglePower: 0.5
+  verticalSnapDown: 0.2
+  onGround: 0
+  stepUpDepth: 0.1
+  verticalSnapUp: 0.3
+  distanceToGround: 0
+  surfaceNormal: {x: 0, y: 0, z: 0}
+  angle: 0
+  movementSpeed: 5
+  sprintSpeed: 6.5
+  inputMovement: {x: 0, y: 0, z: 0}
+  isSprinting: 0
+  elapsedFalling: 0
 --- !u!1 &457463035878123438
 GameObject:
   m_ObjectHideFlags: 0
