@@ -47,7 +47,7 @@ GameObject:
   - component: {fileID: 4663344245480376807}
   - component: {fileID: 8058400921613398875}
   - component: {fileID: 4628193183069983452}
-  - component: {fileID: 4385055463142153387}
+  - component: {fileID: 3216082124122132533}
   m_Layer: 0
   m_Name: TestProp
   m_TagString: Untagged
@@ -221,7 +221,7 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
---- !u!114 &4385055463142153387
+--- !u!114 &3216082124122132533
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -230,6 +230,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6956598771512216254}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b8e0644273e99441a44d3775759ba68, type: 3}
+  m_Script: {fileID: 11500000, guid: fd4b0a6ae935ab54e829c466f1084407, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  highlightTeam: 1

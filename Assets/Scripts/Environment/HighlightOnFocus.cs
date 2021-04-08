@@ -11,12 +11,12 @@ namespace PropHunt.Environment
         /// <summary>
         /// Current focused state of the object
         /// </summary>
-        private bool focused;
+        protected bool focused;
 
         /// <summary>
         /// Outline object
         /// </summary>
-        private Outline outline;
+        protected Outline outline;
 
         public void Start()
         {

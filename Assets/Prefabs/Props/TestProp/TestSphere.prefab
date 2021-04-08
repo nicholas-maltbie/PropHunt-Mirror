@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 6956598772981576141}
   - component: {fileID: 6956598772981576140}
   - component: {fileID: -7505680069362281744}
-  - component: {fileID: -1656801526017127729}
+  - component: {fileID: -7996170456900898477}
   m_Layer: 0
   m_Name: TestSphere
   m_TagString: Untagged
@@ -191,7 +191,7 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
---- !u!114 &-1656801526017127729
+--- !u!114 &-7996170456900898477
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -200,9 +200,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2832051002949170794}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b8e0644273e99441a44d3775759ba68, type: 3}
+  m_Script: {fileID: 11500000, guid: fd4b0a6ae935ab54e829c466f1084407, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  highlightTeam: 1
 --- !u!1 &3026821061586071396
 GameObject:
   m_ObjectHideFlags: 0

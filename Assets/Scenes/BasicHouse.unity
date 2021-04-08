@@ -38234,9 +38234,17 @@ PrefabInstance:
       propertyPath: sceneId
       value: 3614740350
       objectReference: {fileID: 0}
+    - target: {fileID: 1363221236879780549, guid: 12b2bc6ad188c8d4dbda964294152d02, type: 3}
+      propertyPath: m_AssetId
+      value: 12b2bc6ad188c8d4dbda964294152d02
+      objectReference: {fileID: 0}
     - target: {fileID: 1363221237123246688, guid: 12b2bc6ad188c8d4dbda964294152d02, type: 3}
       propertyPath: sceneId
       value: 4211666940
+      objectReference: {fileID: 0}
+    - target: {fileID: 1363221237123246688, guid: 12b2bc6ad188c8d4dbda964294152d02, type: 3}
+      propertyPath: m_AssetId
+      value: 12b2bc6ad188c8d4dbda964294152d02
       objectReference: {fileID: 0}
     - target: {fileID: 1363221237596427616, guid: 12b2bc6ad188c8d4dbda964294152d02, type: 3}
       propertyPath: m_RootOrder
