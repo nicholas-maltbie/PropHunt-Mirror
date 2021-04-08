@@ -16,6 +16,8 @@ GameObject:
   - component: {fileID: 5172308136022080726}
   - component: {fileID: 6956598772981576141}
   - component: {fileID: 6956598772981576140}
+  - component: {fileID: -7505680069362281744}
+  - component: {fileID: -1656801526017127729}
   m_Layer: 0
   m_Name: TestSphere
   m_TagString: Untagged
@@ -171,6 +173,36 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &-7505680069362281744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2832051002949170794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
+--- !u!114 &-1656801526017127729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2832051002949170794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b8e0644273e99441a44d3775759ba68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3026821061586071396
 GameObject:
   m_ObjectHideFlags: 0

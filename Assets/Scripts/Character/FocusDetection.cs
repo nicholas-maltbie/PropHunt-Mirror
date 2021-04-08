@@ -68,6 +68,13 @@ namespace PropHunt.Character
                 viewLayermask, focusTriggerInteraction, out hit))
             {
                 focus = hit.transform.gameObject;
+                // If the object has a focus component, tell the object it is 'focused'
+                Focusable focusable = focus.GetComponent<Focusable>();
+                if (focusable != null)
+                {
+                    // Invoke focus every frame locally
+                    focusable.Focus(gameObject);
+                }
                 currentHitDistance = hit.distance;
                 // If player interacts with what they're looking at
                 if (unityService.GetButtonDown("Interact") && focus.GetComponent<Interactable>() != null)
