@@ -6,7 +6,6 @@ namespace PropHunt.Environment
     /// <summary>
     /// Highlight an given object if a player looks at it for a given team
     /// </summary>
-    [RequireComponent(typeof(Outline))]
     public class HighlightForTeam : HighlightOnFocus
     {
         /// <summary>
