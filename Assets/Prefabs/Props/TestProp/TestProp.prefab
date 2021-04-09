@@ -46,8 +46,7 @@ GameObject:
   - component: {fileID: 5364158197237476595}
   - component: {fileID: 4663344245480376807}
   - component: {fileID: 8058400921613398875}
-  - component: {fileID: 4628193183069983452}
-  - component: {fileID: 3216082124122132533}
+  - component: {fileID: 1539371560}
   m_Layer: 0
   m_Name: TestProp
   m_TagString: Untagged
@@ -130,7 +129,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 0.99, y: 0.99, z: 0.99}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &2418792549772054508
 Rigidbody:
@@ -203,25 +202,7 @@ MonoBehaviour:
   syncAngularVelocity: 1
   clearAngularVelocity: 0
   angularVelocitySensitivity: 0.1
---- !u!114 &4628193183069983452
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6956598771512216254}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  outlineMode: 0
-  outlineColor: {r: 1, g: 1, b: 1, a: 1}
-  outlineWidth: 2
-  precomputeOutline: 0
-  bakeKeys: []
-  bakeValues: []
---- !u!114 &3216082124122132533
+--- !u!114 &1539371560
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -233,4 +214,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd4b0a6ae935ab54e829c466f1084407, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectedMode: 3
   highlightTeam: 1

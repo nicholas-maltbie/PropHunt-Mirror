@@ -23,7 +23,8 @@ public class Outline : MonoBehaviour {
     OutlineVisible,
     OutlineHidden,
     OutlineAndSilhouette,
-    SilhouetteOnly
+    SilhouetteOnly,
+    Disabled
   }
 
   public Mode OutlineMode {
@@ -245,6 +246,13 @@ public class Outline : MonoBehaviour {
     outlineFillMaterial.SetColor("_OutlineColor", outlineColor);
 
     switch (outlineMode) {
+      // case Mode.Disabled:
+      //   outlineMaskMaterial.SetFloat("_ZTest", (float)UnityEngine.Rendering.CompareFunction.LessEqual);
+      //   outlineFillMaterial.SetFloat("_ZTest", (float)UnityEngine.Rendering.CompareFunction.Greater);
+      //   outlineFillMaterial.SetFloat("_OutlineWidth", 0);
+      //   outlineFillMaterial.SetColor("_OutlineColor", new Color(1, 1, 1, 0));
+      //   break;
+
       case Mode.OutlineAll:
         outlineMaskMaterial.SetFloat("_ZTest", (float)UnityEngine.Rendering.CompareFunction.Always);
         outlineFillMaterial.SetFloat("_ZTest", (float)UnityEngine.Rendering.CompareFunction.Always);
