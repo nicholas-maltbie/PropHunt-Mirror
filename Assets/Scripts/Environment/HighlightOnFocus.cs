@@ -13,7 +13,7 @@ namespace PropHunt.Environment
         /// <summary>
         /// Current focused state of the object
         /// </summary>
-        protected bool focused;
+        public bool Focused { get; protected set; }
 
         /// <summary>
         /// Outline object
@@ -43,7 +43,7 @@ namespace PropHunt.Environment
         public override void Focus(GameObject sender)
         {
             // Set focused to true for this frame
-            focused = true;
+            Focused = true;
         }
 
         public void Update()
@@ -51,12 +51,12 @@ namespace PropHunt.Environment
             // Set the current focused state
             if (outline != null)
             {
-                outline.enabled = focused;
+                outline.enabled = Focused;
             }
-            MaterialUtils.RecursiveSetFloatProperty(gameObject, "_EmissionIsActive", focused ? 1 : 0);
+            MaterialUtils.RecursiveSetFloatProperty(gameObject, "_EmissionIsActive", Focused ? 1 : 0);
 
             // Assume the player looks away unless told otherwise
-            focused = false;
+            Focused = false;
         }
     }
 }

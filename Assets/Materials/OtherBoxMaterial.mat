@@ -142,7 +142,7 @@ Material:
     - Vector2_57A569B6: {r: 0, g: 0, b: 0, a: 0}
     - _AlbedoColor: {r: 1, g: 0.24754307, b: 0, a: 1}
     - _BaseColor: {r: 0.9150943, g: 0.331296, b: 0.11654504, a: 1}
-    - _Color: {r: 1, g: 0.53136694, b: 0, a: 1}
+    - _Color: {r: 1, g: 0.5529412, b: 0, a: 1}
     - _Emission: {r: 0, g: 0, b: 0, a: 0}
     - _EmissionColor: {r: 0.8627451, g: 0.7058824, b: 0, a: 1}
     - _Offset: {r: 0, g: 0, b: 0, a: 0}

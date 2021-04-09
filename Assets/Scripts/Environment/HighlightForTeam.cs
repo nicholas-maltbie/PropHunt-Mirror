@@ -19,7 +19,7 @@ namespace PropHunt.Environment
             // Set focused to true for this frame if the player is from the given team
             if (team != null && team.playerTeam == highlightTeam)
             {
-                this.focused = true;
+                this.Focused = true;
             }
         }
     }
