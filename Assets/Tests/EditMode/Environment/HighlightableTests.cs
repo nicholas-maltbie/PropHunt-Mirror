@@ -40,7 +40,7 @@ namespace Tests.EditMode.Environment
 
             // Assert that the start co-routine can finish
             IEnumerator iterable = highlightable.SetupOutline();
-            while (iterable.MoveNext());
+            while (iterable.MoveNext()) ;
         }
 
         [TearDown]
