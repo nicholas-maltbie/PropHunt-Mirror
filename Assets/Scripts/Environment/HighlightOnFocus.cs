@@ -1,3 +1,4 @@
+using System.Collections;
 using PropHunt.Utils;
 using QuickOutline;
 using UnityEngine;
@@ -10,11 +11,6 @@ namespace PropHunt.Environment
     public class HighlightOnFocus : Focusable
     {
         /// <summary>
-        /// Previous state
-        /// </summary>
-        protected bool previousFocused;
-
-        /// <summary>
         /// Current focused state of the object
         /// </summary>
         protected bool focused;
@@ -23,11 +19,6 @@ namespace PropHunt.Environment
         /// Outline object
         /// </summary>
         protected Outline outline;
-
-        /// <summary>
-        /// Mode of outline for this object
-        /// </summary>
-        public Outline.Mode selectedMode;
 
         public void Start()
         {
@@ -43,13 +34,13 @@ namespace PropHunt.Environment
 
         public void Update()
         {
-            if (previousFocused != focused)
+            // Set the current focused state
+            if (outline != null)
             {
-                // Set the current focused state
-                // outline.OutlineMode = focused ? this.selectedMode : Outline.Mode.Disabled;
-                MaterialUtils.RecursiveSetFloatProperty(gameObject, "_EmissionActive", focused ? 1 : 0);
+                outline.enabled = focused;
             }
-            previousFocused = focused;
+            MaterialUtils.RecursiveSetFloatProperty(gameObject, "_EmissionActive", focused ? 1 : 0);
+
             // Assume the player looks away unless told otherwise
             focused = false;
         }
