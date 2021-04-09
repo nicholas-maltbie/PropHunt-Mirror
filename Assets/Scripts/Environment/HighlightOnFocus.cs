@@ -23,7 +23,21 @@ namespace PropHunt.Environment
         public void Start()
         {
             this.outline = GetComponent<Outline>();
-            MaterialUtils.RecursiveSetFloatProperty(gameObject, "_EmissionActive", 0);
+            MaterialUtils.RecursiveSetFloatProperty(gameObject, "_EmissionIsActive", 0);
+            StartCoroutine(SetupOutline());
+        }
+
+        public IEnumerator SetupOutline()
+        {
+            if (this.outline != null)
+            {
+                this.outline.enabled = true;
+                yield return null;
+                yield return null;
+                this.outline.enabled = false;
+                yield return null;
+                yield return null;
+            }
         }
 
         public override void Focus(GameObject sender)
@@ -39,7 +53,7 @@ namespace PropHunt.Environment
             {
                 outline.enabled = focused;
             }
-            MaterialUtils.RecursiveSetFloatProperty(gameObject, "_EmissionActive", focused ? 1 : 0);
+            MaterialUtils.RecursiveSetFloatProperty(gameObject, "_EmissionIsActive", focused ? 1 : 0);
 
             // Assume the player looks away unless told otherwise
             focused = false;

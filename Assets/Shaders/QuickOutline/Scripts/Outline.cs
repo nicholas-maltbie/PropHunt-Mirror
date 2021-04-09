@@ -100,6 +100,8 @@ namespace QuickOutline
       // Retrieve or generate smooth normals
       LoadSmoothNormals();
 
+      UpdateMaterialProperties();
+
       // Apply material properties immediately
       needsUpdate = true;
     }
@@ -257,6 +259,7 @@ namespace QuickOutline
 
       // Apply properties according to mode
       outlineFillMaterial.SetColor("_OutlineColor", outlineColor);
+      outlineMaskMaterial.SetColor("_OutlineColor", outlineColor);
 
       switch (outlineMode) {
         case Mode.OutlineAll:
