@@ -59,7 +59,6 @@ namespace Tests.EditMode.Environment
             Assert.IsFalse(highlightable.Focused);
             // Update after looking at object
             this.highlightable.Focus(highlightable.gameObject);
-            this.highlightable.Update();
             // Assert that the outline is enabled
             Assert.IsTrue(highlightable.Focused);
             // Assert that object's highlight goes away after a frame
