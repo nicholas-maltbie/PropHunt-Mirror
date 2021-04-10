@@ -102,6 +102,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - Vector1_4C4B7100: 1.5
+    - Vector1_f8a87cb5b2d641abb679d4b0f51b8174: 0
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -116,14 +117,15 @@ Material:
     - _DitherSize: 1
     - _DstBlend: 0
     - _EmissionActive: 0
+    - _EmissionIntensity: 1.25
     - _EmissionIsActive: 0
     - _EnvironmentReflections: 1
-    - _FresnelValue: 2
+    - _FresnelValue: 1.5
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _HasHeartbeat: 1
-    - _HeartbeatFrequency: 2
+    - _HeartbeatFrequency: 3
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Opacity: 1

@@ -465,6 +465,9 @@
             "m_Id": "6cd355888e34415dabddd935e779d79f"
         },
         {
+            "m_Id": "1ff4f6d0c5984683941d3e13493fc3b0"
+        },
+        {
             "m_Id": "3c62d317c08b48cd8dba41128be89ff7"
         }
     ],
@@ -482,7 +485,8 @@
         "2147cdc8-90f8-4ade-9bbf-69719692fcf4",
         "4890dbdb-1281-4b8f-a233-e806d9b92283",
         "96123722-2f99-41aa-8db8-e1b5406a7199",
-        "c5fc134a-c139-4a2d-8f86-6c75ede1be2e"
+        "c5fc134a-c139-4a2d-8f86-6c75ede1be2e",
+        "a327601c-f38d-4ea7-9022-ad1ea929e0a2"
     ],
     "m_PropertyIds": [
         -2112301757,
@@ -490,7 +494,8 @@
         -658536478,
         -1307471657,
         1485534737,
-        1757763913
+        1757763913,
+        -39178727
     ]
 }
 
@@ -737,6 +742,21 @@
     "m_StageCapability": 3,
     "m_Value": false,
     "m_DefaultValue": false
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "1ff4f6d0c5984683941d3e13493fc3b0",
+    "m_Id": -39178727,
+    "m_DisplayName": "EmissionIntensity",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Vector1_6f66609578ff49e6b698488e0a0cff74",
+    "m_StageCapability": 3,
+    "m_Value": 1.0,
+    "m_DefaultValue": 0.0,
+    "m_Labels": []
 }
 
 {

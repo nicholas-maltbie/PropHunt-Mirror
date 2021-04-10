@@ -38,6 +38,9 @@
         },
         {
             "m_Id": "d12f55e2525f4a3a8424e03340efb945"
+        },
+        {
+            "m_Id": "f8a87cb5b2d641abb679d4b0f51b8174"
         }
     ],
     "m_Keywords": [],
@@ -125,6 +128,9 @@
         },
         {
             "m_Id": "887c01f5ab77430aa53485d1568d87cc"
+        },
+        {
+            "m_Id": "782ec80a83bd4c2e9a689308a420313d"
         }
     ],
     "m_GroupDatas": [],
@@ -268,6 +274,20 @@
                     "m_Id": "14014c78caf9496c8fc4d8087541ace1"
                 },
                 "m_SlotId": 2
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "782ec80a83bd4c2e9a689308a420313d"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "0d5d2237e7944e0982ad7b821e16310d"
+                },
+                "m_SlotId": -39178727
             }
         },
         {
@@ -571,6 +591,9 @@
             "m_Id": "6cd355888e34415dabddd935e779d79f"
         },
         {
+            "m_Id": "538f12fa0fb8451d91ef4eb354677836"
+        },
+        {
             "m_Id": "3c62d317c08b48cd8dba41128be89ff7"
         }
     ],
@@ -588,7 +611,8 @@
         "2147cdc8-90f8-4ade-9bbf-69719692fcf4",
         "4890dbdb-1281-4b8f-a233-e806d9b92283",
         "96123722-2f99-41aa-8db8-e1b5406a7199",
-        "c5fc134a-c139-4a2d-8f86-6c75ede1be2e"
+        "c5fc134a-c139-4a2d-8f86-6c75ede1be2e",
+        "a327601c-f38d-4ea7-9022-ad1ea929e0a2"
     ],
     "m_PropertyIds": [
         -2112301757,
@@ -596,7 +620,8 @@
         -658536478,
         -1307471657,
         1485534737,
-        1757763913
+        1757763913,
+        -39178727
     ]
 }
 
@@ -1309,6 +1334,21 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "49fb00578560482f9fc2ef3bf2387724",
+    "m_Id": 0,
+    "m_DisplayName": "Emission Intensity",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3,
+    "m_Value": 0.0,
+    "m_DefaultValue": 0.0,
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.Vector2MaterialSlot",
     "m_ObjectId": "4bd8960b25ba44e581d618efb18034cf",
     "m_Id": 3,
@@ -1481,6 +1521,21 @@
     "m_StageCapability": 3,
     "m_Value": false,
     "m_DefaultValue": false
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "538f12fa0fb8451d91ef4eb354677836",
+    "m_Id": -39178727,
+    "m_DisplayName": "EmissionIntensity",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Vector1_6f66609578ff49e6b698488e0a0cff74",
+    "m_StageCapability": 3,
+    "m_Value": 1.0,
+    "m_DefaultValue": 0.0,
+    "m_Labels": []
 }
 
 {
@@ -1705,6 +1760,41 @@
     "m_RangeValues": {
         "x": 0.0,
         "y": 1.0
+    }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
+    "m_ObjectId": "782ec80a83bd4c2e9a689308a420313d",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Property",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": -197.0,
+            "y": -17.0,
+            "width": 171.0,
+            "height": 34.0
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "49fb00578560482f9fc2ef3bf2387724"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_Property": {
+        "m_Id": "f8a87cb5b2d641abb679d4b0f51b8174"
     }
 }
 
@@ -2614,6 +2704,29 @@
     },
     "m_Labels": [],
     "m_Space": 3
+}
+
+{
+    "m_SGVersion": 1,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.Vector1ShaderProperty",
+    "m_ObjectId": "f8a87cb5b2d641abb679d4b0f51b8174",
+    "m_Guid": {
+        "m_GuidSerialized": "c7ba79c3-fcd1-4466-be45-af3068d003c8"
+    },
+    "m_Name": "Emission Intensity",
+    "m_DefaultReferenceName": "Vector1_f8a87cb5b2d641abb679d4b0f51b8174",
+    "m_OverrideReferenceName": "_EmissionIntensity",
+    "m_GeneratePropertyBlock": true,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": 1.0,
+    "m_FloatType": 0,
+    "m_RangeValues": {
+        "x": 0.0,
+        "y": 1.0
+    }
 }
 
 {
