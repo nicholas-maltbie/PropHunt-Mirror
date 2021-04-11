@@ -4,18 +4,17 @@ using UnityEngine;
 
 namespace PropHunt.Animation
 {
+    /// <summary>
+    /// Wrapper object to map the controls of Inverse Kinematics 
+    /// for a humanoid character.
+    /// </summary>
     [RequireComponent(typeof(Animator))]
-    public class IKControl : NetworkBehaviour
+    public class IKControl : MonoBehaviour
     {
-        /// <summary>
-        /// Animator associated with this control object
-        /// </summary>
-        protected Animator animator;
-
         /// <summary>
         /// Are the Inverse Kinematics controls enabled for this character
         /// </summary>
-        public bool ikActive = false;
+        public bool ikActive = true;
 
         /// <summary>
         /// Transform (position and rotation) target for the character's right hand
@@ -105,24 +104,87 @@ namespace PropHunt.Animation
         [Range(0, 1)]
         public float lookWeight = 1.0f;
 
-        public INetworkService networkService;
+        /// <summary>
+        /// Animator component controlling IK
+        /// </summary>
+        protected Animator animator;
 
-        void Start()
+        public void Start()
         {
-            animator = GetComponent<Animator>();
-            this.networkService = new NetworkService(this);
+            this.animator = GetComponent<Animator>();
+        }
+
+        public void SetLookTransform(Transform transform)
+        {
+            this.lookObj = transform;
+        }
+
+        public void SetLookWeight(float weight)
+        {
+            this.lookWeight = weight;
+        }
+
+        public void SetIKHintWeight(AvatarIKHint ikHint, float weight)
+        {
+            switch(ikHint)
+            {
+                case AvatarIKHint.LeftElbow:
+                    this.leftElbowWeight = weight;
+                    break;
+                case AvatarIKHint.RightElbow:
+                    this.rightElbowWeight = weight;
+                    break;
+                case AvatarIKHint.LeftKnee:
+                    this.leftKneeWeight = weight;
+                    break;
+                case AvatarIKHint.RightKnee:
+                    this.rightKneeWeight = weight;
+                    break;
+            }
+        }
+
+        public void SetIKGoalTransform(AvatarIKGoal ikGoal, Transform transform)
+        {
+            switch(ikGoal)
+            {
+                case AvatarIKGoal.LeftHand:
+                    this.leftHandTarget = transform;
+                    break;
+                case AvatarIKGoal.RightHand:
+                    this.rightHandTarget = transform;
+                    break;
+                case AvatarIKGoal.LeftFoot:
+                    this.leftFootTarget = transform;
+                    break;
+                case AvatarIKGoal.RightFoot:
+                    this.rightFootTarget = transform;
+                    break;
+            }
+        }
+
+        public void SetIKGoalWeight(AvatarIKGoal ikGoal, float weight)
+        {
+            switch(ikGoal)
+            {
+                case AvatarIKGoal.LeftHand:
+                    this.leftHandWeight = weight;
+                    break;
+                case AvatarIKGoal.RightHand:
+                    this.rightHandWeight = weight;
+                    break;
+                case AvatarIKGoal.LeftFoot:
+                    this.rightHandWeight = weight;
+                    break;
+                case AvatarIKGoal.RightFoot:
+                    this.rightFootweight = weight;
+                    break;
+            }
         }
 
         public void OnAnimatorIK()
         {
-            // Only configure animator if local player
-            if (!networkService.isLocalPlayer)
-            {
-                return;
-            }
-
             // Skip code if animator is not initialized
-            if (!animator)
+            if (animator == null)
             {
                 return;
             }
@@ -133,7 +195,7 @@ namespace PropHunt.Animation
                 // Set the look target position, if one has been assigned
                 if (lookObj != null)
                 {
-                    animator.SetLookAtWeight(1);
+                    animator.SetLookAtWeight(lookWeight);
                     animator.SetLookAtPosition(lookObj.position);
                 }
 
