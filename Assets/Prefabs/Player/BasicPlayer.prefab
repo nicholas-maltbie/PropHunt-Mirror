@@ -23,8 +23,8 @@ GameObject:
   - component: {fileID: 1509629139552447915}
   - component: {fileID: 8481329674398737299}
   - component: {fileID: 4965862787272249836}
-  - component: {fileID: 9146407159294641169}
   - component: {fileID: 5517084023280369707}
+  - component: {fileID: 9146407159294641169}
   m_Layer: 0
   m_Name: BasicPlayer
   m_TagString: Untagged
@@ -40,7 +40,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 245587927565386927}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8130394144415267709}
@@ -328,20 +328,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   queryTriggerInteraction: 1
---- !u!114 &9146407159294641169
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 245587927565386927}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a262fac824c8c7f40b48999e285c36b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
 --- !u!114 &5517084023280369707
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -360,6 +346,20 @@ MonoBehaviour:
   lookState: 0
   lookWeight: 0
   controller: {fileID: 9123469036688720343}
+--- !u!114 &9146407159294641169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 245587927565386927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a262fac824c8c7f40b48999e285c36b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
 --- !u!1 &886816266439757742
 GameObject:
   m_ObjectHideFlags: 0
@@ -390,6 +390,19 @@ Transform:
   m_Father: {fileID: 2691377025762807458}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2096275806088051630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8756352209484338735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6782980285679d34a8f78cfd600be950, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
 --- !u!114 &9123469036688720343
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -407,6 +420,10 @@ MonoBehaviour:
   leftHandTarget: {fileID: 0}
   rightFootTarget: {fileID: 0}
   leftFootTarget: {fileID: 0}
+  rightKneeTarget: {fileID: 0}
+  leftKneeTarget: {fileID: 0}
+  rightElbowTarget: {fileID: 0}
+  leftElbowTarget: {fileID: 0}
   lookObj: {fileID: 0}
   rightHandWeight: 1
   leftHandWeight: 1

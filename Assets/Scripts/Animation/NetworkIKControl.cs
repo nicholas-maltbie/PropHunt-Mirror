@@ -27,6 +27,11 @@ namespace PropHunt.Animation
         protected Dictionary<AvatarIKGoal, Transform> ikGoalTargets = new Dictionary<AvatarIKGoal, Transform>();
 
         /// <summary>
+        /// Targets for various avatar IK hints
+        /// </summary>
+        protected Dictionary<AvatarIKHint, Transform> ikHintTargets = new Dictionary<AvatarIKHint, Transform>();
+
+        /// <summary>
         /// Are the Inverse Kinematics controls enabled for this character
         /// </summary>
         public bool ikActive = true;
@@ -54,6 +59,11 @@ namespace PropHunt.Animation
         public SyncDictionary<AvatarIKGoal, float> avatarIKGoalWeights = new SyncDictionary<AvatarIKGoal, float>();
 
         /// <summary>
+        /// What is the current avatar IK hint for each state
+        /// </summary>
+        public SyncDictionary<AvatarIKHint, bool> avatarIKHintStates = new SyncDictionary<AvatarIKHint, bool>();
+
+        /// <summary>
         /// Current weights for IK hint positions
         /// </summary>
         public SyncDictionary<AvatarIKHint, float> avatarIKHintWeights = new SyncDictionary<AvatarIKHint, float>();
@@ -72,6 +82,8 @@ namespace PropHunt.Animation
         public void OnLookWeightChange(float _, float newWeight) => this.controller.lookWeight = newWeight;
         public void UpdateIKGoalWeight(AvatarIKGoal goal, float newWeight) => this.controller.SetIKGoalWeight(goal, newWeight);
         public void UpdateIKHintWeight(AvatarIKHint hint, float newWeight) => this.controller.SetIKHintWeight(hint, newWeight);
+        public void UpdateIKHintState(AvatarIKHint hint, bool newState) =>
+            this.controller.SetIKHintTransform(hint, newState ? ikHintTargets[hint] : null);
         public void UpdateIKGoalState(AvatarIKGoal goal, bool newState) =>
             this.controller.SetIKGoalTransform(goal, newState ? ikGoalTargets[goal] : null);
 
@@ -165,6 +177,23 @@ namespace PropHunt.Animation
             }
         }
 
+        public void SetIKHintState(AvatarIKHint hint, bool newState)
+        {
+            if (!networkService.isServer)
+            {
+                CmdSetIKHintState(hint, newState);
+            }
+            else
+            {
+                this.avatarIKHintStates[hint] = newState;
+            }
+
+            if (networkService.isLocalPlayer || networkService.isServer)
+            {
+                UpdateIKHintState(hint, newState);
+            }
+        }
+
         public void Awake()
         {
             networkService = new NetworkService(this);
@@ -191,6 +220,20 @@ namespace PropHunt.Animation
                 ikGoalChildTransform.target = ikGoalTransform;
                 ikGoalChildTransform.clientAuthority = true;
                 this.ikGoalTargets.Add(goal, ikGoalTransform);
+            }
+
+            // Setup and synchronize transform hints
+            foreach (AvatarIKHint hint in avatarIKHints)
+            {
+                Transform ikHintTransform = new GameObject().transform;
+                ikHintTransform.position = transform.position;
+                ikHintTransform.rotation = transform.rotation;
+                ikHintTransform.parent = transform;
+                ikHintTransform.name = hint.ToString();
+                NetworkTransformChild ikGoalChildTransform = gameObject.AddComponent<NetworkTransformChild>();
+                ikGoalChildTransform.target = ikHintTransform;
+                ikGoalChildTransform.clientAuthority = true;
+                this.ikHintTargets.Add(hint, ikHintTransform);
             }
         }
 
@@ -238,6 +281,12 @@ namespace PropHunt.Animation
             {
                 OnLookStateChange(this.lookState, newLookState);
             }
+        }
+
+        [Command]
+        public void CmdSetIKHintState(AvatarIKHint goal, bool newState)
+        {
+            UpdateIKHintState(goal, newState);
         }
 
         [Command]

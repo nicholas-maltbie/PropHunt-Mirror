@@ -132,7 +132,7 @@ AnimatorState:
   - {fileID: 3803962893153478625}
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
+  m_IKOnFeet: 1
   m_WriteDefaultValues: 1
   m_Mirror: 0
   m_SpeedParameterActive: 0
@@ -231,7 +231,7 @@ AnimatorState:
   - {fileID: -6921352179361993083}
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
+  m_IKOnFeet: 1
   m_WriteDefaultValues: 1
   m_Mirror: 0
   m_SpeedParameterActive: 0
@@ -259,7 +259,7 @@ AnimatorState:
   - {fileID: 1193140957959470554}
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
+  m_IKOnFeet: 1
   m_WriteDefaultValues: 1
   m_Mirror: 0
   m_SpeedParameterActive: 0
@@ -397,7 +397,7 @@ AnimatorState:
   - {fileID: 4522937878842545613}
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
+  m_IKOnFeet: 1
   m_WriteDefaultValues: 1
   m_Mirror: 0
   m_SpeedParameterActive: 0
@@ -543,7 +543,7 @@ AnimatorController:
   - serializedVersion: 5
     m_Name: Base Layer
     m_StateMachine: {fileID: -7993613351518135573}
-    m_Mask: {fileID: 0}
+    m_Mask: {fileID: 31900000, guid: 66b22ecd6aff90d45b9959ed25674713, type: 2}
     m_Motions: []
     m_Behaviours: []
     m_BlendingMode: 0

@@ -37,6 +37,26 @@ namespace PropHunt.Animation
         public Transform leftFootTarget = null;
 
         /// <summary>
+        /// Transform (position) target for the character's right knee
+        /// </summary>
+        public Transform rightKneeTarget = null;
+
+        /// <summary>
+        /// Transform (position) target for the character's left knee
+        /// </summary>
+        public Transform leftKneeTarget = null;
+
+        /// <summary>
+        /// Transform (position) target for the character's right elbow
+        /// </summary>
+        public Transform rightElbowTarget = null;
+
+        /// <summary>
+        /// Transform (position) target for the character's left elbow
+        /// </summary>
+        public Transform leftElbowTarget = null;
+
+        /// <summary>
         /// Where is the player currently looking (just positional data)
         /// </summary>
         public Transform lookObj = null;
@@ -143,6 +163,25 @@ namespace PropHunt.Animation
             }
         }
 
+        public void SetIKHintTransform(AvatarIKHint ikGoal, Transform transform)
+        {
+            switch(ikGoal)
+            {
+                case AvatarIKHint.LeftKnee:
+                    this.leftKneeTarget = transform;
+                    break;
+                case AvatarIKHint.RightKnee:
+                    this.rightKneeTarget = transform;
+                    break;
+                case AvatarIKHint.LeftElbow:
+                    this.leftElbowTarget = transform;
+                    break;
+                case AvatarIKHint.RightElbow:
+                    this.rightElbowTarget = transform;
+                    break;
+            }
+        }
+
         public void SetIKGoalTransform(AvatarIKGoal ikGoal, Transform transform)
         {
             switch(ikGoal)
@@ -199,7 +238,6 @@ namespace PropHunt.Animation
                     animator.SetLookAtPosition(lookObj.position);
                 }
 
-                // Set the right hand target position and rotation, if one has been assigned
                 if (rightHandTarget != null)
                 {
                     animator.SetIKHintPositionWeight(AvatarIKHint.RightElbow, rightElbowWeight);
@@ -209,17 +247,14 @@ namespace PropHunt.Animation
                     animator.SetIKRotation(AvatarIKGoal.RightHand, rightHandTarget.rotation);
                 }
 
-                // Set the right hand target position and rotation, if one has been assigned
                 if (leftHandTarget != null)
                 {
-                    animator.SetIKHintPositionWeight(AvatarIKHint.LeftElbow, leftElbowWeight);
                     animator.SetIKPositionWeight(AvatarIKGoal.LeftHand, leftHandWeight);
                     animator.SetIKRotationWeight(AvatarIKGoal.LeftHand, leftHandWeight);
                     animator.SetIKPosition(AvatarIKGoal.LeftHand, leftHandTarget.position);
                     animator.SetIKRotation(AvatarIKGoal.LeftHand, leftHandTarget.rotation);
                 }
 
-                // Set the right hand target position and rotation, if one has been assigned
                 if (rightFootTarget != null)
                 {
                     animator.SetIKHintPositionWeight(AvatarIKHint.RightKnee, rightKneeWeight);
@@ -229,7 +264,6 @@ namespace PropHunt.Animation
                     animator.SetIKRotation(AvatarIKGoal.RightFoot, rightFootTarget.rotation);
                 }
 
-                // Set the right hand target position and rotation, if one has been assigned
                 if (leftFootTarget != null)
                 {
                     animator.SetIKHintPositionWeight(AvatarIKHint.LeftKnee, leftKneeWeight);
@@ -237,6 +271,27 @@ namespace PropHunt.Animation
                     animator.SetIKRotationWeight(AvatarIKGoal.LeftFoot, leftFootWeight);
                     animator.SetIKPosition(AvatarIKGoal.LeftFoot, leftFootTarget.position);
                     animator.SetIKRotation(AvatarIKGoal.LeftFoot, leftFootTarget.rotation);
+                }
+
+                if (leftElbowTarget != null)
+                {
+                    animator.SetIKHintPositionWeight(AvatarIKHint.LeftElbow, leftElbowWeight);
+                    animator.SetIKHintPosition(AvatarIKHint.LeftElbow, leftElbowTarget.position);
+                }
+                if (rightElbowTarget != null)
+                {
+                    animator.SetIKHintPositionWeight(AvatarIKHint.RightElbow, rightElbowWeight);
+                    animator.SetIKHintPosition(AvatarIKHint.RightElbow, rightElbowTarget.position);
+                }
+                if (leftKneeTarget != null)
+                {
+                    animator.SetIKHintPositionWeight(AvatarIKHint.LeftKnee, leftKneeWeight);
+                    animator.SetIKHintPosition(AvatarIKHint.LeftKnee, leftKneeTarget.position);
+                }
+                if (rightKneeTarget != null)
+                {
+                    animator.SetIKHintPositionWeight(AvatarIKHint.RightKnee, rightKneeWeight);
+                    animator.SetIKHintPosition(AvatarIKHint.RightKnee, rightKneeTarget.position);
                 }
             }
 
