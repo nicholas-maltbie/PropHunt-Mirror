@@ -120,6 +120,11 @@ namespace PropHunt.Animation
             {
                 CmdSetIKGoalWeight(goal, newWeight);
             }
+            else
+            {
+                this.avatarIKGoalWeights[goal] = newWeight;
+            }
+
             if (networkService.isLocalPlayer || networkService.isServer)
             {
                 UpdateIKGoalWeight(goal, newWeight);
@@ -132,6 +137,11 @@ namespace PropHunt.Animation
             {
                 CmdSetIKGoalState(goal, newState);
             }
+            else
+            {
+                this.avatarIKGoalStates[goal] = newState;
+            }
+
             if (networkService.isLocalPlayer || networkService.isServer)
             {
                 UpdateIKGoalState(goal, newState);
@@ -144,6 +154,11 @@ namespace PropHunt.Animation
             {
                 CmdSetIKHintWeight(hint, newWeight);
             }
+            else
+            {
+                this.avatarIKHintWeights[hint] = newWeight;
+            }
+
             if (networkService.isLocalPlayer || networkService.isServer)
             {
                 UpdateIKHintWeight(hint, newWeight);

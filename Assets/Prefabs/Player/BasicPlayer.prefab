@@ -356,11 +356,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  ikRightHandGoal: {fileID: 0}
-  ikLeftHandGoal: {fileID: 0}
-  ikRightFootGoal: {fileID: 0}
-  ikLeftFootGoal: {fileID: 0}
-  ikLookTarget: {fileID: 0}
   ikActive: 1
   lookState: 0
   lookWeight: 0
