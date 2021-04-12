@@ -1,7 +1,5 @@
-
 using System.Collections.Generic;
 using Mirror;
-using PropHunt.Character;
 using PropHunt.Utils;
 using UnityEngine;
 
@@ -12,11 +10,22 @@ namespace PropHunt.Animation
     /// </summary>
     public class NetworkIKControl : NetworkBehaviour
     {
+        public static readonly AvatarIKGoal[] avatarIKGoals = {AvatarIKGoal.LeftFoot, AvatarIKGoal.RightFoot,
+            AvatarIKGoal.LeftHand, AvatarIKGoal.RightHand};
+
+        public static readonly AvatarIKHint[] avatarIKHints = {AvatarIKHint.LeftElbow, AvatarIKHint.LeftKnee,
+            AvatarIKHint.RightElbow, AvatarIKHint.RightKnee};
+
         /// <summary>
         /// Target for player looking
         /// </summary>
-        public Transform ikLookTarget;
-        
+        public Transform ikLookTarget { get; private set; }
+
+        /// <summary>
+        /// Targets for various avatar IK Goals
+        /// </summary>
+        protected Dictionary<AvatarIKGoal, Transform> ikGoalTargets = new Dictionary<AvatarIKGoal, Transform>();
+
         /// <summary>
         /// Are the Inverse Kinematics controls enabled for this character
         /// </summary>
@@ -35,6 +44,21 @@ namespace PropHunt.Animation
         public float lookWeight;
 
         /// <summary>
+        /// What is the current avatar IK goal for each state
+        /// </summary>
+        public SyncDictionary<AvatarIKGoal, bool> avatarIKGoalStates = new SyncDictionary<AvatarIKGoal, bool>();
+
+        /// <summary>
+        /// Current weights for IK goal transforms
+        /// </summary>
+        public SyncDictionary<AvatarIKGoal, float> avatarIKGoalWeights = new SyncDictionary<AvatarIKGoal, float>();
+
+        /// <summary>
+        /// Current weights for IK hint positions
+        /// </summary>
+        public SyncDictionary<AvatarIKHint, float> avatarIKHintWeights = new SyncDictionary<AvatarIKHint, float>();
+
+        /// <summary>
         /// Network service for managing player interactions
         /// </summary>
         public INetworkService networkService;
@@ -46,18 +70,113 @@ namespace PropHunt.Animation
 
         public void OnLookStateChange(bool _, bool newState) => this.controller.lookObj = newState ? ikLookTarget : null;
         public void OnLookWeightChange(float _, float newWeight) => this.controller.lookWeight = newWeight;
+        public void UpdateIKGoalWeight(AvatarIKGoal goal, float newWeight) => this.controller.SetIKGoalWeight(goal, newWeight);
+        public void UpdateIKHintWeight(AvatarIKHint hint, float newWeight) => this.controller.SetIKHintWeight(hint, newWeight);
+        public void UpdateIKGoalState(AvatarIKGoal goal, bool newState) =>
+            this.controller.SetIKGoalTransform(goal, newState ? ikGoalTargets[goal] : null);
+
+        public void OnIKGoalStateChange(SyncDictionary<AvatarIKGoal, bool>.Operation operation, AvatarIKGoal goal, bool state)
+        {
+            if (operation == SyncDictionary<AvatarIKGoal, bool>.Operation.OP_ADD ||
+                operation == SyncDictionary<AvatarIKGoal, bool>.Operation.OP_SET)
+            {
+                UpdateIKGoalState(goal, state);
+            }
+            else
+            {
+                UpdateIKGoalState(goal, false);
+            }
+        }
+
+        public void OnIKHintWeightChange(SyncDictionary<AvatarIKHint, float>.Operation operation, AvatarIKHint hint, float weight)
+        {
+            if (operation == SyncDictionary<AvatarIKHint, float>.Operation.OP_ADD ||
+                operation == SyncDictionary<AvatarIKHint, float>.Operation.OP_SET)
+            {
+                UpdateIKHintWeight(hint, weight);
+            }
+            else
+            {
+                UpdateIKHintWeight(hint, 0.0f);
+            }
+        }
+
+        public void OnIKGoalWeightChange(SyncDictionary<AvatarIKGoal, float>.Operation operation, AvatarIKGoal goal, float weight)
+        {
+            if (operation == SyncDictionary<AvatarIKGoal, float>.Operation.OP_ADD ||
+                operation == SyncDictionary<AvatarIKGoal, float>.Operation.OP_SET)
+            {
+                UpdateIKGoalWeight(goal, weight);
+            }
+            else
+            {
+                UpdateIKGoalWeight(goal, 0.0f);
+            }
+        }
+
+        public void SetIKGoalWeight(AvatarIKGoal goal, float newWeight)
+        {
+            if (!networkService.isServer)
+            {
+                CmdSetIKGoalWeight(goal, newWeight);
+            }
+            if (networkService.isLocalPlayer || networkService.isServer)
+            {
+                UpdateIKGoalWeight(goal, newWeight);
+            }
+        }
+
+        public void SetIKGoalState(AvatarIKGoal goal, bool newState)
+        {
+            if (!networkService.isServer)
+            {
+                CmdSetIKGoalState(goal, newState);
+            }
+            if (networkService.isLocalPlayer || networkService.isServer)
+            {
+                UpdateIKGoalState(goal, newState);
+            }
+        }
+
+        public void SetIKHintWeight(AvatarIKHint hint, float newWeight)
+        {
+            if (!networkService.isServer)
+            {
+                CmdSetIKHintWeight(hint, newWeight);
+            }
+            if (networkService.isLocalPlayer || networkService.isServer)
+            {
+                UpdateIKHintWeight(hint, newWeight);
+            }
+        }
 
         public void Awake()
         {
             networkService = new NetworkService(this);
 
+            // Setup look target
             this.ikLookTarget = new GameObject().transform;
             this.ikLookTarget.position = transform.position;
             this.ikLookTarget.rotation = transform.rotation;
             this.ikLookTarget.parent = transform;
+            this.ikLookTarget.name = "Look Target";
             NetworkTransformChild childTransform = gameObject.AddComponent<NetworkTransformChild>();
             childTransform.target = this.ikLookTarget;
             childTransform.clientAuthority = true;
+
+            // Setup and synchronize tarnsform goals
+            foreach (AvatarIKGoal goal in avatarIKGoals)
+            {
+                Transform ikGoalTransform = new GameObject().transform;
+                ikGoalTransform.position = transform.position;
+                ikGoalTransform.rotation = transform.rotation;
+                ikGoalTransform.parent = transform;
+                ikGoalTransform.name = goal.ToString();
+                NetworkTransformChild ikGoalChildTransform = gameObject.AddComponent<NetworkTransformChild>();
+                ikGoalChildTransform.target = ikGoalTransform;
+                ikGoalChildTransform.clientAuthority = true;
+                this.ikGoalTargets.Add(goal, ikGoalTransform);
+            }
         }
 
         public void SetLookWeight(float newLookWeight)
@@ -73,6 +192,26 @@ namespace PropHunt.Animation
             }
         }
 
+        public override void OnStartServer()
+        {
+            foreach (AvatarIKGoal goal in avatarIKGoals)
+            {
+                this.avatarIKGoalStates.Add(goal, false);
+                this.avatarIKGoalWeights.Add(goal, 0.0f);
+            }
+            foreach (AvatarIKHint hint in avatarIKHints)
+            {
+                this.avatarIKHintWeights.Add(hint, 0.0f);
+            }
+        }
+
+        public override void OnStartClient()
+        {
+            this.avatarIKGoalStates.Callback += OnIKGoalStateChange;
+            this.avatarIKGoalWeights.Callback += OnIKGoalWeightChange;
+            this.avatarIKHintWeights.Callback += OnIKHintWeightChange;
+        }
+
         public void SetLookState(bool newLookState)
         {
             if (!networkService.isServer)
@@ -86,16 +225,22 @@ namespace PropHunt.Animation
             }
         }
 
-        public void Update()
+        [Command]
+        public void CmdSetIKGoalState(AvatarIKGoal goal, bool newState)
         {
-            if ((controller.lookObj != null) != this.lookState)
-            {
-                OnLookStateChange(this.lookState, this.lookState);
-            }
-            if (controller.lookWeight != this.lookWeight)
-            {
-                OnLookWeightChange(this.lookWeight, this.lookWeight);
-            }
+            UpdateIKGoalState(goal, newState);
+        }
+
+        [Command]
+        public void CmdSetIKHintWeight(AvatarIKHint hint, float newWeight)
+        {
+            UpdateIKHintWeight(hint, newWeight);
+        }
+
+        [Command]
+        public void CmdSetIKGoalWeight(AvatarIKGoal goal, float newWeight)
+        {
+            UpdateIKGoalWeight(goal, newWeight);
         }
 
         [Command]
