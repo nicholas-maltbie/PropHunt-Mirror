@@ -50,6 +50,12 @@ namespace PropHunt.Animation
         public float rotationWeight = 1f;
 
         /// <summary>
+        /// Weight of rotation when moving feet of character
+        /// </summary>
+        [Range(0, 1)]
+        public float positionWeight = 1f;
+
+        /// <summary>
         /// Direction of up
         /// </summary>
         public readonly Vector3 up = Vector3.up;
@@ -60,26 +66,20 @@ namespace PropHunt.Animation
         public float movementThreshold = 0.01f;
 
         /// <summary>
-        /// Previous position for movement
+        /// Previous position for left foot
         /// </summary>
-        private Vector3 previousPosition;
-
-        public IUnityService unityService = new UnityService();
+        private Vector3 previousLeftFoot;
 
         /// <summary>
-        /// Is the player currently moving?
+        /// Previous position for right foot
         /// </summary>
-        private bool moving;
+        private Vector3 previousRightFoot;
+
+        public IUnityService unityService = new UnityService();
 
         public void Start()
         {
             animator = GetComponent<Animator>();
-        }
-
-        public void Update()
-        {
-            moving = (transform.position - previousPosition).magnitude / unityService.deltaTime >= movementThreshold;
-            previousPosition = transform.position;
         }
 
         public void OnAnimatorIK()
@@ -91,8 +91,22 @@ namespace PropHunt.Animation
                 Vector3 leftFoot = leftFootTransform.position;
                 Vector3 rightFoot = rightFootTransform.position;
 
-                bool leftHit = Physics.Raycast(leftFoot + up * (kneeHeight), -up, out RaycastHit leftFootRaycastHit, maximumFootReach + kneeHeight + footHeight);
-                bool rightHit = Physics.Raycast(rightFoot + up * (kneeHeight), -up, out RaycastHit rightFootRaycastHit, maximumFootReach + kneeHeight + footHeight);
+                bool leftMoving = (leftFoot - previousLeftFoot).magnitude / unityService.deltaTime >= movementThreshold;
+                bool rightMoving = (rightFoot - previousRightFoot).magnitude / unityService.deltaTime >= movementThreshold;
+
+                previousLeftFoot = leftFoot;
+                previousRightFoot = rightFoot;
+
+                bool leftHit = Physics.Raycast(leftFoot + up * (kneeHeight + footHeight), -up, out RaycastHit leftFootRaycastHit, maximumFootReach + kneeHeight + footHeight);
+                bool rightHit = Physics.Raycast(rightFoot + up * (kneeHeight + footHeight), -up, out RaycastHit rightFootRaycastHit, maximumFootReach + kneeHeight + footHeight);
+                if (!leftHit)
+                {
+                    leftFootRaycastHit.point = leftFoot + up * (kneeHeight + footHeight) - up * (maximumFootReach + kneeHeight + footHeight);
+                }
+                if (!rightHit)
+                {
+                    rightFootRaycastHit.point = rightFoot + up * (kneeHeight + footHeight) - up * (maximumFootReach + kneeHeight + footHeight);
+                }
 
                 UnityEngine.Debug.DrawRay(leftFoot + up * (kneeHeight), -up * (maximumFootReach + kneeHeight + footHeight), Color.red);
                 UnityEngine.Debug.DrawRay(rightFoot + up * (kneeHeight), -up * (maximumFootReach + kneeHeight + footHeight), Color.red);
@@ -102,48 +116,49 @@ namespace PropHunt.Animation
                 bool rightGrounded = rightHit && rightFootRaycastHit.distance <= kneeHeight + footHeight + footGroundedThreshold;
 
                 // If it is not grounded, set IK position weight to zero
-                animator.SetIKPositionWeight(AvatarIKGoal.LeftFoot, leftGrounded ? 0.8f : 0);
-                animator.SetIKPositionWeight(AvatarIKGoal.RightFoot, rightGrounded ? 0.8f : 0);
+                animator.SetIKPositionWeight(AvatarIKGoal.LeftFoot, leftGrounded ? positionWeight : 0);
+                animator.SetIKPositionWeight(AvatarIKGoal.RightFoot, rightGrounded ? positionWeight : 0);
 
                 // Set desired position of foot to be hit position + footHeight
-                if (leftGrounded || !moving)
+                if (leftGrounded || !leftMoving)
                 {
                     animator.SetIKPosition(AvatarIKGoal.LeftFoot, leftFootRaycastHit.point + Vector3.up * footHeight);
                     // If grounded, get where toes should hit
                     Vector3 leftToes = animator.GetBoneTransform(HumanBodyBones.LeftToes).position;
                     // Get the distance between toes and ground
                     bool leftToesHit = Physics.Raycast(leftToes + up * (kneeHeight), -up, out RaycastHit leftToesRaycastHit, maximumFootReach + kneeHeight + footHeight);
-                    UnityEngine.Debug.DrawLine(leftFootRaycastHit.point, leftToesRaycastHit.point, Color.blue);
-                    animator.SetIKRotationWeight(AvatarIKGoal.LeftFoot, leftToesHit ? 0.6f : 0);
+                    animator.SetIKRotationWeight(AvatarIKGoal.LeftFoot, leftToesHit ? rotationWeight : 0);
                     if (!leftToesHit)
                     {
                         leftToesRaycastHit.point = leftToes + up * (kneeHeight) - up * (maximumFootReach + kneeHeight + footHeight);
                     }
+                    UnityEngine.Debug.DrawLine(leftFootRaycastHit.point, leftToesRaycastHit.point, Color.blue);
                     Vector3 footVector = leftToesRaycastHit.point - leftFootRaycastHit.point;
                     Vector3 projectedVector = Vector3.ProjectOnPlane(footVector, Vector3.up);
                     Vector3 targetRotation = new Vector3(
                         Vector3.Angle(footVector, projectedVector),
-                        Mathf.Atan2(projectedVector.x, projectedVector.z), 0);
+                        // Mathf.Atan2(footVector.x, footVector.z) * Mathf.Rad2Deg, 0);
+                        0, 0);
                     animator.SetIKRotation(AvatarIKGoal.LeftFoot, Quaternion.Euler(targetRotation) * transform.rotation);
                 }
-                if (rightGrounded || !moving)
+                if (rightGrounded || !rightMoving)
                 {
                     animator.SetIKPosition(AvatarIKGoal.RightFoot, rightFootRaycastHit.point + Vector3.up * footHeight);
                     // If grounded, get where toes should hit
                     Vector3 rightToes = animator.GetBoneTransform(HumanBodyBones.RightToes).position;
                     // Get the distance between toes and ground
                     bool rightToesHit = Physics.Raycast(rightToes + up * (kneeHeight), -up, out RaycastHit rightToesRaycastHit, maximumFootReach + kneeHeight + footHeight);
-                    UnityEngine.Debug.DrawLine(rightFootRaycastHit.point, rightToesRaycastHit.point, Color.blue);
-                    animator.SetIKRotationWeight(AvatarIKGoal.RightFoot, rightToesHit ? 0.6f : 0);
+                    animator.SetIKRotationWeight(AvatarIKGoal.RightFoot, rightToesHit ? rotationWeight : 0);
                     if (!rightToesHit)
                     {
                         rightToesRaycastHit.point = rightToes + up * (kneeHeight) - up * (maximumFootReach + kneeHeight + footHeight);
                     }
+                    UnityEngine.Debug.DrawLine(rightFootRaycastHit.point, rightToesRaycastHit.point, Color.blue);
                     Vector3 footVector = rightToesRaycastHit.point - rightFootRaycastHit.point;
                     Vector3 projectedVector = Vector3.ProjectOnPlane(footVector, Vector3.up);
                     Vector3 targetRotation = new Vector3(
                         Vector3.Angle(footVector, projectedVector),
-                        Mathf.Atan2(projectedVector.x, projectedVector.z), 0);
+                        0, 0);
                     animator.SetIKRotation(AvatarIKGoal.RightFoot, Quaternion.Euler(targetRotation) * transform.rotation);
                 }
             }

@@ -134,7 +134,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.45
+  m_Radius: 0.35
   m_Height: 1.8
   m_Direction: 1
   m_Center: {x: 0, y: 0.9, z: 0}
@@ -404,12 +404,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
   enableFootGrounded: 1
-  footHeight: 0.125
-  kneeHeight: 0.5
-  footGroundedThreshold: 0.025
-  maximumFootReach: 0.25
-  rotationWeight: 1
-  movementThreshold: 0.01
+  footHeight: 0.1
+  kneeHeight: 0.45
+  footGroundedThreshold: 0.075
+  maximumFootReach: 0.4
+  rotationWeight: 0.75
+  positionWeight: 0.85
+  movementThreshold: 0.05
 --- !u!114 &9123469036688720343
 MonoBehaviour:
   m_ObjectHideFlags: 0
