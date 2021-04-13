@@ -1,6 +1,5 @@
 
 using Mirror;
-using PropHunt.Character;
 using PropHunt.Utils;
 using UnityEngine;
 
@@ -35,9 +34,18 @@ namespace PropHunt.Animation
             playerFootGrounded.enableFootGrounded = newState;
         }
 
+        private void SetFootGroundedStateInternal(bool newState)
+        {
+            // Change from newtorked control to local control
+            // Grounding feet is done locally so invert network state
+            networkIKControl.SetIKGoalState(AvatarIKGoal.LeftFoot, !newState);
+            networkIKControl.SetIKGoalState(AvatarIKGoal.RightFoot, !newState);
+        }
+
         public void SetFootGroundedState(bool newState)
         {
-            if (!isServer)
+            UnityEngine.Debug.Log(networkService.isServer);
+            if (!networkService.isServer)
             {
                 CmdSetFootGroundedState(newState);
             }
@@ -47,12 +55,9 @@ namespace PropHunt.Animation
                 playerFootGrounded.enableFootGrounded = newState;
             }
 
-            if (isServer || isLocalPlayer)
+            if (networkService.isServer || networkService.isLocalPlayer)
             {
-                // Change from newtorked control to local control
-                // Grounding feet is done locally so invert network state
-                networkIKControl.SetIKGoalState(AvatarIKGoal.LeftFoot, !newState);
-                networkIKControl.SetIKGoalState(AvatarIKGoal.RightFoot, !newState);
+                SetFootGroundedStateInternal(newState);
             }
         }
 
@@ -74,7 +79,7 @@ namespace PropHunt.Animation
         [Command]
         public void CmdSetFootGroundedState(bool newState)
         {
-            SetFootGroundedState(newState);
+            SetFootGroundedStateInternal(newState);
         }
     }
 }

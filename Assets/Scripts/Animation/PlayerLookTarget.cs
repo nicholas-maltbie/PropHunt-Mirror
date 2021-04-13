@@ -54,8 +54,9 @@ namespace PropHunt.Animation
             }
 
             // Set the look target to be 1 unit in front of the camera base position
-            this.networkIKControl.ikLookTarget.position = transform.TransformDirection(cameraController.baseCameraOffset) +
-                transform.position + cameraController.cameraTransform.forward;
+            this.networkIKControl.ikLookTarget.position = transform.TransformDirection(
+                cameraController.baseCameraOffset) + transform.position +
+                cameraController.cameraTransform.forward;
             // With this setting, the player should always look at the correct position
             //   accounting for both the correct pitch and yaw of direction
         }

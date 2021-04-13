@@ -237,6 +237,16 @@ namespace PropHunt.Animation
             }
         }
 
+        private void SetLookWeightInternal(float newLookWeight)
+        {
+            if (networkService.isLocalPlayer || networkService.isServer)
+            {
+                float previousWeight = this.lookWeight;
+                this.lookWeight = newLookWeight;
+                OnLookWeightChange(previousWeight, newLookWeight);
+            }
+        }
+
         public void SetLookWeight(float newLookWeight)
         {
             if (!networkService.isServer)
@@ -246,7 +256,7 @@ namespace PropHunt.Animation
 
             if (networkService.isLocalPlayer || networkService.isServer)
             {
-                OnLookWeightChange(this.lookWeight, newLookWeight);
+                SetLookWeightInternal(newLookWeight);
             }
         }
 
@@ -254,12 +264,13 @@ namespace PropHunt.Animation
         {
             foreach (AvatarIKGoal goal in avatarIKGoals)
             {
-                this.avatarIKGoalStates.Add(goal, false);
-                this.avatarIKGoalWeights.Add(goal, 0.0f);
+                this.avatarIKGoalStates[goal] = false;
+                this.avatarIKGoalWeights[goal] = 0.0f;
             }
             foreach (AvatarIKHint hint in avatarIKHints)
             {
-                this.avatarIKHintWeights.Add(hint, 0.0f);
+                this.avatarIKHintStates[hint] = false;
+                this.avatarIKHintWeights[hint] = 0.0f;
             }
         }
 
@@ -268,6 +279,16 @@ namespace PropHunt.Animation
             this.avatarIKGoalStates.Callback += OnIKGoalStateChange;
             this.avatarIKGoalWeights.Callback += OnIKGoalWeightChange;
             this.avatarIKHintWeights.Callback += OnIKHintWeightChange;
+        }
+
+        private void SetLookStateInternal(bool newLookState)
+        {
+            if (networkService.isLocalPlayer || networkService.isServer)
+            {
+                bool previousState = this.lookState;
+                this.lookState = newLookState;
+                OnLookStateChange(previousState, newLookState);
+            }
         }
 
         public void SetLookState(bool newLookState)
@@ -279,7 +300,7 @@ namespace PropHunt.Animation
 
             if (networkService.isLocalPlayer || networkService.isServer)
             {
-                OnLookStateChange(this.lookState, newLookState);
+                SetLookStateInternal(newLookState);
             }
         }
 
@@ -310,13 +331,13 @@ namespace PropHunt.Animation
         [Command]
         public void CmdSetLookWeight(float newLookWeight)
         {
-            SetLookWeight(newLookWeight);
+            SetLookWeightInternal(newLookWeight);
         }
 
         [Command]
         public void CmdSetLookState(bool newLookState)
         {
-            SetLookState(newLookState);
+            SetLookStateInternal(newLookState);
         }
     }
 }

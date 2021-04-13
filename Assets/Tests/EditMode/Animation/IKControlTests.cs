@@ -3,7 +3,7 @@ using PropHunt.Animation;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-namespace Tests.EditMode.Character
+namespace Tests.EditMode.Animation
 {
     [TestFixture]
     public class IKControlTests
