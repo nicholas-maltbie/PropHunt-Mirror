@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 4965862787272249836}
   - component: {fileID: 5517084023280369707}
   - component: {fileID: 9146407159294641169}
+  - component: {fileID: 5860327242025993134}
   m_Layer: 0
   m_Name: BasicPlayer
   m_TagString: Untagged
@@ -360,6 +361,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+--- !u!114 &5860327242025993134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 245587927565386927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9832560dc55dac84484e162163ada677, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  groundFeet: 0
+  playerFootGrounded: {fileID: 2096275806088051630}
 --- !u!1 &886816266439757742
 GameObject:
   m_ObjectHideFlags: 0
@@ -403,7 +420,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
-  enableFootGrounded: 1
+  enableFootGrounded: 0
   footHeight: 0.1
   kneeHeight: 0.45
   footGroundedThreshold: 0.075
