@@ -212,7 +212,7 @@ namespace PropHunt.Animation
                     this.rightHandWeight = weight;
                     break;
                 case AvatarIKGoal.LeftFoot:
-                    this.rightHandWeight = weight;
+                    this.leftFootWeight = weight;
                     break;
                 case AvatarIKGoal.RightFoot:
                     this.rightFootweight = weight;
@@ -222,12 +222,6 @@ namespace PropHunt.Animation
 
         public void OnAnimatorIK()
         {
-            // Skip code if animator is not initialized
-            if (animator == null)
-            {
-                return;
-            }
-
             //if the IK is active, set the position and rotation directly to the goal. 
             if (ikActive)
             {
