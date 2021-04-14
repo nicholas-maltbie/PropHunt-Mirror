@@ -44,7 +44,7 @@ namespace Tests.EditMode.Animation
             this.floor.AddComponent<BoxCollider>();
             this.floor.name = "Floor";
 
-            foreach(HumanBodyBones bone in new HumanBodyBones[]{HumanBodyBones.LeftFoot,
+            foreach (HumanBodyBones bone in new HumanBodyBones[]{HumanBodyBones.LeftFoot,
                 HumanBodyBones.RightFoot, HumanBodyBones.LeftHand, HumanBodyBones.RightHand,
                 HumanBodyBones.LeftToes, HumanBodyBones.RightToes})
             {

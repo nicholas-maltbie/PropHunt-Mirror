@@ -14,7 +14,7 @@ namespace Tests.EditMode.Utils
             LogAssert.ignoreFailingMessages = true;
             GameObject go = new GameObject();
             AnimatorWrapper animatorWrapper = new AnimatorWrapper(go.AddComponent<Animator>());
-            
+
             animatorWrapper.GetBoneTransform(HumanBodyBones.LeftHand);
             animatorWrapper.SetIKPosition(AvatarIKGoal.LeftHand, Vector3.zero);
             animatorWrapper.SetIKPositionWeight(AvatarIKGoal.LeftHand, 1.0f);

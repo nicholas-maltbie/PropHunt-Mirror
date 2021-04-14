@@ -19,7 +19,7 @@ namespace Tests.EditMode.Animation
             CameraController cameraController = go.AddComponent<CameraController>();
             PlayerLookTarget playerLookTarget = go.AddComponent<PlayerLookTarget>();
             Mock<INetworkService> networkServiceMock = new Mock<INetworkService>();
-            
+
             networkIKControl.Awake();
             playerLookTarget.Awake();
             playerLookTarget.Start();

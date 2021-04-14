@@ -146,7 +146,7 @@ namespace PropHunt.Animation
 
         public void SetIKHintWeight(AvatarIKHint ikHint, float weight)
         {
-            switch(ikHint)
+            switch (ikHint)
             {
                 case AvatarIKHint.LeftElbow:
                     this.leftElbowWeight = weight;
@@ -165,7 +165,7 @@ namespace PropHunt.Animation
 
         public void SetIKHintTransform(AvatarIKHint ikGoal, Transform transform)
         {
-            switch(ikGoal)
+            switch (ikGoal)
             {
                 case AvatarIKHint.LeftKnee:
                     this.leftKneeTarget = transform;
@@ -184,7 +184,7 @@ namespace PropHunt.Animation
 
         public void SetIKGoalTransform(AvatarIKGoal ikGoal, Transform transform)
         {
-            switch(ikGoal)
+            switch (ikGoal)
             {
                 case AvatarIKGoal.LeftHand:
                     this.leftHandTarget = transform;
@@ -203,7 +203,7 @@ namespace PropHunt.Animation
 
         public void SetIKGoalWeight(AvatarIKGoal ikGoal, float weight)
         {
-            switch(ikGoal)
+            switch (ikGoal)
             {
                 case AvatarIKGoal.LeftHand:
                     this.leftHandWeight = weight;

@@ -29,7 +29,7 @@ namespace Tests.EditMode.Animation
             networkFootGrounding.Awake();
             networkFootGrounding.networkService = networkServiceMock.Object;
             networkControl.networkService = networkServiceMock.Object;
-            
+
             networkServiceMock.Setup(e => e.isServer).Returns(true);
             networkFootGrounding.Start();
 
