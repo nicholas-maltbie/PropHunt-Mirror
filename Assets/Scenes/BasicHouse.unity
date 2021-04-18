@@ -18995,9 +18995,21 @@ PrefabInstance:
     m_TransformParent: {fileID: 1956078182}
     m_Modifications:
     - target: {fileID: 989705373, guid: 19f5dcded63c2ff45b78f5bfb22ce1cb, type: 3}
+      propertyPath: Loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 989705373, guid: 19f5dcded63c2ff45b78f5bfb22ce1cb, type: 3}
       propertyPath: m_audioClip
       value: 
       objectReference: {fileID: 8300000, guid: 07fde23d1ac772d4996b60175ca530c1, type: 3}
+    - target: {fileID: 989705374, guid: 19f5dcded63c2ff45b78f5bfb22ce1cb, type: 3}
+      propertyPath: sourceRadius
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 989705374, guid: 19f5dcded63c2ff45b78f5bfb22ce1cb, type: 3}
+      propertyPath: interpolation
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 989705374, guid: 19f5dcded63c2ff45b78f5bfb22ce1cb, type: 3}
       propertyPath: indirectBinaural
       value: 1
@@ -19005,6 +19017,10 @@ PrefabInstance:
     - target: {fileID: 989705374, guid: 19f5dcded63c2ff45b78f5bfb22ce1cb, type: 3}
       propertyPath: indirectMixLevel
       value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 989705374, guid: 19f5dcded63c2ff45b78f5bfb22ce1cb, type: 3}
+      propertyPath: physicsBasedAttenuation
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4663344245480376807, guid: 19f5dcded63c2ff45b78f5bfb22ce1cb, type: 3}
       propertyPath: sceneId

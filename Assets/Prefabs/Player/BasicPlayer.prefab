@@ -418,6 +418,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2648021938205662071}
   - component: {fileID: 9123469036688720343}
+  - component: {fileID: 8100560083151916898}
   m_Layer: 0
   m_Name: Audio Listener
   m_TagString: Untagged
@@ -459,13 +460,13 @@ MonoBehaviour:
   bakedStatsFoldout: 0
   bakeToggle: 0
   currentStaticListenerNode: {fileID: 0}
---- !u!81 &810705862924898505
+--- !u!81 &8100560083151916898
 AudioListener:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8756352209484338735}
+  m_GameObject: {fileID: 6004249445925865796}
   m_Enabled: 1
 --- !u!114 &6956521044681878227
 MonoBehaviour:
