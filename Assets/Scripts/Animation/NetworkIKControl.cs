@@ -190,8 +190,8 @@ namespace PropHunt.Animation
 
         public void Awake()
         {
-            AvatarIKGoal[] avatarIKGoals = {AvatarIKGoal.LeftFoot, AvatarIKGoal.RightFoot, AvatarIKGoal.LeftHand, AvatarIKGoal.RightHand};
-            AvatarIKHint[] avatarIKHints = {AvatarIKHint.LeftElbow, AvatarIKHint.LeftKnee, AvatarIKHint.RightElbow, AvatarIKHint.RightKnee};
+            AvatarIKGoal[] avatarIKGoals = { AvatarIKGoal.LeftFoot, AvatarIKGoal.RightFoot, AvatarIKGoal.LeftHand, AvatarIKGoal.RightHand };
+            AvatarIKHint[] avatarIKHints = { AvatarIKHint.LeftElbow, AvatarIKHint.LeftKnee, AvatarIKHint.RightElbow, AvatarIKHint.RightKnee };
 
             networkService = new NetworkService(this);
 
@@ -259,8 +259,8 @@ namespace PropHunt.Animation
 
         public override void OnStartServer()
         {
-            AvatarIKGoal[] avatarIKGoals = {AvatarIKGoal.LeftFoot, AvatarIKGoal.RightFoot, AvatarIKGoal.LeftHand, AvatarIKGoal.RightHand};
-            AvatarIKHint[] avatarIKHints = {AvatarIKHint.LeftElbow, AvatarIKHint.LeftKnee, AvatarIKHint.RightElbow, AvatarIKHint.RightKnee};
+            AvatarIKGoal[] avatarIKGoals = { AvatarIKGoal.LeftFoot, AvatarIKGoal.RightFoot, AvatarIKGoal.LeftHand, AvatarIKGoal.RightHand };
+            AvatarIKHint[] avatarIKHints = { AvatarIKHint.LeftElbow, AvatarIKHint.LeftKnee, AvatarIKHint.RightElbow, AvatarIKHint.RightKnee };
             foreach (AvatarIKGoal goal in avatarIKGoals)
             {
                 this.avatarIKGoalStates[goal] = false;
