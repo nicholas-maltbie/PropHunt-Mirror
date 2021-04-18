@@ -16,10 +16,6 @@ namespace Tests.EditMode.Animation
         [Test]
         public void TestSenderConnectionIsSetWhenCommandReceived()
         {
-            // Test static variables
-            Assert.IsTrue(NetworkIKControl.avatarIKGoals.Length > 0);
-            Assert.IsTrue(NetworkIKControl.avatarIKHints.Length > 0);
-
             NetworkIKControl networkIKControl = CreateHostObject<NetworkIKControl>(true);
             IKControl ikControl = networkIKControl.gameObject.AddComponent<IKControl>();
             Mock<INetworkService> networkServiceMock = new Mock<INetworkService>();
