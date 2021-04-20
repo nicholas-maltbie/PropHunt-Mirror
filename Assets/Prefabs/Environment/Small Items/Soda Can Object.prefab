@@ -98,6 +98,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: soda
       objectReference: {fileID: 0}
+    - target: {fileID: 7202271454713460447, guid: 14229c11c19736e4e8936308b6a1d552, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 77b05a1fab57fea47b5ccbdd819465d3, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 14229c11c19736e4e8936308b6a1d552, type: 3}
 --- !u!4 &5379804521908946043 stripped
