@@ -94,10 +94,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -5197661584694614450, guid: a8a75f4f2082a6d4693b5582ec4aa4ec, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 0cf98a116932ca543baef34bf20eadcc, type: 2}
     - target: {fileID: 919132149155446097, guid: a8a75f4f2082a6d4693b5582ec4aa4ec, type: 3}
       propertyPath: m_Name
       value: candle
       objectReference: {fileID: 0}
+    - target: {fileID: 7202271454713460447, guid: a8a75f4f2082a6d4693b5582ec4aa4ec, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 0cf98a116932ca543baef34bf20eadcc, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a8a75f4f2082a6d4693b5582ec4aa4ec, type: 3}
 --- !u!4 &7139986600059350458 stripped

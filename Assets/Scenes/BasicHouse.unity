@@ -41612,11 +41612,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8183667879407862640, guid: 718ede4cf6eae4c4a86816c539653b1d, type: 3}
       propertyPath: sceneId
-      value: 799479131
-      objectReference: {fileID: 0}
-    - target: {fileID: 8183667879407862640, guid: 718ede4cf6eae4c4a86816c539653b1d, type: 3}
-      propertyPath: m_AssetId
-      value: 718ede4cf6eae4c4a86816c539653b1d
+      value: 3750756022
       objectReference: {fileID: 0}
     - target: {fileID: 8183667879407862643, guid: 718ede4cf6eae4c4a86816c539653b1d, type: 3}
       propertyPath: m_RootOrder

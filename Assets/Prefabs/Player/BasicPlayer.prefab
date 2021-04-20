@@ -301,7 +301,7 @@ MonoBehaviour:
   maxPushSpeed: 1
   pushDecay: 0.9
   anglePower: 0.5
-  verticalSnapDown: 0.2
+  verticalSnapDown: 0.35
   onGround: 0
   stepUpDepth: 0.1
   verticalSnapUp: 0.3
