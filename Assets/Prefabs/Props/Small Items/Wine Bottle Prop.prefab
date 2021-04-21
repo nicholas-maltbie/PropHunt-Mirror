@@ -49,8 +49,8 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.075
-  m_Height: 0.45
+  m_Radius: 0.1
+  m_Height: 0.65
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &4400330216933705363
@@ -735,6 +735,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4400330216933705367}
     m_Modifications:
+    - target: {fileID: 8326277764877557611, guid: ae91e1b4aec378f4c80b3a2a13354886, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 8.448874
+      objectReference: {fileID: 0}
+    - target: {fileID: 8326277764877557611, guid: ae91e1b4aec378f4c80b3a2a13354886, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 8.448874
+      objectReference: {fileID: 0}
+    - target: {fileID: 8326277764877557611, guid: ae91e1b4aec378f4c80b3a2a13354886, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 20.86872
+      objectReference: {fileID: 0}
     - target: {fileID: 8360467606299415982, guid: ae91e1b4aec378f4c80b3a2a13354886, type: 3}
       propertyPath: m_Name
       value: Wine Bottle Visual
