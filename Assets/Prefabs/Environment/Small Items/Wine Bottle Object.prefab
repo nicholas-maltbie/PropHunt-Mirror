@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8360467606299415983}
   m_Layer: 0
-  m_Name: Wine Bottle Visual
+  m_Name: Wine Bottle Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,15 +44,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a26849409f560e041ba4961220ea26ef, type: 3}
       propertyPath: m_LocalScale.x
-      value: 6.061755
+      value: 8.448874
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a26849409f560e041ba4961220ea26ef, type: 3}
       propertyPath: m_LocalScale.y
-      value: 6.061755
+      value: 8.448874
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a26849409f560e041ba4961220ea26ef, type: 3}
       propertyPath: m_LocalScale.z
-      value: 14.972534
+      value: 20.86872
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a26849409f560e041ba4961220ea26ef, type: 3}
       propertyPath: m_LocalPosition.x

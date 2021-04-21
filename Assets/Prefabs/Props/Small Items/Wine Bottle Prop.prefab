@@ -35,7 +35,7 @@ Transform:
   m_LocalPosition: {x: -6.251896, y: 2.382, z: -1.7239}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 4400330217405368043}
+  - {fileID: 4453807273482937582}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -728,7 +728,7 @@ MonoBehaviour:
     - {x: 0.7063923, y: 0.04494747, z: 0.706392}
     - {x: 0.34110048, y: 0.6646991, z: 0.6646996}
     - {x: 0.17692533, y: 0.69595146, z: 0.6959518}
---- !u!1001 &5266755232691278660
+--- !u!1001 &5316854365861146945
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -749,7 +749,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8360467606299415982, guid: ae91e1b4aec378f4c80b3a2a13354886, type: 3}
       propertyPath: m_Name
-      value: Wine Bottle Visual
+      value: Wine Bottle Object
       objectReference: {fileID: 0}
     - target: {fileID: 8360467606299415983, guid: ae91e1b4aec378f4c80b3a2a13354886, type: 3}
       propertyPath: m_RootOrder
@@ -797,8 +797,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ae91e1b4aec378f4c80b3a2a13354886, type: 3}
---- !u!4 &4400330217405368043 stripped
+--- !u!4 &4453807273482937582 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8360467606299415983, guid: ae91e1b4aec378f4c80b3a2a13354886, type: 3}
-  m_PrefabInstance: {fileID: 5266755232691278660}
+  m_PrefabInstance: {fileID: 5316854365861146945}
   m_PrefabAsset: {fileID: 0}
