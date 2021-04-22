@@ -1,14 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using UnityEngine;
 using UnityEditor;
+using UnityEditor.Build;
+using UnityEditor.Build.Reporting;
+using UnityEngine;
 
-public class ScriptBatch 
+public class ScriptBatch : IPostprocessBuildWithReport
 {
+    public int callbackOrder { get { return 0; } }
+
     public static string[] GetScenes()
     {
-        return new string[] {"Assets/Scenes/BasicHouse.unity"};
+        return new string[] { "Assets/Scenes/BasicHouse.unity" };
     }
 
     [MenuItem("Build/Build All")]
@@ -19,19 +23,34 @@ public class ScriptBatch
         WindowsBuild();
     }
 
+    public void OnPostprocessBuild(BuildReport report)
+    {
+        string path = "Builds/MacOS";
+        string appFolder = path + "/PropHunt.app";
+
+#if UNITY_STANDALONE_OSX
+        UnityEngine.Debug.Log("Signing files for MacOS Build");
+        UnityEditor.OSXStandalone.MacOSCodeSigning.CodeSignAppBundle(appFolder + "/Contents/PlugIns/steam_api.bundle");
+        UnityEditor.OSXStandalone.MacOSCodeSigning.CodeSignAppBundle(appFolder); 
+#endif
+        UnityEngine.Debug.Log("MyCustomBuildProcessor.OnPostprocessBuild for target " + report.summary.platform + " at path " + report.summary.outputPath);
+    }
+
     [MenuItem("Build/MacOS Build")]
-    public static void MacOSBuild ()
+    public static void MacOSBuild()
     {
         // Get filename.
         string path = "Builds/MacOS";
         string[] levels = GetScenes();
 
+        string appFolder = path + "/PropHunt.app";
+
         // Build player.
-        BuildPipeline.BuildPlayer(levels, path + "/PropHunt.app", BuildTarget.StandaloneOSX, BuildOptions.Development);
+        BuildPipeline.BuildPlayer(levels, appFolder, BuildTarget.StandaloneOSX, BuildOptions.Development);
     }
 
     [MenuItem("Build/Linux Build")]
-    public static void LinuxBuild ()
+    public static void LinuxBuild()
     {
         // Get filename.
         string path = "Builds/Linux";
@@ -42,7 +61,7 @@ public class ScriptBatch
     }
 
     [MenuItem("Build/Windows64 Build")]
-    public static void WindowsBuild ()
+    public static void WindowsBuild()
     {
         // Get filename.
         string path = "Builds/Wins64";
