@@ -25,7 +25,14 @@ namespace PropHunt.Game.Communication
 
         public override string ToString()
         {
-            return $"[{time.ToShortTimeString()}] {source}> {content}";
+            if (source != null && source.Length > 0)
+            {
+                return $"[{time.ToShortTimeString()}] {source}> {content}";
+            }
+            else
+            {
+                return $"[{time.ToShortTimeString()}] {content}";
+            }
         }
     }
 
@@ -68,6 +75,7 @@ namespace PropHunt.Game.Communication
         public void ClearChatLog()
         {
             messages.Clear();
+            DebugChatEvents?.Invoke(this, new ChatMessageEvent{message = new ChatMessage()});
         }
 
         public void SendMessage(ChatMessage chatMessage)
@@ -86,6 +94,15 @@ namespace PropHunt.Game.Communication
         {
             AddLocalMessage(chatMessage);
             RpcAddMessage(chatMessage);
+        }
+
+        public void AddInfoMessage(string message)
+        {
+            AddLocalMessage(new ChatMessage
+            {
+                time = DateTime.Now,
+                content = message,
+            });
         }
 
         public void AddLocalMessage(ChatMessage chatMessage)
