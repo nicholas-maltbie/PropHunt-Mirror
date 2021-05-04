@@ -24,6 +24,7 @@ namespace PropHunt.UI
         {
             yield return null;
             textScroll.value = position;
+            yield return null;
         }
 
         public void OnEnable()
