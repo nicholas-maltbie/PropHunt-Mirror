@@ -13,15 +13,15 @@ namespace PropHunt.UI
         public void OnEnable()
         {
             UpdateText();
-            DebugChatLog.DebugChatEvents += HandlehatEvent;
+            DebugChatLog.DebugChatEvents += HandleEvent;
         }
 
         public void OnDisable()
         {
-            DebugChatLog.DebugChatEvents -= HandlehatEvent;
+            DebugChatLog.DebugChatEvents -= HandleEvent;
         }
 
-        public void HandlehatEvent(object sender, ChatMessageEvent eventArgs)
+        public void HandleEvent(object sender, ChatMessageEvent eventArgs)
         {
             UpdateText();
             bar.value = 0;
@@ -29,10 +29,7 @@ namespace PropHunt.UI
 
         public void UpdateText()
         {
-            if (DebugChatLog.Instance != null)
-            {
-                text.text = DebugChatLog.Instance.GetChatLog();
-            }
+            text.text = DebugChatLog.GetChatLog();
         }
     }
 }

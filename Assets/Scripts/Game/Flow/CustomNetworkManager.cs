@@ -10,14 +10,14 @@ namespace PropHunt.Game.Flow
         public override void OnServerConnect(NetworkConnection conn)
         {
             base.OnServerConnect(conn);
-            DebugChatLog.Instance.SendChatMessage(new ChatMessage("", $"Player {conn.connectionId} connected to server"));
+            DebugChatLog.SendChatMessage(new ChatMessage("", $"Player {conn.connectionId} connected to server"));
         }
 
         public override void OnStartClient()
         {
             base.OnStartClient();
-            DebugChatLog.Instance.ClearChatLog();
-            NetworkClient.RegisterHandler<ChatMessage>(DebugChatLog.Instance.OnMessage);
+            DebugChatLog.ClearChatLog();
+            NetworkClient.RegisterHandler<ChatMessage>(DebugChatLog.OnMessage);
         }
 
         public override void OnStopClient()
@@ -29,7 +29,7 @@ namespace PropHunt.Game.Flow
         public override void OnServerDisconnect(NetworkConnection conn)
         {
             base.OnServerDisconnect(conn);
-            DebugChatLog.Instance.SendChatMessage(new ChatMessage("", $"Player {conn.connectionId} disconnected from server"));
+            DebugChatLog.SendChatMessage(new ChatMessage("", $"Player {conn.connectionId} disconnected from server"));
         }
     }
 }

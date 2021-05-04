@@ -38,7 +38,7 @@ namespace PropHunt.UI
             if (Application.platform != RuntimePlatform.WebGLPlayer && Initialized())
             {
                 manager.StartHost();
-                DebugChatLog.Instance.AddInfoMessage("Starting host");
+                DebugChatLog.AddInfoMessage("Starting host");
             }
         }
 
@@ -48,7 +48,7 @@ namespace PropHunt.UI
             {
                 manager.networkAddress = connectAddress.text.Trim();
                 manager.StartClient();
-                DebugChatLog.Instance.AddInfoMessage("Starting client");
+                DebugChatLog.AddInfoMessage("Starting client");
             }
         }
 
@@ -57,7 +57,7 @@ namespace PropHunt.UI
             if (Initialized())
             {
                 manager.StartServer();
-                DebugChatLog.Instance.AddInfoMessage("Starting server");
+                DebugChatLog.AddInfoMessage("Starting server");
             }
         }
 
@@ -66,7 +66,7 @@ namespace PropHunt.UI
             if (Initialized() && networkService.activeNetworkClient)
             {
                 manager.StopClient();
-                DebugChatLog.Instance.AddInfoMessage("Ended connection attempt");
+                DebugChatLog.AddInfoMessage("Ended connection attempt");
             }
         }
 
@@ -77,19 +77,19 @@ namespace PropHunt.UI
                 if (networkService.activeNetworkServer && networkService.isConnectedNetworkClient)
                 {
                     manager.StopHost();
-                    DebugChatLog.Instance.AddInfoMessage("Stopping host");
+                    DebugChatLog.AddInfoMessage("Stopping host");
                 }
                 // stop client if client-only
                 else if (networkService.isConnectedNetworkClient)
                 {
                     manager.StopClient();
-                    DebugChatLog.Instance.AddInfoMessage("Disconnecting from server");
+                    DebugChatLog.AddInfoMessage("Disconnecting from server");
                 }
                 // stop server if server-only
                 else if (networkService.activeNetworkServer)
                 {
                     manager.StopServer();
-                    DebugChatLog.Instance.AddInfoMessage("Stopping server");
+                    DebugChatLog.AddInfoMessage("Stopping server");
                 }
             }
         }

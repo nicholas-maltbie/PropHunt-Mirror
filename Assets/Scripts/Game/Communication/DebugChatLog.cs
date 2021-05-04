@@ -29,11 +29,13 @@ namespace PropHunt.Game.Communication
             return other.source == source && other.time == time && other.content == content;
         }
 
-        public ChatMessage(string source, string content)
+        public ChatMessage(string source, string content) : this(source, content, DateTime.Now) { }
+
+        public ChatMessage(string source, string content, DateTime time)
         {
             this.source = source;
             this.content = content;
-            this.time = DateTime.Now.ToBinary();
+            this.time = time.ToBinary();
         }
 
         public override string ToString()
@@ -55,29 +57,13 @@ namespace PropHunt.Game.Communication
     }
 
 
-    public class DebugChatLog : MonoBehaviour
+    public static class DebugChatLog
     {
-        public static DebugChatLog Instance;
-
-        private List<ChatMessage> messages;
+        private static List<ChatMessage> messages = new List<ChatMessage>();
 
         public static event EventHandler<ChatMessageEvent> DebugChatEvents;
 
-        public void Awake()
-        {
-            messages = new List<ChatMessage>();
-            if (DebugChatLog.Instance == null)
-            {
-                DebugChatLog.Instance = this;
-            }
-        }
-
-        public void SetupClient()
-        {
-            NetworkClient.RegisterHandler<ChatMessage>(OnMessage);
-        }
-
-        public string GetChatLog()
+        public static string GetChatLog()
         {
             string log = "";
             foreach(ChatMessage chatMessage in messages)
@@ -87,36 +73,36 @@ namespace PropHunt.Game.Communication
             return log;
         }
 
-        public void ClearChatLog()
+        public static void ClearChatLog()
         {
             messages.Clear();
-            DebugChatEvents?.Invoke(this, new ChatMessageEvent{message = new ChatMessage()});
+            DebugChatEvents?.Invoke(null, new ChatMessageEvent{message = new ChatMessage()});
         }
 
-        public void SendChatMessage(ChatMessage chatMessage)
+        public static void SendChatMessage(ChatMessage chatMessage)
         {
             AdjustMessageLogServer(chatMessage);
         }
 
-        private void AdjustMessageLogServer(ChatMessage chatMessage)
+        private static void AdjustMessageLogServer(ChatMessage chatMessage)
         {
             // OnMessage(chatMessage);
             NetworkServer.SendToAll(chatMessage);
             UnityEngine.Debug.Log($"Logging chat events {chatMessage}");
         }
 
-        public void AddInfoMessage(string message)
+        public static void AddInfoMessage(string message)
         {
             AddLocalMessage(new ChatMessage("", message));
         }
 
-        public void AddLocalMessage(ChatMessage chatMessage)
+        public static void AddLocalMessage(ChatMessage chatMessage)
         {
             messages.Add(chatMessage);
-            DebugChatEvents?.Invoke(this, new ChatMessageEvent{message = chatMessage});
+            DebugChatEvents?.Invoke(null, new ChatMessageEvent{message = chatMessage});
         }
 
-        public void OnMessage(ChatMessage chatMessage)
+        public static void OnMessage(ChatMessage chatMessage)
         {
             UnityEngine.Debug.Log($"Chat event received from server {chatMessage}");
             AddLocalMessage(chatMessage);
