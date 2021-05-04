@@ -88,7 +88,6 @@ namespace PropHunt.Game.Communication
         {
             // OnMessage(chatMessage);
             NetworkServer.SendToAll(chatMessage);
-            UnityEngine.Debug.Log($"Logging chat events {chatMessage}");
         }
 
         public static void AddInfoMessage(string message)
@@ -104,7 +103,6 @@ namespace PropHunt.Game.Communication
 
         public static void OnMessage(ChatMessage chatMessage)
         {
-            UnityEngine.Debug.Log($"Chat event received from server {chatMessage}");
             AddLocalMessage(chatMessage);
         }
     }
