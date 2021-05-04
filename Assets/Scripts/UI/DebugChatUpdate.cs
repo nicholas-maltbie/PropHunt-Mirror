@@ -29,7 +29,10 @@ namespace PropHunt.UI
 
         public void UpdateText()
         {
-            text.text = DebugChatLog.Instance.GetChatLog();
+            if (DebugChatLog.Instance != null)
+            {
+                text.text = DebugChatLog.Instance.GetChatLog();
+            }
         }
     }
 }
