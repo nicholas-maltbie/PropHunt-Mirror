@@ -16,6 +16,7 @@ namespace PropHunt.Game.Flow
         public override void OnStartClient()
         {
             base.OnStartClient();
+            DebugChatLog.Instance.ClearChatLog();
             NetworkClient.RegisterHandler<ChatMessage>(DebugChatLog.Instance.OnMessage);
         }
 
