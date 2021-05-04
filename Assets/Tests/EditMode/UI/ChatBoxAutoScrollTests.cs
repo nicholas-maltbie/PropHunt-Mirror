@@ -45,10 +45,10 @@ namespace Tests.EditMode.UI
             Assert.IsTrue(ChatBoxAutoScroll.scrollPosition == 0.5f);
             this.chatBoxAuto.OnScrollEvent(0.0f);
             Assert.IsTrue(ChatBoxAutoScroll.scrollPosition == 0.0f);
-            
+
 
             IEnumerator enumerator = this.chatBoxAuto.SetScroll(0.8f);
-            while(enumerator.MoveNext()) {};
+            while (enumerator.MoveNext()) { };
             Assert.IsTrue(scrollbar.value == 0.8f);
 
             ChatBoxAutoScroll.scrollPosition = 1.0f;

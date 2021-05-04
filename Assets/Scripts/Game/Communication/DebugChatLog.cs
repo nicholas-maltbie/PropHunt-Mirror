@@ -66,7 +66,7 @@ namespace PropHunt.Game.Communication
         public static string GetChatLog()
         {
             string log = "";
-            foreach(ChatMessage chatMessage in messages)
+            foreach (ChatMessage chatMessage in messages)
             {
                 log += chatMessage.ToString() + "\n";
             }
@@ -76,7 +76,7 @@ namespace PropHunt.Game.Communication
         public static void ClearChatLog()
         {
             messages.Clear();
-            DebugChatEvents?.Invoke(null, new ChatMessageEvent{message = new ChatMessage()});
+            DebugChatEvents?.Invoke(null, new ChatMessageEvent { message = new ChatMessage() });
         }
 
         public static void SendChatMessage(ChatMessage chatMessage)
@@ -99,7 +99,7 @@ namespace PropHunt.Game.Communication
         public static void AddLocalMessage(ChatMessage chatMessage)
         {
             messages.Add(chatMessage);
-            DebugChatEvents?.Invoke(null, new ChatMessageEvent{message = chatMessage});
+            DebugChatEvents?.Invoke(null, new ChatMessageEvent { message = chatMessage });
         }
 
         public static void OnMessage(ChatMessage chatMessage)
