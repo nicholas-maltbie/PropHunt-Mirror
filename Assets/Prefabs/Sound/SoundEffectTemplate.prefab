@@ -45,7 +45,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: -9155922391933593567, guid: 447bcbade0387f642bb6a6663dd979ce, type: 2}
   m_audioClip: {fileID: 8300000, guid: 07fde23d1ac772d4996b60175ca530c1, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -149,7 +149,7 @@ MonoBehaviour:
   dipolePower: 0
   occlusionMode: 2
   occlusionMethod: 1
-  sourceRadius: 1
+  sourceRadius: 0.25
   occlusionSamples: 16
   directMixLevel: 1
   reflections: 1
@@ -184,4 +184,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2eaaf5254e34bf45992fcb0491c5489, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  source: {fileID: 0}

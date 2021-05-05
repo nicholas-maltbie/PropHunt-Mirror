@@ -40,16 +40,16 @@ namespace PropHunt.Environment.Sound
                 return;
             }
 
-            if (unityService.time - lastSound >= minimumDelay)
+            if ((unityService.time - lastSound) >= minimumDelay)
             {
-                lastSound = minimumDelay;
+                lastSound = unityService.time;
             }
             else
             {
                 return;
             }
-            
-            SoundEffectManager.CreateSoundEffectAtPoint(other.GetContact(0).point, soundMaterial, SoundType.Hit);
+
+            SoundEffectManager.CreateSoundEffectAtPoint(transform.position, soundMaterial, SoundType.Hit);
         }
     }
 }
