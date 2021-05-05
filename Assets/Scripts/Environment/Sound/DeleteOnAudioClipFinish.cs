@@ -10,6 +10,10 @@ namespace PropHunt.Environment.Sound
     {
         protected AudioSource source;
 
+        public float clearTime = 1.0f;
+
+        private bool cleared = false;
+
         public void Awake()
         {
             source = GetComponent<AudioSource>();
@@ -17,15 +21,16 @@ namespace PropHunt.Environment.Sound
 
         public IEnumerator DestorySelf()
         {
-            yield return null;
+            yield return new WaitForSeconds(clearTime);
             GameObject.Destroy(gameObject);
             yield return null;
         }
 
         public void Update()
         {
-            if(!source.isPlaying)
+            if(!source.isPlaying && !cleared)
             {
+                cleared = true;
                 StartCoroutine(DestorySelf());
             }
         }

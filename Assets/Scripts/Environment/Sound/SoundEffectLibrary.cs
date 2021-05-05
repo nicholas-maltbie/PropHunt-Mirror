@@ -93,14 +93,18 @@ namespace PropHunt.Environment.Sound
         Glass,
         Wood,
         Metal,
-        Concrete
+        Concrete,
+        Misc
     }
 
     public enum SoundType
     {
         Hit,
         Break,
-        Scrape
+        Scrape,
+        Roll,
+        Footstep,
+        Misc
     }
 
     [System.Serializable]

@@ -1,3 +1,4 @@
+using Mirror;
 using PropHunt.Utils;
 using UnityEngine;
 
@@ -6,7 +7,7 @@ namespace PropHunt.Environment.Sound
     /// <summary>
     /// Have an object generate sound effects when it hits something
     /// </summary>
-    public class SoundEffectOnHit : MonoBehaviour
+    public class SoundEffectOnHit : NetworkBehaviour
     {
         /// <summary>
         /// Minimum velocity of a collision to create a sound effect (in units per second)
@@ -33,8 +34,43 @@ namespace PropHunt.Environment.Sound
         /// </summary>
         public IUnityService unityService = new UnityService();
 
+        /// <summary>
+        /// Minimum pitch varaition
+        /// </summary>
+        [Range(-3, 3)]
+        public float minPitch = 0.8f;
+
+        /// <summary>
+        /// Maximum pitch variation
+        /// </summary>
+        [Range(-3, 3)]
+        public float maxPitch = 1.2f;
+
+        /// <summary>
+        /// Random variation in volume
+        /// </summary>
+        [Range(0, 1)]
+        public float volumeVariation = 0.05f;
+
+        /// <summary>
+        /// Speed at which sound effect will be played at full volume
+        /// </summary>
+        public float maximumSpeed = 10.0f;
+
+        public INetworkService networkService;
+
+        public void Awake()
+        {
+            networkService = new NetworkService(this);
+        }
+
         public void OnCollisionEnter(Collision other)
         {
+            if (!networkService.isServer)
+            {
+                return;
+            }
+
             if (other.relativeVelocity.magnitude < minCollisionVelocity)
             {
                 return;
@@ -49,7 +85,11 @@ namespace PropHunt.Environment.Sound
                 return;
             }
 
-            SoundEffectManager.CreateSoundEffectAtPoint(transform.position, soundMaterial, SoundType.Hit);
+            float speedVolume = Mathf.Clamp(other.relativeVelocity.magnitude / maximumSpeed, 0, 1.0f);
+            float sampledVariation = Random.Range(-volumeVariation, volumeVariation);
+
+            SoundEffectManager.CreateNetworkedSoundEffectAtPoint(other.GetContact(0).point,
+                soundMaterial, SoundType.Hit, pitch:Random.Range(minPitch, maxPitch), volume: speedVolume + sampledVariation);
         }
     }
 }
