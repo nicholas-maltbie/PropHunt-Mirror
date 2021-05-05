@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace PropHunt.Environment
+namespace PropHunt.Environment.Sound
 {
     /// <summary>
     /// Have an object generate sound effects when it hits something
