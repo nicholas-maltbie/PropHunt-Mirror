@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1268714253140809690}
   - component: {fileID: 1268714253140809691}
   - component: {fileID: 1268714253140809688}
+  - component: {fileID: 6528211291951724841}
   m_Layer: 0
   m_Name: SoundEffectTemplate
   m_TagString: Untagged
@@ -41,9 +42,9 @@ AudioSource:
   m_GameObject: {fileID: 1268714253140809689}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -9155922391933593567, guid: 447bcbade0387f642bb6a6663dd979ce, type: 2}
   m_audioClip: {fileID: 8300000, guid: 07fde23d1ac772d4996b60175ca530c1, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -171,3 +172,16 @@ MonoBehaviour:
   bakedDataIdentifier:
     identifier: 0
     type: 0
+--- !u!114 &6528211291951724841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1268714253140809689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2eaaf5254e34bf45992fcb0491c5489, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  source: {fileID: 0}
