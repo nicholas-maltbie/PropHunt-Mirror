@@ -1,6 +1,4 @@
 using System.Collections;
-using Mirror;
-using PropHunt.Utils;
 using UnityEngine;
 
 namespace PropHunt.Environment.Sound

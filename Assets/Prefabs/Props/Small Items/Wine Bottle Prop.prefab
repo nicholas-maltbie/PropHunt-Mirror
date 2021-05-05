@@ -743,11 +743,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  minCollisionVelocity: 1
+  minCollisionVelocity: 0.2
   soundMaterial: 0
-  minimumDelay: 0.45
-  minPitch: 0.8
-  maxPitch: 1.2
+  minimumDelay: 0.25
+  minPitch: 0.6
+  maxPitch: 1.4
   volumeVariation: 0.01
   maximumSpeed: 10
 --- !u!1001 &5316854365861146945
