@@ -741,9 +741,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c08297e4b3940974bbd0e0aa886efc82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minCollisionVelocity: 0.1
+  syncMode: 0
+  syncInterval: 0.1
+  minCollisionVelocity: 1
   soundMaterial: 0
-  minimumDelay: 0.2
+  minimumDelay: 0.45
+  minPitch: 0.8
+  maxPitch: 1.2
+  volumeVariation: 0.01
+  maximumSpeed: 10
 --- !u!1001 &5316854365861146945
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -50,7 +50,7 @@ namespace PropHunt.Environment.Sound
         /// Random variation in volume
         /// </summary>
         [Range(0, 1)]
-        public float volumeVariation = 0.05f;
+        public float volumeVariation = 0.01f;
 
         /// <summary>
         /// Speed at which sound effect will be played at full volume
@@ -87,9 +87,10 @@ namespace PropHunt.Environment.Sound
 
             float speedVolume = Mathf.Clamp(other.relativeVelocity.magnitude / maximumSpeed, 0, 1.0f);
             float sampledVariation = Random.Range(-volumeVariation, volumeVariation);
+            float volume = Mathf.Clamp(speedVolume + sampledVariation, 0, 1);
 
             SoundEffectManager.CreateNetworkedSoundEffectAtPoint(other.GetContact(0).point,
-                soundMaterial, SoundType.Hit, pitch:Random.Range(minPitch, maxPitch), volume: speedVolume + sampledVariation);
+                soundMaterial, SoundType.Hit, pitch:Random.Range(minPitch, maxPitch), volume: volume);
         }
     }
 }

@@ -41988,7 +41988,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cc64aca77a4bc84f9a15ccd92d26878, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  directBinaural: 1
+  directBinaural: 0
   interpolation: 0
   physicsBasedAttenuation: 0
   airAbsorption: 0

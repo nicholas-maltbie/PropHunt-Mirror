@@ -1,3 +1,4 @@
+using System.Collections;
 using Mirror;
 using PropHunt.Utils;
 using UnityEngine;
@@ -39,7 +40,6 @@ namespace PropHunt.Environment.Sound
             {
                 return;
             }
-            UnityEngine.Debug.Log(pitch);
 
             NetworkServer.SendToAll<SoundEffectEvent>(new SoundEffectEvent
             {
@@ -54,7 +54,7 @@ namespace PropHunt.Environment.Sound
         {
             CreateSoundEffectAtPoint(sfxEvent.point, 
                 SoundEffectManager.Instance.soundEffectLibrary.GetSFXClipById(sfxEvent.sfxId).audioClip,
-                pitchValue:sfxEvent.pitchValue);
+                pitchValue:sfxEvent.pitchValue, volume:sfxEvent.volume);
         }
 
         public static GameObject CreateSoundEffectAtPoint(Vector3 point, SoundMaterial soundMaterial, SoundType soundType)
@@ -63,16 +63,23 @@ namespace PropHunt.Environment.Sound
                 SoundEffectManager.Instance.soundEffectLibrary.GetSFXClipBySoundMaterialAndType(soundMaterial, soundType).audioClip);
         }
 
+        public static IEnumerator DelayedStartAudioClip(AudioSource source)
+        {
+            yield return null;
+            source.Play();
+            source.gameObject.AddComponent<DeleteOnAudioClipFinish>();
+            yield return null;
+        }
+
         public static GameObject CreateSoundEffectAtPoint(Vector3 point, AudioClip clip, float pitchValue=1.0f, float volume=1.0f)
         {
-            UnityEngine.Debug.Log(volume);
             GameObject sfxGo = GameObject.Instantiate(SoundEffectManager.Instance.soundEffectPrefab);
             sfxGo.transform.position = point;
             AudioSource source = sfxGo.GetComponent<AudioSource>();
             source.pitch = pitchValue;
             source.clip = clip;
             source.volume = volume;
-            source.Play();
+            SoundEffectManager.Instance.StartCoroutine(DelayedStartAudioClip(source));
             return sfxGo;
         }
     }

@@ -70,16 +70,19 @@ namespace PropHunt.Environment.Sound
 
         public LabeledSFX GetSFXClipBySoundMaterial(SoundMaterial soundMaterial)
         {
-            return soundMaterialLookup[soundMaterial][0];
+            List<LabeledSFX> sounds = soundMaterialLookup[soundMaterial];
+            return sounds[(int)UnityEngine.Random.Range(0, sounds.Count)];
         }
         public LabeledSFX GetSFXClipBySoundType(SoundType soundType)
         {
-            return soundTypeLookup[soundType][0];
+            List<LabeledSFX> sounds = soundTypeLookup[soundType];
+            return sounds[(int)UnityEngine.Random.Range(0, sounds.Count)];
         }
 
         public LabeledSFX GetSFXClipBySoundMaterialAndType(SoundMaterial soundMaterial, SoundType soundType)
         {
-            return soundMaterialTypeLookup[new Tuple<SoundMaterial, SoundType>(soundMaterial, soundType)][0];
+            List<LabeledSFX> sounds = soundMaterialTypeLookup[new Tuple<SoundMaterial, SoundType>(soundMaterial, soundType)];
+            return sounds[(int)UnityEngine.Random.Range(0, sounds.Count)];
         }
 
         public LabeledSFX GetSFXClipById(string soundId)
