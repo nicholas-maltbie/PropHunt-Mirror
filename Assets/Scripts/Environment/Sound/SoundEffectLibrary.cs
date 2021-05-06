@@ -30,7 +30,7 @@ namespace PropHunt.Environment.Sound
             soundMaterialLookup.Clear();
             soundTypeLookup.Clear();
             soundMaterialTypeLookup.Clear();
-            soundIdLookup.Clear();   
+            soundIdLookup.Clear();
         }
 
         public void VerifyLookups()
@@ -44,10 +44,9 @@ namespace PropHunt.Environment.Sound
 
         public void SetupLookups()
         {
-            foreach(LabeledSFX labeled in sounds)
+            foreach (LabeledSFX labeled in sounds)
             {
                 Tuple<SoundMaterial, SoundType> tupleKey = new Tuple<SoundMaterial, SoundType>(labeled.soundMaterial, labeled.soundType);
-                UnityEngine.Debug.Log($"{tupleKey.Item1.ToString()}, {tupleKey.Item2.ToString()}");
                 if (!soundMaterialLookup.ContainsKey(labeled.soundMaterial))
                 {
                     soundMaterialLookup[labeled.soundMaterial] = new List<LabeledSFX>();
