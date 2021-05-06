@@ -64,14 +64,11 @@ namespace PropHunt.Environment.Sound
             networkService = new NetworkService(this);
         }
 
-        public void OnCollisionEnter(Collision other)
+        public void CollisionEvent(ICollision collision)
         {
-            if (!networkService.isServer)
-            {
-                return;
-            }
-
-            if (other.relativeVelocity.magnitude < minCollisionVelocity)
+            Vector3 point = collision.GetContact(0).point;
+            float velocity = collision.relativeVelocity.magnitude;
+            if (velocity < minCollisionVelocity)
             {
                 return;
             }
@@ -85,12 +82,22 @@ namespace PropHunt.Environment.Sound
                 return;
             }
 
-            float speedVolume = Mathf.Clamp(other.relativeVelocity.magnitude / maximumSpeed, 0, 1.0f);
+            float speedVolume = Mathf.Clamp(velocity / maximumSpeed, 0, 1.0f);
             float sampledVariation = Random.Range(-volumeVariation, volumeVariation);
             float volume = Mathf.Clamp(speedVolume + sampledVariation, 0, 1);
 
-            SoundEffectManager.CreateNetworkedSoundEffectAtPoint(other.GetContact(0).point,
-                soundMaterial, SoundType.Hit, pitch:Random.Range(minPitch, maxPitch), volume: volume);
+            SoundEffectManager.CreateNetworkedSoundEffectAtPoint(point,
+                soundMaterial, SoundType.Hit,
+                pitch:Random.Range(minPitch, maxPitch), volume: volume);
+        }
+
+        public void OnCollisionEnter(Collision other)
+        {
+            if (!networkService.isServer)
+            {
+                return;
+            }
+            CollisionEvent(new CollisionWrapper(other));
         }
     }
 }

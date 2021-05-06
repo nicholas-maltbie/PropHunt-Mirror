@@ -17,8 +17,6 @@ namespace PropHunt.Environment.Sound
     {
         public static SoundEffectManager Instance;
 
-        public INetworkService networkService;
-
         public SoundEffectLibrary soundEffectLibrary;
 
         public GameObject soundEffectPrefab;
