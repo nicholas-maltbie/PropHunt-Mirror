@@ -19,7 +19,7 @@ namespace Tests.EditMode.Environment.Sound
             GameObject go = new GameObject();
             var audioSource = go.AddComponent<AudioSource>();
             var deleteOnFinish = go.AddComponent<DeleteOnAudioClipFinish>();
-            
+
             audioSource.Stop();
 
             deleteOnFinish.Awake();

@@ -88,7 +88,7 @@ namespace PropHunt.Environment.Sound
 
             SoundEffectManager.CreateNetworkedSoundEffectAtPoint(point,
                 soundMaterial, SoundType.Hit,
-                pitch:Random.Range(minPitch, maxPitch), volume: volume);
+                pitch: Random.Range(minPitch, maxPitch), volume: volume);
         }
 
         public void OnCollisionEnter(Collision other)

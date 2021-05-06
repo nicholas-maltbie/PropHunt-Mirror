@@ -25,13 +25,13 @@ namespace Tests.EditMode.Environment.Sound
 #endif
             base.Setup();
             // Clear out all audio sources
-            foreach(AudioSource source in GameObject.FindObjectsOfType<AudioSource>())
+            foreach (AudioSource source in GameObject.FindObjectsOfType<AudioSource>())
             {
                 GameObject.DestroyImmediate(source);
             }
             soundEffectPrefab = new GameObject();
             soundEffectPrefab.AddComponent<AudioSource>();
-            
+
             library = ScriptableObject.CreateInstance<SoundEffectLibrary>();
             LabeledSFX glassHit = new LabeledSFX
             {
@@ -40,7 +40,7 @@ namespace Tests.EditMode.Environment.Sound
                 audioClip = null,
                 soundID = "testSound1",
             };
-            library.sounds = new LabeledSFX[]{glassHit};
+            library.sounds = new LabeledSFX[] { glassHit };
             GameObject go = new GameObject();
             manager = go.AddComponent<SoundEffectManager>();
             manager.soundEffectLibrary = library;
@@ -60,7 +60,7 @@ namespace Tests.EditMode.Environment.Sound
         {
             AudioSource[] sources = GameObject.FindObjectsOfType<AudioSource>();
             List<AudioSource> filtered = new List<AudioSource>();
-            foreach(AudioSource source in sources)
+            foreach (AudioSource source in sources)
             {
                 if (source.gameObject != soundEffectPrefab)
                 {
@@ -84,7 +84,7 @@ namespace Tests.EditMode.Environment.Sound
             );
             GameObject created = null;
             AudioSource[] sources = GameObject.FindObjectsOfType<AudioSource>();
-            foreach(AudioSource source in sources)
+            foreach (AudioSource source in sources)
             {
                 if (source.gameObject != soundEffectPrefab)
                 {
@@ -117,7 +117,7 @@ namespace Tests.EditMode.Environment.Sound
         public void TestCreateSoundFromEffect()
         {
             // Test creating via sound effect event
-            SoundEffectManager.CreateSoundEffectAtPoint(new SoundEffectEvent 
+            SoundEffectManager.CreateSoundEffectAtPoint(new SoundEffectEvent
             {
                 sfxId = "testSound1",
                 point = new Vector3(1, 5, 1),
@@ -137,7 +137,7 @@ namespace Tests.EditMode.Environment.Sound
             // Ensure that the delayed start works as expected
             Assert.IsFalse(createdSound.isPlaying);
             IEnumerator eventEnum = SoundEffectManager.DelayedStartAudioClip(createdSound);
-            while (eventEnum.MoveNext()) {}
+            while (eventEnum.MoveNext()) { }
             GameObject.DestroyImmediate(created);
         }
     }

@@ -25,7 +25,7 @@ namespace Tests.EditMode.Environment.Sound
             base.TearDown();
             GameObject.DestroyImmediate(soundOnHit.gameObject);
             // Cleanup any created audio sources
-            foreach(AudioSource source in GameObject.FindObjectsOfType<AudioSource>())
+            foreach (AudioSource source in GameObject.FindObjectsOfType<AudioSource>())
             {
                 GameObject.DestroyImmediate(source.gameObject);
             }

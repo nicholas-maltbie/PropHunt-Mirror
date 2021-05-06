@@ -32,7 +32,7 @@ namespace PropHunt.Environment.Sound
 
         [Server]
         public static void CreateNetworkedSoundEffectAtPoint(
-            Vector3 point, SoundMaterial material, SoundType type, float pitch=1.0f, float volume=1.0f)
+            Vector3 point, SoundMaterial material, SoundType type, float pitch = 1.0f, float volume = 1.0f)
         {
             if (SoundEffectManager.Instance == null || !NetworkServer.active)
             {
@@ -50,9 +50,9 @@ namespace PropHunt.Environment.Sound
 
         public static void CreateSoundEffectAtPoint(SoundEffectEvent sfxEvent)
         {
-            CreateSoundEffectAtPoint(sfxEvent.point, 
+            CreateSoundEffectAtPoint(sfxEvent.point,
                 SoundEffectManager.Instance.soundEffectLibrary.GetSFXClipById(sfxEvent.sfxId).audioClip,
-                pitchValue:sfxEvent.pitchValue, volume:sfxEvent.volume);
+                pitchValue: sfxEvent.pitchValue, volume: sfxEvent.volume);
         }
 
         public static GameObject CreateSoundEffectAtPoint(Vector3 point, SoundMaterial soundMaterial, SoundType soundType)
@@ -69,7 +69,7 @@ namespace PropHunt.Environment.Sound
             yield return null;
         }
 
-        public static GameObject CreateSoundEffectAtPoint(Vector3 point, AudioClip clip, float pitchValue=1.0f, float volume=1.0f)
+        public static GameObject CreateSoundEffectAtPoint(Vector3 point, AudioClip clip, float pitchValue = 1.0f, float volume = 1.0f)
         {
             GameObject sfxGo = GameObject.Instantiate(SoundEffectManager.Instance.soundEffectPrefab);
             sfxGo.transform.position = point;

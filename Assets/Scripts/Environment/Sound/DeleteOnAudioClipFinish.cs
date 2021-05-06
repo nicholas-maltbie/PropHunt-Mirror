@@ -26,7 +26,7 @@ namespace PropHunt.Environment.Sound
 
         public void Update()
         {
-            if(!source.isPlaying && !cleared)
+            if (!source.isPlaying && !cleared)
             {
                 cleared = true;
                 StartCoroutine(DestorySelf());
