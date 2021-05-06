@@ -113,10 +113,12 @@ namespace PropHunt.Environment.Sound
                 return;
             }
 
+            string sfxId = SoundEffectManager.Instance.soundEffectLibrary.
+                GetSFXClipBySoundMaterialAndType(material, type).soundId;
+
             NetworkServer.SendToAll<SoundEffectEvent>(new SoundEffectEvent
             {
-                sfxId = SoundEffectManager.Instance.soundEffectLibrary.
-                    GetSFXClipBySoundMaterialAndType(material, type).soundId,
+                sfxId = sfxId,
                 point = point,
                 pitchValue = pitch,
                 volume = volume,
@@ -174,6 +176,7 @@ namespace PropHunt.Environment.Sound
             AudioClip clip, float pitchValue = 1.0f, float volume = 1.0f,
             string audioMixerGroup = defaultAudioMixerGroup)
         {
+            UnityEngine.Debug.Log(clip.name);
             GameObject sfxGo = GameObject.Instantiate(SoundEffectManager.Instance.soundEffectPrefab);
             sfxGo.transform.position = point;
             AudioSource source = sfxGo.GetComponent<AudioSource>();
