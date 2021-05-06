@@ -6,7 +6,9 @@ using NUnit.Framework;
 using PropHunt.Environment.Sound;
 using PropHunt.Game.Flow;
 using Tests.EditMode.Game.Flow;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.Audio;
 
 namespace Tests.EditMode.Environment.Sound
 {
@@ -32,19 +34,22 @@ namespace Tests.EditMode.Environment.Sound
             soundEffectPrefab = new GameObject();
             soundEffectPrefab.AddComponent<AudioSource>();
 
+            AudioMixer mixer = (AudioMixer)AssetDatabase.LoadAssetAtPath("Assets/Sound/Settings/AudioMixer.mixer", typeof(AudioMixer));
+
             library = ScriptableObject.CreateInstance<SoundEffectLibrary>();
             LabeledSFX glassHit = new LabeledSFX
             {
                 soundMaterial = SoundMaterial.Glass,
                 soundType = SoundType.Hit,
                 audioClip = null,
-                soundID = "testSound1",
+                soundId = "testSound1",
             };
             library.sounds = new LabeledSFX[] { glassHit };
             GameObject go = new GameObject();
             manager = go.AddComponent<SoundEffectManager>();
             manager.soundEffectLibrary = library;
             manager.soundEffectPrefab = soundEffectPrefab;
+            manager.audioMixer = mixer;
             manager.Awake();
         }
 

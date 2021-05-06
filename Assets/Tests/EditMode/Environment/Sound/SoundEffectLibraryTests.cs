@@ -16,14 +16,14 @@ namespace Tests.EditMode.Environment.Sound
                 soundMaterial = SoundMaterial.Glass,
                 soundType = SoundType.Hit,
                 audioClip = null,
-                soundID = "testSound1",
+                soundId = "testSound1",
             };
             LabeledSFX concreteHit = new LabeledSFX
             {
                 soundMaterial = SoundMaterial.Concrete,
                 soundType = SoundType.Hit,
                 audioClip = null,
-                soundID = "testSound2",
+                soundId = "testSound2",
             };
             LabeledSFX[] sounds = new LabeledSFX[]{
                 glassHit, concreteHit

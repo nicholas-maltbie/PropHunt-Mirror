@@ -64,6 +64,10 @@ namespace PropHunt.Environment.Sound
             networkService = new NetworkService(this);
         }
 
+        /// <summary>
+        /// Process a collision event and make a sound effect if permissible
+        /// </summary>
+        /// <param name="collision">Collision event that ocurred</param>
         public void CollisionEvent(ICollision collision)
         {
             Vector3 point = collision.GetContact(0).point;
