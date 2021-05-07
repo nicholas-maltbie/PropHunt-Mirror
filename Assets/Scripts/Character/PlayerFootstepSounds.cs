@@ -43,9 +43,19 @@ namespace PropHunt.Character
         public float maxPitchRange = 1.05f;
 
         /// <summary>
+        /// Maximum time while walking between footstep sounds
+        /// </summary>
+        public float maxFootstepSoundDelay = 0.75f;
+
+        /// <summary>
         /// Minimum delay between footstep sounds
         /// </summary>
         public float minFootstepSoundDelay = 0.25f;
+
+        /// <summary>
+        /// How long has the player been walking but not made a footsep sound
+        /// </summary>
+        private float elapsedWalkingSilent = 0.0f;
 
         private float lastFootstep = Mathf.NegativeInfinity;
 
@@ -70,17 +80,66 @@ namespace PropHunt.Character
             {
                 return;
             }
+
+            MakeFootstepAtPoint(footstepEvent.footstepPosition, footstepEvent.floor);
+        }
+
+        public void Update()
+        {
+            // If the player is on the ground and not moving, update the elapsed walking time
+            if (!kcc.Falling && kcc.inputMovement.magnitude > 0)
+            {
+                elapsedWalkingSilent += unityService.deltaTime;
+            }
+            else
+            {
+                elapsedWalkingSilent = 0;
+            }
+
+            if (elapsedWalkingSilent >= maxFootstepSoundDelay)
+            {
+                MakeFootstepAtPoint(transform.position, kcc.floor);
+            }
+        }
+
+        private void MakeFootstepAtPoint(Vector3 point, GameObject ground)
+        {
             lastFootstep = unityService.time;
+            elapsedWalkingSilent = 0.0f;
             SoundEffectEvent sfxEvent = new SoundEffectEvent
             {
                 sfxId = SoundEffectManager.Instance.soundEffectLibrary.GetSFXClipBySoundMaterialAndType(
-                    GetSoundMaterial(footstepEvent.floor),
+                    GetSoundMaterial(ground),
                     SoundType.Footstep).soundId,
-                point = footstepEvent.footstepPosition,
+                point = point,
                 pitchValue = Random.Range(minPitchRange, maxPitchRange),
                 volume = kcc.isSprinting ? sprintVolume : walkVolume,
                 mixerGroup = "Footsteps"
             };
+            SoundEffectManager.CreateSoundEffectAtPoint(sfxEvent);
+            if (isServer)
+            {
+                RpcCreateFootstepSound(sfxEvent);
+            }
+            else
+            {
+                CmdCreateFootstepSound(sfxEvent);
+            }
+        }
+
+        [Command]
+        public void CmdCreateFootstepSound(SoundEffectEvent sfxEvent)
+        {
+            RpcCreateFootstepSound(sfxEvent);
+        }
+
+        [ClientRpc]
+        public void RpcCreateFootstepSound(SoundEffectEvent sfxEvent)
+        {
+            if (isLocalPlayer)
+            {
+                return;
+            }
             SoundEffectManager.CreateSoundEffectAtPoint(sfxEvent);
         }
     }

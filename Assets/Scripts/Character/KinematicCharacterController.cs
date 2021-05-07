@@ -119,6 +119,11 @@ namespace PropHunt.Character
         public Vector3 surfaceNormal;
 
         /// <summary>
+        /// What is the player standing on
+        /// </summary>
+        public GameObject floor;
+
+        /// <summary>
         /// Angle between the ground and the player
         /// </summary>
         public float angle;
@@ -162,7 +167,6 @@ namespace PropHunt.Character
         /// <summary>
         /// Is the player sprinting
         /// </summary>
-        [SyncVar]
         public bool isSprinting;
 
         /// <summary>
@@ -322,6 +326,7 @@ namespace PropHunt.Character
             this.distanceToGround = hit.distance;
             this.onGround = hit.hit;
             this.surfaceNormal = hit.normal;
+            this.floor = hit.collider != null ? hit.collider.gameObject : null;
         }
 
         /// <summary>

@@ -300,7 +300,7 @@ MonoBehaviour:
   velocity: {x: 0, y: 0, z: 0}
   jumpVelocity: 8
   attemptingJump: 0
-  maxPushSpeed: 1
+  maxPushSpeed: 10
   pushDecay: 0.9
   anglePower: 0.5
   verticalSnapDown: 0.35
@@ -309,6 +309,7 @@ MonoBehaviour:
   verticalSnapUp: 0.3
   distanceToGround: 0
   surfaceNormal: {x: 0, y: 0, z: 0}
+  floor: {fileID: 0}
   angle: 0
   movementSpeed: 5
   sprintSpeed: 7.5
@@ -411,8 +412,10 @@ MonoBehaviour:
   footGrounded: {fileID: 6956521044681878227}
   sprintVolume: 0.95
   walkVolume: 0.45
-  minPitchRange: 0.95
-  maxPitchRange: 1.05
+  minPitchRange: 0.85
+  maxPitchRange: 1.15
+  maxFootstepSoundDelay: 0.75
+  minFootstepSoundDelay: 0.25
 --- !u!1 &886816266439757742
 GameObject:
   m_ObjectHideFlags: 0
