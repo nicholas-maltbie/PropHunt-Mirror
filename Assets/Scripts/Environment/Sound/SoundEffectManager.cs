@@ -176,7 +176,6 @@ namespace PropHunt.Environment.Sound
             AudioClip clip, float pitchValue = 1.0f, float volume = 1.0f,
             string audioMixerGroup = defaultAudioMixerGroup)
         {
-            UnityEngine.Debug.Log(clip.name);
             GameObject sfxGo = GameObject.Instantiate(SoundEffectManager.Instance.soundEffectPrefab);
             sfxGo.transform.position = point;
             AudioSource source = sfxGo.GetComponent<AudioSource>();
