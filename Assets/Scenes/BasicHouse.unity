@@ -20069,7 +20069,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh25922
+  m_Name: pb_Mesh405208
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -31083,7 +31083,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 1
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1613349862
 Transform:
@@ -41610,6 +41610,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3612603010206716568, guid: c198513fb8db39d408ec6a282a3019e6, type: 3}
+      propertyPath: maxSFXSources
+      value: 32
+      objectReference: {fileID: 0}
     - target: {fileID: 3612603010206716569, guid: c198513fb8db39d408ec6a282a3019e6, type: 3}
       propertyPath: m_RootOrder
       value: 5

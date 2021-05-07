@@ -42,6 +42,13 @@ namespace PropHunt.Character
         /// </summary>
         public float maxPitchRange = 1.05f;
 
+        /// <summary>
+        /// Minimum delay between footstep sounds
+        /// </summary>
+        public float minFootstepSoundDelay = 0.25f;
+
+        private float lastFootstep = Mathf.NegativeInfinity;
+
         public INetworkService networkService;
         public UnityService unityService = new UnityService();
 
@@ -59,15 +66,22 @@ namespace PropHunt.Character
 
         public void HandleFootstepEvent(object sender, FootstepEvent footstepEvent)
         {
-            if (!networkService.isLocalPlayer || footstepEvent.state != FootstepState.Down)
+            if (footstepEvent.state != FootstepState.Down || (unityService.time - lastFootstep) < minFootstepSoundDelay)
             {
                 return;
             }
-            SoundEffectManager.CreateNetworkedSoundEffectAtPoint(
-                footstepEvent.footstepPosition, GetSoundMaterial(footstepEvent.floor),
-                SoundType.Footstep, Random.Range(minPitchRange, maxPitchRange), 
-                kcc.isSprinting ? sprintVolume : walkVolume, "Footsteps"
-            );
+            lastFootstep = unityService.time;
+            SoundEffectEvent sfxEvent = new SoundEffectEvent
+            {
+                sfxId = SoundEffectManager.Instance.soundEffectLibrary.GetSFXClipBySoundMaterialAndType(
+                    GetSoundMaterial(footstepEvent.floor),
+                    SoundType.Footstep).soundId,
+                point = footstepEvent.footstepPosition,
+                pitchValue = Random.Range(minPitchRange, maxPitchRange),
+                volume = kcc.isSprinting ? sprintVolume : walkVolume,
+                mixerGroup = "Footsteps"
+            };
+            SoundEffectManager.CreateSoundEffectAtPoint(sfxEvent);
         }
     }
 }

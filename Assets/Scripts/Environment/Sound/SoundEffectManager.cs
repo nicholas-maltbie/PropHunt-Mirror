@@ -86,9 +86,8 @@ namespace PropHunt.Environment.Sound
 
         public void ReturnAudioSource(AudioSource source)
         {
-            UnityEngine.Debug.Log("Returned audio source");
             source.gameObject.transform.position = Vector3.zero;
-            source.enabled = false;
+            // source.gameObject.SetActive(false);
             sfxPool.Enqueue(source);
         }
 
@@ -109,10 +108,10 @@ namespace PropHunt.Environment.Sound
             {
                 GameObject sfxObj = GameObject.Instantiate(soundEffectPrefab);
                 AudioSource source = sfxObj.GetComponent<AudioSource>();
-                source.enabled = false;
                 sfxPool.Enqueue(source);
                 sfxObj.gameObject.AddComponent<ReturnAudioSourceOnFinish>();
                 sfxObj.transform.parent = transform;
+                // sfxObj.SetActive(false);
             }
         }
 
@@ -146,6 +145,20 @@ namespace PropHunt.Environment.Sound
                 volume = volume,
                 mixerGroup = audioMixerGroup
             });
+        }
+
+        /// <summary>
+        /// Create a sound effect event on the server and send this event to all clients
+        /// </summary>
+        /// <param name="sfxEvent">Sound effect event to create</param>
+        [Server]
+        public static void CreateNetworkedSoundEffectAtPoint(SoundEffectEvent sfxEvent)
+        {
+            if (SoundEffectManager.Instance == null || !NetworkServer.active)
+            {
+                return;
+            }
+            NetworkServer.SendToAll<SoundEffectEvent>(sfxEvent);
         }
 
         /// <summary>
@@ -199,7 +212,7 @@ namespace PropHunt.Environment.Sound
             source.outputAudioMixerGroup = audioMixerGroup != null && SoundEffectManager.Instance.HasAudioMixerGroup(audioMixerGroup) ?
                 SoundEffectManager.Instance.GetAudioMixerGroup(audioMixerGroup) :
                 SoundEffectManager.Instance.GetAudioMixerGroup(defaultAudioMixerGroup);
-            source.enabled = true;
+            // sfxGo.SetActive(true);
             source.Play();
             sfxGo.GetComponent<ReturnAudioSourceOnFinish>().inUse = true;
             return sfxGo;

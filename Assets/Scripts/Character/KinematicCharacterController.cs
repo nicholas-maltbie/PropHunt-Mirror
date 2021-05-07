@@ -162,6 +162,7 @@ namespace PropHunt.Character
         /// <summary>
         /// Is the player sprinting
         /// </summary>
+        [SyncVar]
         public bool isSprinting;
 
         /// <summary>

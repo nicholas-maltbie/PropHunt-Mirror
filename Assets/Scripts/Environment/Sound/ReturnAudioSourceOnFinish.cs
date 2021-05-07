@@ -28,7 +28,6 @@ namespace PropHunt.Environment.Sound
         {
             if (!source.isPlaying && inUse)
             {
-                UnityEngine.Debug.Log("attempting to return audio source");
                 inUse = false;
                 SoundEffectManager.Instance.ReturnAudioSource(source);
             }
