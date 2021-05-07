@@ -139,10 +139,6 @@ namespace Tests.EditMode.Environment.Sound
             Assert.IsTrue(createdSound.volume == 0.8f);
             Assert.IsTrue(created.transform.position == new Vector3(1, 5, 1));
 
-            // Ensure that the delayed start works as expected
-            Assert.IsFalse(createdSound.isPlaying);
-            IEnumerator eventEnum = SoundEffectManager.DelayedStartAudioClip(createdSound);
-            while (eventEnum.MoveNext()) { }
             GameObject.DestroyImmediate(created);
         }
     }

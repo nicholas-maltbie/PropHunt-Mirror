@@ -152,18 +152,6 @@ namespace PropHunt.Environment.Sound
         }
 
         /// <summary>
-        /// Play a sound effect with a one frame delay and ensure deletion on finish
-        /// </summary>
-        /// <param name="source">Audio source to play</param>
-        public static IEnumerator DelayedStartAudioClip(AudioSource source)
-        {
-            yield return null;
-            source.Play();
-            source.gameObject.AddComponent<DeleteOnAudioClipFinish>();
-            yield return null;
-        }
-
-        /// <summary>
         /// Creates a sound effect at a given point for a clip and settings.
         /// </summary>
         /// <param name="point">Point on the map to create a sound effect</param>
@@ -185,7 +173,8 @@ namespace PropHunt.Environment.Sound
             source.outputAudioMixerGroup = audioMixerGroup != null && SoundEffectManager.Instance.HasAudioMixerGroup(audioMixerGroup) ?
                 SoundEffectManager.Instance.GetAudioMixerGroup(audioMixerGroup) :
                 SoundEffectManager.Instance.GetAudioMixerGroup(defaultAudioMixerGroup);
-            SoundEffectManager.Instance.StartCoroutine(DelayedStartAudioClip(source));
+            sfxGo.gameObject.AddComponent<DeleteOnAudioClipFinish>();
+            source.Play();
             return sfxGo;
         }
     }
