@@ -80,6 +80,18 @@ namespace PropHunt.Environment.Sound
         /// </summary>
         private bool HasAudioMixerGroup(string name) => mixerGroupLookup.ContainsKey(name.ToUpper());
 
+
+        public int maxSFXSources = 128;
+        private Queue<AudioSource> sfxPool = new Queue<AudioSource>();
+
+        public void ReturnAudioSource(AudioSource source)
+        {
+            UnityEngine.Debug.Log("Returned audio source");
+            source.gameObject.transform.position = Vector3.zero;
+            source.enabled = false;
+            sfxPool.Enqueue(source);
+        }
+
         public void Awake()
         {
             if (Instance == null)
@@ -91,6 +103,16 @@ namespace PropHunt.Environment.Sound
             foreach (AudioMixerGroup group in audioMixer.FindMatchingGroups(string.Empty))
             {
                 mixerGroupLookup[group.name.ToUpper()] = group;
+            }
+
+            for(int i = 0; i < maxSFXSources; i++)
+            {
+                GameObject sfxObj = GameObject.Instantiate(soundEffectPrefab);
+                AudioSource source = sfxObj.GetComponent<AudioSource>();
+                source.enabled = false;
+                sfxPool.Enqueue(source);
+                sfxObj.gameObject.AddComponent<ReturnAudioSourceOnFinish>();
+                sfxObj.transform.parent = transform;
             }
         }
 
@@ -164,7 +186,11 @@ namespace PropHunt.Environment.Sound
             AudioClip clip, float pitchValue = 1.0f, float volume = 1.0f,
             string audioMixerGroup = defaultAudioMixerGroup)
         {
-            GameObject sfxGo = GameObject.Instantiate(SoundEffectManager.Instance.soundEffectPrefab);
+            if (Instance.sfxPool.Count == 0)
+            {
+                return null;
+            }
+            GameObject sfxGo = Instance.sfxPool.Dequeue().gameObject;
             sfxGo.transform.position = point;
             AudioSource source = sfxGo.GetComponent<AudioSource>();
             source.pitch = pitchValue;
@@ -173,8 +199,9 @@ namespace PropHunt.Environment.Sound
             source.outputAudioMixerGroup = audioMixerGroup != null && SoundEffectManager.Instance.HasAudioMixerGroup(audioMixerGroup) ?
                 SoundEffectManager.Instance.GetAudioMixerGroup(audioMixerGroup) :
                 SoundEffectManager.Instance.GetAudioMixerGroup(defaultAudioMixerGroup);
-            sfxGo.gameObject.AddComponent<DeleteOnAudioClipFinish>();
+            source.enabled = true;
             source.Play();
+            sfxGo.GetComponent<ReturnAudioSourceOnFinish>().inUse = true;
             return sfxGo;
         }
     }
