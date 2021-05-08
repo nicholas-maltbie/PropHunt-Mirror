@@ -60,7 +60,7 @@ namespace PropHunt.Character
         private float lastFootstep = Mathf.NegativeInfinity;
 
         public INetworkService networkService;
-        public UnityService unityService = new UnityService();
+        public IUnityService unityService = new UnityService();
 
         public void Start()
         {
@@ -117,7 +117,7 @@ namespace PropHunt.Character
                 mixerGroup = "Footsteps"
             };
             SoundEffectManager.CreateSoundEffectAtPoint(sfxEvent);
-            if (isServer)
+            if (this.networkService.isServer)
             {
                 RpcCreateFootstepSound(sfxEvent);
             }
@@ -136,7 +136,7 @@ namespace PropHunt.Character
         [ClientRpc]
         public void RpcCreateFootstepSound(SoundEffectEvent sfxEvent)
         {
-            if (isLocalPlayer)
+            if (this.networkService.isLocalPlayer)
             {
                 return;
             }

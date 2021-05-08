@@ -80,9 +80,25 @@ namespace PropHunt.Environment.Sound
         /// </summary>
         private bool HasAudioMixerGroup(string name) => mixerGroupLookup.ContainsKey(name.ToUpper());
 
+        /// <summary>
+        /// Maximum number of sound effect sources that are generated
+        /// </summary>
+        public int maxSFXSources = 16;
 
-        public int maxSFXSources = 128;
-        private Queue<AudioSource> sfxPool = new Queue<AudioSource>();
+        /// <summary>
+        /// Returns the number of available sound effect sources in the pool
+        /// </summary>
+        public int AvailableSources => sfxPool.Count;
+        
+        /// <summary>
+        /// Returns the number of currently used sound effect sources in the pool
+        /// </summary>
+        public int UsedSources => maxSFXSources - sfxPool.Count;
+        
+        /// <summary>
+        /// Pool of available audio sources for making sound effects
+        /// </summary>
+        public Queue<AudioSource> sfxPool = new Queue<AudioSource>();
 
         public void ReturnAudioSource(AudioSource source)
         {
@@ -137,7 +153,7 @@ namespace PropHunt.Environment.Sound
             string sfxId = SoundEffectManager.Instance.soundEffectLibrary.
                 GetSFXClipBySoundMaterialAndType(material, type).soundId;
 
-            NetworkServer.SendToAll<SoundEffectEvent>(new SoundEffectEvent
+            CreateNetworkedSoundEffectAtPoint(new SoundEffectEvent
             {
                 sfxId = sfxId,
                 point = point,
