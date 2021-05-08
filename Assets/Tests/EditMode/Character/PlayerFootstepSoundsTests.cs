@@ -18,7 +18,7 @@ namespace Tests.EditMode.Character
     [TestFixture]
     public class PlayerFootstepSoundsTests : SoundEffectManagerTestBase
     {
-            
+
         Mock<INetworkService> networkServiceMock;
         Mock<IUnityService> unityServiceMock;
         PlayerFootstepSounds footstepSounds;

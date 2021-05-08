@@ -138,12 +138,12 @@ namespace PropHunt.Animation
         /// <summary>
         /// Previous position for left foot
         /// </summary>
-        public Vector3 leftFootPosition {get; private set; }
+        public Vector3 leftFootPosition { get; private set; }
 
         /// <summary>
         /// Previous position for right foot
         /// </summary>
-        public Vector3 rightFootPosition {get; private set; }
+        public Vector3 rightFootPosition { get; private set; }
 
         /// <summary>
         /// Previous grounded state for left foot

@@ -89,12 +89,12 @@ namespace PropHunt.Environment.Sound
         /// Returns the number of available sound effect sources in the pool
         /// </summary>
         public int AvailableSources => sfxPool.Count;
-        
+
         /// <summary>
         /// Returns the number of currently used sound effect sources in the pool
         /// </summary>
         public int UsedSources => maxSFXSources - sfxPool.Count;
-        
+
         /// <summary>
         /// Pool of available audio sources for making sound effects
         /// </summary>

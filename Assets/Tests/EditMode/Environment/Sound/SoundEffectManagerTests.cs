@@ -35,7 +35,7 @@ namespace Tests.EditMode.Environment.Sound
             SetupSoundEffectManager(out this.soundEffectPrefab, out this.library, out this.manager);
         }
 
-        public static void SetupSoundEffectManager(out GameObject soundEffectPrefab, 
+        public static void SetupSoundEffectManager(out GameObject soundEffectPrefab,
             out SoundEffectLibrary library, out SoundEffectManager manager)
         {
             soundEffectPrefab = new GameObject();
@@ -127,7 +127,7 @@ namespace Tests.EditMode.Environment.Sound
         {
             AudioSource source = SoundEffectManager.CreateSoundEffectAtPoint(Vector3.zero, library.sounds[0].audioClip).GetComponent<AudioSource>();
             IEnumerator enumerator = SoundEffectManager.PlaySFX(source, SoundEffectManager.defaultAudioMixerGroup);
-            while (enumerator.MoveNext()) {}
+            while (enumerator.MoveNext()) { }
             Assert.IsTrue(source.isPlaying);
         }
 

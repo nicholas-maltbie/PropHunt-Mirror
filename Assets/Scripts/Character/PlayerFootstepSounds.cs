@@ -36,7 +36,7 @@ namespace PropHunt.Character
         /// Minimum pitch modulation for footsteps
         /// </summary>
         public float minPitchRange = 0.95f;
-        
+
         /// <summary>
         /// Maximum pitch modulation for footsteps
         /// </summary>
