@@ -50,15 +50,15 @@ MonoBehaviour:
   airAbsorption: 0
   dipoleWeight: 0
   dipolePower: 0
-  occlusionMode: 0
+  occlusionMode: 1
   occlusionMethod: 1
-  sourceRadius: 2
+  sourceRadius: 1
   occlusionSamples: 4
-  directMixLevel: 1
+  directMixLevel: 0.5
   reflections: 1
   indirectBinaural: 0
   physicsBasedAttenuationForIndirect: 1
-  indirectMixLevel: 0.2
+  indirectMixLevel: 0.5
   simulationType: 0
   uniqueIdentifier: 
   avoidSilenceDuringInit: 0

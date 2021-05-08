@@ -9707,6 +9707,8 @@ GameObject:
   - component: {fileID: 500060063}
   - component: {fileID: 500060062}
   - component: {fileID: 500060060}
+  - component: {fileID: 500060064}
+  - component: {fileID: 500060061}
   m_Layer: 0
   m_Name: Camera
   m_TagString: MainCamera
@@ -9746,6 +9748,26 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+--- !u!114 &500060061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 500060059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 052d599a015141b47a4d10676f2dac29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useAllProbeBoxes: 0
+  probeBoxes: []
+  bakedProbeNames: []
+  bakedProbeDataSizes: 
+  bakedDataSize: 0
+  bakedStatsFoldout: 0
+  bakeToggle: 0
+  currentStaticListenerNode: {fileID: 0}
 --- !u!20 &500060062
 Camera:
   m_ObjectHideFlags: 0
@@ -9803,6 +9825,14 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!81 &500060064
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 500060059}
+  m_Enabled: 1
 --- !u!1 &506821487
 GameObject:
   m_ObjectHideFlags: 0
@@ -41998,30 +42028,31 @@ MonoBehaviour:
   airAbsorption: 0
   dipoleWeight: 0
   dipolePower: 0
-  occlusionMode: 0
-  occlusionMethod: 0
+  occlusionMode: 1
+  occlusionMethod: 1
   sourceRadius: 1
-  occlusionSamples: 16
-  directMixLevel: 1
-  reflections: 0
+  occlusionSamples: 4
+  directMixLevel: 0.5
+  reflections: 1
   indirectBinaural: 0
   physicsBasedAttenuationForIndirect: 1
-  indirectMixLevel: 1
+  indirectMixLevel: 0.5
   simulationType: 0
-  uniqueIdentifier: 
+  uniqueIdentifier: STATIC_JUKEBOX_BASIC_HOUSE
   avoidSilenceDuringInit: 0
   overrideHRTFIndex: 0
   hrtfIndex: 0
   bakingRadius: 16
   useAllProbeBoxes: 0
-  probeBoxes: []
+  probeBoxes:
+  - {fileID: 0}
   bakedProbeNames: []
   bakedProbeDataSizes: 
   bakedDataSize: 0
   bakedStatsFoldout: 0
   bakeToggle: 0
   bakedDataIdentifier:
-    identifier: 0
+    identifier: -2136302728
     type: 0
 --- !u!82 &6044473273120238737
 AudioSource:
@@ -42035,7 +42066,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 5335082761107716713, guid: 447bcbade0387f642bb6a6663dd979ce, type: 2}
   m_audioClip: {fileID: 8300000, guid: 07fde23d1ac772d4996b60175ca530c1, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.4
   m_Pitch: 1
   Loop: 1
   Mute: 0

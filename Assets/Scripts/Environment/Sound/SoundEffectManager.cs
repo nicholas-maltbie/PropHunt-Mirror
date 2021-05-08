@@ -87,7 +87,7 @@ namespace PropHunt.Environment.Sound
         public void ReturnAudioSource(AudioSource source)
         {
             source.gameObject.transform.position = Vector3.zero;
-            // source.gameObject.SetActive(false);
+            source.gameObject.SetActive(false);
             sfxPool.Enqueue(source);
         }
 
@@ -104,14 +104,14 @@ namespace PropHunt.Environment.Sound
                 mixerGroupLookup[group.name.ToUpper()] = group;
             }
 
-            for(int i = 0; i < maxSFXSources; i++)
+            for (int i = 0; i < maxSFXSources; i++)
             {
                 GameObject sfxObj = GameObject.Instantiate(soundEffectPrefab);
                 AudioSource source = sfxObj.GetComponent<AudioSource>();
                 sfxPool.Enqueue(source);
                 sfxObj.gameObject.AddComponent<ReturnAudioSourceOnFinish>();
                 sfxObj.transform.parent = transform;
-                // sfxObj.SetActive(false);
+                sfxObj.SetActive(false);
             }
         }
 
@@ -186,6 +186,19 @@ namespace PropHunt.Environment.Sound
                 SoundEffectManager.Instance.soundEffectLibrary.GetSFXClipBySoundMaterialAndType(soundMaterial, soundType).audioClip);
         }
 
+        public static IEnumerator PlaySFX(AudioSource source, string audioMixerGroup)
+        {
+            yield return null;
+            source.outputAudioMixerGroup = audioMixerGroup != null && SoundEffectManager.Instance.HasAudioMixerGroup(audioMixerGroup) ?
+                SoundEffectManager.Instance.GetAudioMixerGroup(audioMixerGroup) :
+                SoundEffectManager.Instance.GetAudioMixerGroup(defaultAudioMixerGroup);
+            source.gameObject.SetActive(true);
+            yield return null;
+            source.Play();
+            source.gameObject.GetComponent<ReturnAudioSourceOnFinish>().inUse = true;
+            yield return null;
+        }
+
         /// <summary>
         /// Creates a sound effect at a given point for a clip and settings.
         /// </summary>
@@ -209,12 +222,7 @@ namespace PropHunt.Environment.Sound
             source.pitch = pitchValue;
             source.clip = clip;
             source.volume = volume;
-            source.outputAudioMixerGroup = audioMixerGroup != null && SoundEffectManager.Instance.HasAudioMixerGroup(audioMixerGroup) ?
-                SoundEffectManager.Instance.GetAudioMixerGroup(audioMixerGroup) :
-                SoundEffectManager.Instance.GetAudioMixerGroup(defaultAudioMixerGroup);
-            // sfxGo.SetActive(true);
-            source.Play();
-            sfxGo.GetComponent<ReturnAudioSourceOnFinish>().inUse = true;
+            SoundEffectManager.Instance.StartCoroutine(PlaySFX(source, audioMixerGroup));
             return sfxGo;
         }
     }
