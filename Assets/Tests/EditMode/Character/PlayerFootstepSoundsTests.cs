@@ -54,6 +54,8 @@ namespace Tests.EditMode.Character
             networkServiceMock = new Mock<INetworkService>();
             unityServiceMock = new Mock<IUnityService>();
 
+            networkServiceMock.Setup(e => e.isLocalPlayer).Returns(true);
+
             footstepSounds.networkService = networkServiceMock.Object;
             footstepSounds.unityService = unityServiceMock.Object;
         }
@@ -119,6 +121,11 @@ namespace Tests.EditMode.Character
             this.footstepSounds.Update();
             Assert.IsTrue(manager.UsedSources == 0);
 
+            networkServiceMock.Setup(e => e.isLocalPlayer).Returns(false);
+            this.footstepSounds.Update();
+            Assert.IsTrue(manager.UsedSources == 0);
+
+            networkServiceMock.Setup(e => e.isLocalPlayer).Returns(true);
             this.footstepSounds.Update();
             Assert.IsTrue(manager.UsedSources == 1);
 

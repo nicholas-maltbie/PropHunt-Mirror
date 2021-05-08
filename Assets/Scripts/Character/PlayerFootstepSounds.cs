@@ -36,7 +36,7 @@ namespace PropHunt.Character
         /// Minimum pitch modulation for footsteps
         /// </summary>
         public float minPitchRange = 0.95f;
-
+        
         /// <summary>
         /// Maximum pitch modulation for footsteps
         /// </summary>
@@ -121,6 +121,7 @@ namespace PropHunt.Character
                 volume = kcc.isSprinting ? sprintVolume : walkVolume,
                 mixerGroup = "Footsteps"
             };
+            SoundEffectManager.CreateSoundEffectAtPoint(sfxEvent);
             if (this.networkService.isServer)
             {
                 RpcCreateFootstepSound(sfxEvent);
@@ -140,6 +141,10 @@ namespace PropHunt.Character
         [ClientRpc]
         public void RpcCreateFootstepSound(SoundEffectEvent sfxEvent)
         {
+            if (this.networkService.isLocalPlayer)
+            {
+                return;
+            }
             SoundEffectManager.CreateSoundEffectAtPoint(sfxEvent);
         }
     }
