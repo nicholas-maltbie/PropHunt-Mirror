@@ -36,7 +36,7 @@ namespace PropHunt.Character
         /// Minimum pitch modulation for footsteps
         /// </summary>
         public float minPitchRange = 0.95f;
-        
+
         /// <summary>
         /// Maximum pitch modulation for footsteps
         /// </summary>
@@ -76,7 +76,7 @@ namespace PropHunt.Character
 
         public void HandleFootstepEvent(object sender, FootstepEvent footstepEvent)
         {
-            if (footstepEvent.state != FootstepState.Down || (unityService.time - lastFootstep) < minFootstepSoundDelay)
+            if (!networkService.isLocalPlayer || footstepEvent.state != FootstepState.Down || (unityService.time - lastFootstep) < minFootstepSoundDelay)
             {
                 return;
             }
@@ -86,6 +86,11 @@ namespace PropHunt.Character
 
         public void Update()
         {
+            if (!this.networkService.isLocalPlayer)
+            {
+                return;
+            }
+
             // If the player is on the ground and not moving, update the elapsed walking time
             if (!kcc.Falling && kcc.inputMovement.magnitude > 0)
             {
@@ -116,7 +121,6 @@ namespace PropHunt.Character
                 volume = kcc.isSprinting ? sprintVolume : walkVolume,
                 mixerGroup = "Footsteps"
             };
-            SoundEffectManager.CreateSoundEffectAtPoint(sfxEvent);
             if (this.networkService.isServer)
             {
                 RpcCreateFootstepSound(sfxEvent);
@@ -136,10 +140,6 @@ namespace PropHunt.Character
         [ClientRpc]
         public void RpcCreateFootstepSound(SoundEffectEvent sfxEvent)
         {
-            if (this.networkService.isLocalPlayer)
-            {
-                return;
-            }
             SoundEffectManager.CreateSoundEffectAtPoint(sfxEvent);
         }
     }

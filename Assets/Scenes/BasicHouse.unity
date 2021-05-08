@@ -42032,11 +42032,11 @@ MonoBehaviour:
   occlusionMethod: 1
   sourceRadius: 1
   occlusionSamples: 4
-  directMixLevel: 0.5
+  directMixLevel: 0.45
   reflections: 1
   indirectBinaural: 0
   physicsBasedAttenuationForIndirect: 1
-  indirectMixLevel: 0.5
+  indirectMixLevel: 0.4
   simulationType: 0
   uniqueIdentifier: STATIC_JUKEBOX_BASIC_HOUSE
   avoidSilenceDuringInit: 0
@@ -42066,7 +42066,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 5335082761107716713, guid: 447bcbade0387f642bb6a6663dd979ce, type: 2}
   m_audioClip: {fileID: 8300000, guid: 07fde23d1ac772d4996b60175ca530c1, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.4
+  m_Volume: 1
   m_Pitch: 1
   Loop: 1
   Mute: 0

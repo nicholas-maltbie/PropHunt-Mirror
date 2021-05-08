@@ -54,14 +54,14 @@ MonoBehaviour:
   occlusionMethod: 1
   sourceRadius: 1
   occlusionSamples: 4
-  directMixLevel: 0.5
+  directMixLevel: 0.45
   reflections: 1
   indirectBinaural: 0
   physicsBasedAttenuationForIndirect: 1
-  indirectMixLevel: 0.5
+  indirectMixLevel: 0.45
   simulationType: 0
   uniqueIdentifier: 
-  avoidSilenceDuringInit: 0
+  avoidSilenceDuringInit: 1
   overrideHRTFIndex: 0
   hrtfIndex: 0
   bakingRadius: 16
