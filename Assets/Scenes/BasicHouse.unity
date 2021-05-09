@@ -41987,8 +41987,8 @@ GameObject:
   - component: {fileID: 1326421800131990778}
   - component: {fileID: 7453009274335119397}
   - component: {fileID: 6044473273120238735}
-  - component: {fileID: 6044473273120238736}
   - component: {fileID: 6044473273120238737}
+  - component: {fileID: 6044473273120238736}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -42140,7 +42140,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
