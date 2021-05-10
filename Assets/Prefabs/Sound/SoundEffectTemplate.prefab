@@ -55,7 +55,7 @@ MonoBehaviour:
   sourceRadius: 1
   occlusionSamples: 4
   directMixLevel: 1
-  reflections: 1
+  reflections: 0
   indirectBinaural: 0
   physicsBasedAttenuationForIndirect: 0
   indirectMixLevel: 1
