@@ -42032,11 +42032,11 @@ MonoBehaviour:
   occlusionMethod: 1
   sourceRadius: 1
   occlusionSamples: 4
-  directMixLevel: 0.45
+  directMixLevel: 1
   reflections: 1
   indirectBinaural: 0
   physicsBasedAttenuationForIndirect: 1
-  indirectMixLevel: 0.4
+  indirectMixLevel: 1
   simulationType: 0
   uniqueIdentifier: STATIC_JUKEBOX_BASIC_HOUSE
   avoidSilenceDuringInit: 0
