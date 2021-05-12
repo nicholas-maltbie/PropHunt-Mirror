@@ -140,7 +140,7 @@ CapsuleCollider:
   m_Radius: 0.35
   m_Height: 1.8
   m_Direction: 1
-  m_Center: {x: 0, y: 0.9, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &-749921916936975090
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -302,11 +302,11 @@ MonoBehaviour:
   attemptingJump: 0
   maxPushSpeed: 10
   pushDecay: 0.9
-  anglePower: 0.5
-  verticalSnapDown: 0.35
+  anglePower: 1
+  verticalSnapDown: 0.45
   onGround: 0
-  stepUpDepth: 0.1
-  verticalSnapUp: 0.3
+  stepUpDepth: 0.05
+  verticalSnapUp: 0.35
   distanceToGround: 0
   surfaceNormal: {x: 0, y: 0, z: 0}
   floor: {fileID: 0}
@@ -440,7 +440,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 886816266439757742}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.65, z: 0}
+  m_LocalPosition: {x: 0, y: 0.75, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2648021938205662071}
@@ -588,7 +588,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2fe50b90de0f56b429fe6e254cc0441e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.025
+      value: -0.925
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2fe50b90de0f56b429fe6e254cc0441e, type: 3}
       propertyPath: m_LocalPosition.z

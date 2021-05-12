@@ -66,6 +66,11 @@ namespace PropHunt.UI
         /// </summary>
         private Dictionary<string, GameObject> screenLookup;
 
+        public void Awake()
+        {
+            DontDestroyOnLoad(gameObject);
+        }
+
         public void Start()
         {
             if (this.screenPrefabs.Count == 0)
