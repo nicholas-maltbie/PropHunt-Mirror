@@ -82,6 +82,11 @@ namespace PropHunt.Game.Flow
         public void Start()
         {
             this.networkManager = GameObject.FindObjectOfType<CustomNetworkManager>();
+
+            if (!NetworkClient.prefabs.ContainsValue(playerPrefab))
+            {
+                NetworkClient.RegisterPrefab(playerPrefab);
+            }
         }
 
         public void ExitLobbyPhase()
@@ -115,7 +120,7 @@ namespace PropHunt.Game.Flow
             // Increment current phase time
             phaseTime += unityService.deltaTime;
 
-            switch(gamePhase)
+            switch (gamePhase)
             {
                 // Do things differently based on phase
                 case GamePhase.Lobby:
@@ -159,7 +164,7 @@ namespace PropHunt.Game.Flow
             phaseTime = 0;
 
             // Handle whenever the game state changes
-            switch(change.next)
+            switch (change.next)
             {
                 // Do things differently based on the new phase
                 case GamePhase.Lobby:
@@ -174,8 +179,9 @@ namespace PropHunt.Game.Flow
                     // When in game starts, spawn a player for each connection
                     foreach (NetworkConnection conn in NetworkServer.connections.Values)
                     {
-                        GameObject newPlayer = Instantiate(playerPrefab);
-                        NetworkServer.ReplacePlayerForConnection(conn, playerPrefab);
+                        GameObject newPlayer = GameObject.Instantiate(playerPrefab);
+                        NetworkServer.DestroyPlayerForConnection(conn);
+                        NetworkServer.AddPlayerForConnection(conn, newPlayer);
                     }
                     break;
                 case GamePhase.Score:
