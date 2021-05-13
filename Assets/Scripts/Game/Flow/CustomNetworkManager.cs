@@ -4,6 +4,7 @@ using PropHunt.Game.Communication;
 using System;
 using PropHunt.Environment.Sound;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 namespace PropHunt.Game.Flow
 {
@@ -14,6 +15,30 @@ namespace PropHunt.Game.Flow
 
         [Scene]
         public string gameScene;
+
+        public CustomNetworkManager Instance;
+
+        public IEnumerator DestorySelf()
+        {
+            yield return null;
+            GameObject.Destroy(this);
+        }
+
+        public override void Start()
+        {
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                // Only let one exist
+                StartCoroutine(DestorySelf());
+                return;
+            }
+
+            base.Start();
+        }
 
         public override void OnServerConnect(NetworkConnection conn)
         {

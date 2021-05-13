@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -47,6 +48,11 @@ namespace PropHunt.UI
         public static event EventHandler<ScreenChangeEventArgs> ScreenChangeOccur;
 
         /// <summary>
+        /// Globally created instance of the UIManager
+        /// </summary>
+        public static UIManager Instance;
+
+        /// <summary>
         /// Various screens to add into the scene
         /// </summary>
         public List<Canvas> screenPrefabs;
@@ -66,13 +72,28 @@ namespace PropHunt.UI
         /// </summary>
         private Dictionary<string, GameObject> screenLookup;
 
-        public void Awake()
+        public IEnumerator DestorySelf()
         {
-            DontDestroyOnLoad(gameObject);
+            yield return null;
+            GameObject.Destroy(this);
         }
 
         public void Start()
         {
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                // Only let one exist
+                gameObject.SetActive(false);
+                StartCoroutine(DestorySelf());
+                return;
+            }
+
+            DontDestroyOnLoad(gameObject);
+
             if (this.screenPrefabs.Count == 0)
             {
                 UnityEngine.Debug.Log("No valid screens to display for UIManager");
@@ -105,15 +126,12 @@ namespace PropHunt.UI
                     this.screenLookup[screenName].SetActive(false);
                 }
             }
-        }
 
-        public void OnEnable()
-        {
             // Setup listening to event queue
             UIManager.RequestScreenChange += this.HandleScreenRequest;
         }
 
-        public void OnDisable()
+        public void OnDestroy()
         {
             UIManager.RequestScreenChange -= this.HandleScreenRequest;
         }

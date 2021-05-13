@@ -37,8 +37,6 @@ namespace Tests.EditMode.UI
             this.uiManagerObject = new GameObject();
             this.uiManager = this.uiManagerObject.AddComponent<UIManager>();
 
-            this.uiManager.OnEnable();
-
             this.currentScreen = "";
             this.screenChangeEvents = 0;
 
@@ -54,7 +52,7 @@ namespace Tests.EditMode.UI
         public void TearDown()
         {
             // Disable and cleanup UIManager
-            this.uiManager.OnDisable();
+            this.uiManager.OnDestroy();
             GameObject.DestroyImmediate(this.uiManagerObject);
         }
 

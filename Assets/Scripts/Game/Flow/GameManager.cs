@@ -89,17 +89,8 @@ namespace PropHunt.Game.Flow
             }
         }
 
-        public void ExitLobbyPhase()
-        {
-            // If host and current phase is lobby, go to next phase
-            if (gamePhase == GamePhase.Lobby)
-            {
-                ChangePhase(GamePhase.Setup);
-            }
-        }
-
         [Server]
-        private void ChangePhase(GamePhase next)
+        public void ChangePhase(GamePhase next)
         {
             gamePhase = next;
         }
@@ -168,14 +159,16 @@ namespace PropHunt.Game.Flow
             {
                 // Do things differently based on the new phase
                 case GamePhase.Lobby:
+                    DebugChatLog.SendChatMessage(new ChatMessage("", "Entering Lobby Phase"));
 
                     break;
                 case GamePhase.Setup:
-                    UnityEngine.Debug.Log("Resetting game state back to lobby");
+                    DebugChatLog.SendChatMessage(new ChatMessage("", "Entering Setup Phase"));
                     networkManager.LoadGameScene();
                     // Once loading is complete, go to InGame
                     break;
                 case GamePhase.InGame:
+                    DebugChatLog.SendChatMessage(new ChatMessage("", "Entering In Game Phase"));
                     // When in game starts, spawn a player for each connection
                     foreach (NetworkConnection conn in NetworkServer.connections.Values)
                     {
@@ -185,9 +178,10 @@ namespace PropHunt.Game.Flow
                     }
                     break;
                 case GamePhase.Score:
-
+                    DebugChatLog.SendChatMessage(new ChatMessage("", "Entering Score Phase"));
                     break;
                 case GamePhase.Reset:
+                    DebugChatLog.SendChatMessage(new ChatMessage("", "Entering Reset Phase"));
                     // Destory the network clients for each player
                     foreach (NetworkConnection conn in NetworkServer.connections.Values)
                     {

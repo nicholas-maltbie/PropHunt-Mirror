@@ -12,7 +12,12 @@ public class ScriptBatch : IPostprocessBuildWithReport
 
     public static string[] GetScenes()
     {
-        return new string[] { "Assets/Scenes/BasicHouse.unity" };
+        return new string[]
+        {
+            "Assets/Scenes/MainMenu.unity",
+            "Assets/Scenes/LobbyScene.unity",
+            "Assets/Scenes/BasicHouse.unity"
+        };
     }
 
     [MenuItem("Build/Build All")]
