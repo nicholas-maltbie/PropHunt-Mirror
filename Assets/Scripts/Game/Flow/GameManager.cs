@@ -2,7 +2,6 @@ using UnityEngine;
 using Mirror;
 using PropHunt.Game.Communication;
 using System;
-using PropHunt.Environment.Sound;
 using PropHunt.Utils;
 
 namespace PropHunt.Game.Flow
@@ -46,11 +45,10 @@ namespace PropHunt.Game.Flow
     /// <summary>
     /// Game manager for managing phases of the game
     /// </summary>
-    public class GameManager : NetworkBehaviour
+    public class GameManager : MonoBehaviour
     {
         public static event EventHandler<GamePhaseChange> OnGamePhaseChange;
 
-        [SyncVar(hook = nameof(SetGamePhase))]
         public GamePhase gamePhase;
 
         /// <summary>
@@ -58,29 +56,23 @@ namespace PropHunt.Game.Flow
         /// </summary>
         public float phaseTime;
 
-        public INetworkService networkService;
-
         private CustomNetworkManager networkManager;
 
         public GameObject playerPrefab;
 
         public IUnityService unityService = new UnityService();
 
-        public static GameManager Instance;
+        public INetworkService networkService = new NetworkService(null);
 
-        public void Awake()
-        {
-            DontDestroyOnLoad(gameObject);
-            OnGamePhaseChange += HandleGamePhaseChange;
-            this.networkService = new NetworkService(this);
-            if (GameManager.Instance == null)
-            {
-                GameManager.Instance = this;
-            }
-        }
+        public static GameManager Instance;
 
         public void Start()
         {
+            GameManager.Instance = this;
+            UnityEngine.Debug.Log($"Setting up game manager: {GameManager.Instance}");
+            DontDestroyOnLoad(gameObject);
+            OnGamePhaseChange += HandleGamePhaseChange;
+
             this.networkManager = GameObject.FindObjectOfType<CustomNetworkManager>();
 
             if (!NetworkClient.prefabs.ContainsValue(playerPrefab))
@@ -89,21 +81,16 @@ namespace PropHunt.Game.Flow
             }
         }
 
-        [Server]
-        public void ChangePhase(GamePhase next)
+        public void ChangePhase(GamePhase newPhase)
         {
-            gamePhase = next;
-        }
-
-        public void SetGamePhase(GamePhase previousPhase, GamePhase newPhase)
-        {
-            GamePhaseChange changeEvent = new GamePhaseChange(previousPhase, newPhase);
+            GamePhaseChange changeEvent = new GamePhaseChange(gamePhase, newPhase);
             OnGamePhaseChange?.Invoke(this, changeEvent);
+            gamePhase = newPhase;
         }
 
         public void Update()
         {
-            if (!networkService.isServer)
+            if (!networkService.activeNetworkServer)
             {
                 return;
             }
@@ -146,7 +133,7 @@ namespace PropHunt.Game.Flow
 
         public void HandleGamePhaseChange(object sender, GamePhaseChange change)
         {
-            if (!networkService.isServer)
+            if (!networkService.activeNetworkServer)
             {
                 return;
             }

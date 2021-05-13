@@ -87,7 +87,6 @@ namespace PropHunt.UI
             else
             {
                 // Only let one exist
-                gameObject.SetActive(false);
                 StartCoroutine(DestorySelf());
                 return;
             }

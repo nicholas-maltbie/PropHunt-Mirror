@@ -7,6 +7,7 @@ namespace PropHunt.UI
     {
         public void ExitLobby()
         {
+            UnityEngine.Debug.Log($"{GameManager.Instance} {GameManager.Instance == null}");
             // If host and current phase is lobby, go to next phase
             if (GameManager.Instance.gamePhase == GamePhase.Lobby)
             {
