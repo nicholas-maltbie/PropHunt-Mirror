@@ -8,8 +8,20 @@ using System.Collections;
 
 namespace PropHunt.Game.Flow
 {
+    public class PlayerConnectEvent : EventArgs
+    {
+        public readonly NetworkConnection connection;
+
+        public PlayerConnectEvent(NetworkConnection connection)
+        {
+            this.connection = connection;
+        }
+    }
+
     public class CustomNetworkManager : NetworkManager
     {
+        public static event EventHandler<PlayerConnectEvent> OnPlayerConnect;
+
         [Scene]
         public string lobbyScene;
 
@@ -38,6 +50,13 @@ namespace PropHunt.Game.Flow
             }
 
             base.Start();
+        }
+
+        public override void OnServerReady(NetworkConnection conn)
+        {
+            base.OnServerReady(conn);
+            PlayerConnectEvent connectEvent = new PlayerConnectEvent(conn);
+            OnPlayerConnect?.Invoke(this, connectEvent);
         }
 
         public override void OnServerConnect(NetworkConnection conn)

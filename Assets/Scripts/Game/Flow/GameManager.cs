@@ -71,6 +71,7 @@ namespace PropHunt.Game.Flow
             GameManager.Instance = this;
             UnityEngine.Debug.Log($"Setting up game manager: {GameManager.Instance}");
             DontDestroyOnLoad(gameObject);
+            CustomNetworkManager.OnPlayerConnect += HandlePlayerConnect;
             OnGamePhaseChange += HandleGamePhaseChange;
 
             this.networkManager = GameObject.FindObjectOfType<CustomNetworkManager>();
@@ -78,6 +79,17 @@ namespace PropHunt.Game.Flow
             if (!NetworkClient.prefabs.ContainsValue(playerPrefab))
             {
                 NetworkClient.RegisterPrefab(playerPrefab);
+            }
+        }
+
+        public void HandlePlayerConnect(object sender, PlayerConnectEvent joinEvent)
+        {
+            // If in game, spawn a player for them... debug behaviour yay
+            if (gamePhase == GamePhase.InGame || gamePhase == GamePhase.Score)
+            {
+                GameObject newPlayer = GameObject.Instantiate(playerPrefab);
+                NetworkServer.DestroyPlayerForConnection(joinEvent.connection);
+                NetworkServer.AddPlayerForConnection(joinEvent.connection, newPlayer);
             }
         }
 
