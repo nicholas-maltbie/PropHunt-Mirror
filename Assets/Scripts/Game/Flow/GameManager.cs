@@ -3,6 +3,7 @@ using Mirror;
 using PropHunt.Game.Communication;
 using System;
 using PropHunt.Utils;
+using PropHunt.Prop;
 
 namespace PropHunt.Game.Flow
 {
