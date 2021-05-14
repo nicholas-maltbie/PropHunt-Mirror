@@ -89,7 +89,7 @@ namespace Tests.EditMode.UI
             // Assert that the destory works as expected
             LogAssert.ignoreFailingMessages = true;
             IEnumerator enumerator = this.uiManager.DestorySelf();
-            while(enumerator.MoveNext()) {}
+            while (enumerator.MoveNext()) { }
 
             Assert.IsTrue(this.uiManager.initialScreen == -1);
         }

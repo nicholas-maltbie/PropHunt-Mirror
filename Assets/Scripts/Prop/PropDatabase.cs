@@ -13,7 +13,7 @@ namespace PropHunt.Prop
         private Dictionary<string, Disguise> disguiseLookup = new Dictionary<string, Disguise>();
 
         private static PropDatabase Instance;
-        
+
         public void Awake()
         {
             if (Instance == null)

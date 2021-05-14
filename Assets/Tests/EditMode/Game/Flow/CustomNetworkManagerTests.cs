@@ -48,14 +48,14 @@ namespace Tests.EditMode.Game.Flow
 
             // Verify delete behaviour
             IEnumerator enumerator = base.networkManager.DestorySelf();
-            while(enumerator.MoveNext()) {}
+            while (enumerator.MoveNext()) { }
         }
 
         [Test]
         public void TestHandleConnection()
         {
             int connects = 0;
-            CustomNetworkManager.OnPlayerConnect += (object sender, PlayerConnectEvent connectEvent) => {connects++;};
+            CustomNetworkManager.OnPlayerConnect += (object sender, PlayerConnectEvent connectEvent) => { connects++; };
             this.networkManager.OnServerReady(NetworkClient.connection);
             Assert.IsTrue(connects == 1);
         }

@@ -84,7 +84,7 @@ namespace PropHunt.Game.Flow
             base.OnServerDisconnect(conn);
             DebugChatLog.SendChatMessage(new ChatMessage("", $"Player {conn.connectionId} disconnected from server"));
         }
-        
+
         /// <summary>
         /// Load the lobby scene for players
         /// </summary>
