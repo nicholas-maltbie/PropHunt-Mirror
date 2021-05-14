@@ -69,9 +69,14 @@ namespace PropHunt.Game.Flow
 
         public void Start()
         {
-            GameManager.Instance = this;
-            UnityEngine.Debug.Log($"Setting up game manager: {GameManager.Instance}");
-            DontDestroyOnLoad(gameObject);
+            if (GameManager.Instance == null)
+            {
+                GameManager.Instance = this;
+            }
+            else
+            {
+                return;
+            }
             CustomNetworkManager.OnPlayerConnect += HandlePlayerConnect;
             OnGamePhaseChange += HandleGamePhaseChange;
 
@@ -81,6 +86,13 @@ namespace PropHunt.Game.Flow
             {
                 NetworkClient.RegisterPrefab(playerPrefab);
             }
+            DontDestroyOnLoad(gameObject);
+        }
+
+        public void OnDestory()
+        {
+            CustomNetworkManager.OnPlayerConnect -= HandlePlayerConnect;
+            Instance = null;
         }
 
         public void HandlePlayerConnect(object sender, PlayerConnectEvent joinEvent)
@@ -119,7 +131,7 @@ namespace PropHunt.Game.Flow
                     break;
                 case GamePhase.Setup:
                     // Once loading is complete, go to InGame
-                    if (NetworkManager.loadingSceneAsync.isDone)
+                    if (NetworkManager.loadingSceneAsync == null || NetworkManager.loadingSceneAsync.isDone)
                     {
                         ChangePhase(GamePhase.InGame);
                     }
@@ -136,7 +148,7 @@ namespace PropHunt.Game.Flow
                     break;
                 case GamePhase.Reset:
                     // Once laoding is complete, go to lobby
-                    if (NetworkManager.loadingSceneAsync.isDone)
+                    if (NetworkManager.loadingSceneAsync == null || NetworkManager.loadingSceneAsync.isDone)
                     {
                         ChangePhase(GamePhase.Lobby);
                     }
