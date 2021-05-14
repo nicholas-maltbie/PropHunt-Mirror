@@ -91,8 +91,6 @@ namespace PropHunt.UI
                 return;
             }
 
-            DontDestroyOnLoad(gameObject);
-
             if (this.screenPrefabs.Count == 0)
             {
                 UnityEngine.Debug.Log("No valid screens to display for UIManager");
@@ -128,6 +126,8 @@ namespace PropHunt.UI
 
             // Setup listening to event queue
             UIManager.RequestScreenChange += this.HandleScreenRequest;
+
+            DontDestroyOnLoad(gameObject);
         }
 
         public void OnDestroy()
