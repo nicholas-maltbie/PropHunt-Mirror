@@ -28,7 +28,9 @@ namespace PropHunt.Game.Flow
         [Scene]
         public string gameScene;
 
-        public CustomNetworkManager Instance;
+        public GameObject gameManager;
+
+        public static CustomNetworkManager Instance;
 
         public IEnumerator DestorySelf()
         {
@@ -48,6 +50,8 @@ namespace PropHunt.Game.Flow
                 StartCoroutine(DestorySelf());
                 return;
             }
+
+            NetworkClient.RegisterPrefab(gameManager);
 
             base.Start();
         }
@@ -83,6 +87,14 @@ namespace PropHunt.Game.Flow
         {
             base.OnServerDisconnect(conn);
             DebugChatLog.SendChatMessage(new ChatMessage("", $"Player {conn.connectionId} disconnected from server"));
+        }
+
+        public override void OnStartServer()
+        {
+            base.OnStartServer();
+            GameObject manager = GameObject.Instantiate(gameManager);
+            NetworkServer.Spawn(manager);
+            DontDestroyOnLoad(manager);
         }
 
         /// <summary>

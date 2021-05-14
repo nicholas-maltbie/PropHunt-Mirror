@@ -4,6 +4,7 @@ using PropHunt.Game.Communication;
 using System;
 using PropHunt.Utils;
 using PropHunt.Prop;
+using System.Collections;
 
 namespace PropHunt.Game.Flow
 {
@@ -46,10 +47,11 @@ namespace PropHunt.Game.Flow
     /// <summary>
     /// Game manager for managing phases of the game
     /// </summary>
-    public class GameManager : MonoBehaviour
+    public class GameManager : NetworkBehaviour
     {
         public static event EventHandler<GamePhaseChange> OnGamePhaseChange;
 
+        [SyncVar(hook = nameof(HandleChangePhase))]
         public GamePhase gamePhase;
 
         /// <summary>
@@ -106,11 +108,10 @@ namespace PropHunt.Game.Flow
             }
         }
 
-        public void ChangePhase(GamePhase newPhase)
+        public void HandleChangePhase(GamePhase previousPhase, GamePhase newPhase)
         {
-            GamePhaseChange changeEvent = new GamePhaseChange(gamePhase, newPhase);
+            GamePhaseChange changeEvent = new GamePhaseChange(previousPhase, newPhase);
             OnGamePhaseChange?.Invoke(this, changeEvent);
-            gamePhase = newPhase;
         }
 
         public void Update()
@@ -133,7 +134,7 @@ namespace PropHunt.Game.Flow
                     // Once loading is complete, go to InGame
                     if (NetworkManager.loadingSceneAsync == null || NetworkManager.loadingSceneAsync.isDone)
                     {
-                        ChangePhase(GamePhase.InGame);
+                        gamePhase = GamePhase.InGame;
                     }
                     break;
                 case GamePhase.InGame:
@@ -150,10 +151,22 @@ namespace PropHunt.Game.Flow
                     // Once laoding is complete, go to lobby
                     if (NetworkManager.loadingSceneAsync == null || NetworkManager.loadingSceneAsync.isDone)
                     {
-                        ChangePhase(GamePhase.Lobby);
+                        gamePhase = GamePhase.Lobby;
                     }
                     break;
             }
+        }
+
+        public IEnumerator SpawnPlayerCharacter(NetworkConnection conn)
+        {
+            yield return null;
+            while(!conn.isReady)
+            {
+                yield return null;
+            }
+            GameObject newPlayer = GameObject.Instantiate(playerPrefab);
+            NetworkServer.DestroyPlayerForConnection(conn);
+            NetworkServer.AddPlayerForConnection(conn, newPlayer);
         }
 
         public void HandleGamePhaseChange(object sender, GamePhaseChange change)
@@ -184,9 +197,7 @@ namespace PropHunt.Game.Flow
                     // When in game starts, spawn a player for each connection
                     foreach (NetworkConnection conn in NetworkServer.connections.Values)
                     {
-                        GameObject newPlayer = GameObject.Instantiate(playerPrefab);
-                        NetworkServer.DestroyPlayerForConnection(conn);
-                        NetworkServer.AddPlayerForConnection(conn, newPlayer);
+                        SpawnPlayerCharacter(conn);
                     }
                     break;
                 case GamePhase.Score:

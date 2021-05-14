@@ -43,7 +43,7 @@ namespace Tests.EditMode.Game.Flow
         public void HandlePlayerConnectInLobbyTest()
         {
             // Test connecting durring lobby phase
-            gameManager.ChangePhase(GamePhase.Lobby);
+            GameManager.Instance.gamePhase = GamePhase.Lobby;
             gameManager.HandlePlayerConnect(null, new PlayerConnectEvent(
                 NetworkServer.connections[0]
             ));
@@ -54,7 +54,7 @@ namespace Tests.EditMode.Game.Flow
         {
             LogAssert.ignoreFailingMessages = true;
             // Evaluate connecting during in game phase
-            gameManager.ChangePhase(GamePhase.InGame);
+            GameManager.Instance.gamePhase = GamePhase.InGame;
             gameManager.HandlePlayerConnect(null, new PlayerConnectEvent(
                 NetworkServer.connections[0]
             ));
@@ -65,21 +65,21 @@ namespace Tests.EditMode.Game.Flow
         {
             LogAssert.ignoreFailingMessages = true;
 
-            gameManager.ChangePhase(GamePhase.Lobby);
+            GameManager.Instance.gamePhase = GamePhase.Lobby;
             gameManager.Update();
 
             LogAssert.Expect(LogType.Error, "ServerChangeScene empty scene name");
-            gameManager.ChangePhase(GamePhase.Setup);
+            GameManager.Instance.gamePhase = GamePhase.Setup;
             gameManager.Update();
 
-            gameManager.ChangePhase(GamePhase.InGame);
+            GameManager.Instance.gamePhase = GamePhase.InGame;
             gameManager.Update();
 
-            gameManager.ChangePhase(GamePhase.Score);
+            GameManager.Instance.gamePhase = GamePhase.Score;
             gameManager.Update();
 
             LogAssert.Expect(LogType.Error, "ServerChangeScene empty scene name");
-            gameManager.ChangePhase(GamePhase.Reset);
+            GameManager.Instance.gamePhase = GamePhase.Reset;
             gameManager.Update();
         }
 
@@ -88,7 +88,7 @@ namespace Tests.EditMode.Game.Flow
         {
             NetworkServer.Shutdown();
 
-            gameManager.ChangePhase(GamePhase.Lobby);
+            GameManager.Instance.gamePhase = GamePhase.Lobby;
             gameManager.Update();
         }
     }

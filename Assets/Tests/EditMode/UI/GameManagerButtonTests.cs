@@ -18,19 +18,19 @@ namespace Tests.EditMode.UI
             gameManager.playerPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Tests/EditMode/TestPlayer.prefab");
             Assert.Throws<System.InvalidOperationException>(() => gameManager.Start());
             // Test exiting lobby while in or not in lobby phase
-            gameManager.ChangePhase(GamePhase.Lobby);
+            GameManager.Instance.gamePhase = GamePhase.Lobby;
             buttonPhase.ExitLobby();
-            gameManager.ChangePhase(GamePhase.Setup);
+            GameManager.Instance.gamePhase = GamePhase.Setup;
             buttonPhase.ExitLobby();
             // Test exiting while in and not in game
-            gameManager.ChangePhase(GamePhase.InGame);
+            GameManager.Instance.gamePhase = GamePhase.InGame;
             buttonPhase.ExitGame();
-            gameManager.ChangePhase(GamePhase.Lobby);
+            GameManager.Instance.gamePhase = GamePhase.Lobby;
             buttonPhase.ExitGame();
             // Test exiting while in and not in score
-            gameManager.ChangePhase(GamePhase.Score);
+            GameManager.Instance.gamePhase = GamePhase.Score;
             buttonPhase.ExitScore();
-            gameManager.ChangePhase(GamePhase.Lobby);
+            GameManager.Instance.gamePhase = GamePhase.Lobby;
             buttonPhase.ExitScore();
 
             GameObject.DestroyImmediate(testObj);

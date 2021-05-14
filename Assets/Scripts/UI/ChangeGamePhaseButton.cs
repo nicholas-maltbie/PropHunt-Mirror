@@ -11,7 +11,7 @@ namespace PropHunt.UI
             // If host and current phase is lobby, go to next phase
             if (GameManager.Instance.gamePhase == GamePhase.Lobby)
             {
-                GameManager.Instance.ChangePhase(GamePhase.Setup);
+                GameManager.Instance.gamePhase = GamePhase.Setup;
             }
             else
             {
@@ -24,7 +24,7 @@ namespace PropHunt.UI
             // If host and current phase is lobby, go to next phase
             if (GameManager.Instance.gamePhase == GamePhase.InGame)
             {
-                GameManager.Instance.ChangePhase(GamePhase.Score);
+                GameManager.Instance.gamePhase = GamePhase.Score;
             }
             else
             {
@@ -37,7 +37,7 @@ namespace PropHunt.UI
             // If host and current phase is lobby, go to next phase
             if (GameManager.Instance.gamePhase == GamePhase.Score)
             {
-                GameManager.Instance.ChangePhase(GamePhase.Reset);
+                GameManager.Instance.gamePhase = GamePhase.Reset;
             }
             else
             {
