@@ -227,6 +227,10 @@ PrefabInstance:
       propertyPath: gameManager
       value: 
       objectReference: {fileID: 2564128500920165626, guid: a962043aad18d9e4ab2ce1363fff9b11, type: 3}
+    - target: {fileID: 3526196192389498832, guid: 128bf2dcaa8d43942a6e23d498102de3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8542409671753137158, guid: 128bf2dcaa8d43942a6e23d498102de3, type: 3}
       propertyPath: m_Name
       value: NetworkManager

@@ -28,7 +28,7 @@ namespace Tests.EditMode.Game.Flow
         {
             LogAssert.ignoreFailingMessages = true;
             base.TearDown();
-            gameManager.OnDestory();
+            gameManager.DisableGameManager();
             GameObject.DestroyImmediate(gameManager.gameObject);
         }
 

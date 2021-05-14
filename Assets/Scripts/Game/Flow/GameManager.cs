@@ -74,6 +74,7 @@ namespace PropHunt.Game.Flow
             if (GameManager.Instance == null)
             {
                 GameManager.Instance = this;
+                gamePhase = GamePhase.Lobby;
             }
             else
             {
@@ -91,9 +92,11 @@ namespace PropHunt.Game.Flow
             DontDestroyOnLoad(gameObject);
         }
 
-        public void OnDestory()
+        public void DisableGameManager()
         {
+            UnityEngine.Debug.Log("Destorying Self");
             CustomNetworkManager.OnPlayerConnect -= HandlePlayerConnect;
+            OnGamePhaseChange -= HandleGamePhaseChange;
             Instance = null;
         }
 

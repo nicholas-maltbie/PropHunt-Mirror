@@ -97,6 +97,21 @@ namespace PropHunt.Game.Flow
             DontDestroyOnLoad(manager);
         }
 
+        public override void OnClientDisconnect(NetworkConnection conn)
+        {
+            base.OnClientDisconnect(conn);
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.DisableGameManager();
+            }
+        }
+
+        public override void OnStopServer()
+        {
+            GameManager.Instance.DisableGameManager();
+            base.OnStopServer();
+        }
+
         /// <summary>
         /// Load the lobby scene for players
         /// </summary>
