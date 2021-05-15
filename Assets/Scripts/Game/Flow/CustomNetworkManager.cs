@@ -43,7 +43,7 @@ namespace PropHunt.Game.Flow
                 return;
             }
 
-            base.Start();
+            base.Awake();
         }
 
         public override void OnServerReady(NetworkConnection conn)

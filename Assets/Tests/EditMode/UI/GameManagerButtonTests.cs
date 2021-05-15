@@ -3,6 +3,7 @@ using PropHunt.Game.Flow;
 using PropHunt.UI;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.TestTools;
 
 namespace Tests.EditMode.UI
 {
@@ -17,6 +18,7 @@ namespace Tests.EditMode.UI
             GameManager.playerPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Tests/EditMode/TestPlayer.prefab");
             // Test exiting lobby while in or not in lobby phase
             GameManager.ChangePhase(GamePhase.Lobby);
+            LogAssert.Expect(LogType.Error, "ServerChangeScene empty scene name");
             buttonPhase.ExitLobby();
             GameManager.ChangePhase(GamePhase.Setup);
             buttonPhase.ExitLobby();
@@ -27,6 +29,8 @@ namespace Tests.EditMode.UI
             buttonPhase.ExitGame();
             // Test exiting while in and not in score
             GameManager.ChangePhase(GamePhase.Score);
+            LogAssert.Expect(LogType.Error, "ServerChangeScene empty scene name");
+            LogAssert.Expect(LogType.Error, "ServerChangeScene empty scene name");
             buttonPhase.ExitScore();
             GameManager.ChangePhase(GamePhase.Lobby);
             buttonPhase.ExitScore();

@@ -116,7 +116,7 @@ namespace PropHunt.Game.Flow
                     break;
                 case GamePhase.Setup:
                     DebugChatLog.SendChatMessage(new ChatMessage("", "Entering Setup Phase"));
-                    GameObject.FindObjectOfType<CustomNetworkManager>().LoadGameScene();
+                    CustomNetworkManager.Instance.LoadGameScene();
                     // Once loading is complete, go to InGame
                     break;
                 case GamePhase.InGame:
@@ -138,7 +138,7 @@ namespace PropHunt.Game.Flow
                         NetworkServer.DestroyPlayerForConnection(conn);
                     }
                     // Start loading the lobby scene
-                    GameObject.FindObjectOfType<CustomNetworkManager>().LoadLobbyScene();
+                    CustomNetworkManager.Instance.LoadLobbyScene();
                     // Once laoding is complete, go to lobby
                     break;
             }
