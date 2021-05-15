@@ -28,17 +28,9 @@ namespace PropHunt.Game.Flow
         [Scene]
         public string gameScene;
 
-        public GameObject gameManager;
-
         public static CustomNetworkManager Instance;
 
-        public IEnumerator DestorySelf()
-        {
-            yield return null;
-            GameObject.Destroy(this);
-        }
-
-        public override void Start()
+        public override void Awake()
         {
             if (Instance == null)
             {
@@ -47,11 +39,9 @@ namespace PropHunt.Game.Flow
             else
             {
                 // Only let one exist
-                StartCoroutine(DestorySelf());
+                GameObject.Destroy(this);
                 return;
             }
-
-            NetworkClient.RegisterPrefab(gameManager);
 
             base.Start();
         }
@@ -61,6 +51,7 @@ namespace PropHunt.Game.Flow
             base.OnServerReady(conn);
             PlayerConnectEvent connectEvent = new PlayerConnectEvent(conn);
             OnPlayerConnect?.Invoke(this, connectEvent);
+            GameManager.playerPrefab = playerPrefab;
         }
 
         public override void OnServerConnect(NetworkConnection conn)
@@ -83,33 +74,49 @@ namespace PropHunt.Game.Flow
             NetworkClient.UnregisterHandler<ChatMessage>();
         }
 
+        public override void OnStartServer()
+        {
+            base.OnStartServer();
+            GameManager.SetupHooks();
+            GameManager.ChangePhase(GamePhase.Lobby);
+        }
+
+        public override void OnStopServer()
+        {
+            base.OnStopServer();
+            GameManager.DisableHooks();
+        }
+
         public override void OnServerDisconnect(NetworkConnection conn)
         {
             base.OnServerDisconnect(conn);
             DebugChatLog.SendChatMessage(new ChatMessage("", $"Player {conn.connectionId} disconnected from server"));
         }
 
-        public override void OnStartServer()
+        public void Update()
         {
-            base.OnStartServer();
-            GameObject manager = GameObject.Instantiate(gameManager);
-            NetworkServer.Spawn(manager);
-            DontDestroyOnLoad(manager);
-        }
-
-        public override void OnClientDisconnect(NetworkConnection conn)
-        {
-            base.OnClientDisconnect(conn);
-            if (GameManager.Instance != null)
+            // Only run this on server
+            if (!NetworkServer.active)
             {
-                GameManager.Instance.DisableGameManager();
+                return;
             }
-        }
-
-        public override void OnStopServer()
-        {
-            GameManager.Instance.DisableGameManager();
-            base.OnStopServer();
+            switch (GameManager.gamePhase)
+            {
+                case GamePhase.Setup:
+                    // As soon as scene is loaded, move to in game
+                    if (NetworkManager.loadingSceneAsync == null || NetworkManager.loadingSceneAsync.isDone)
+                    {
+                        GameManager.ChangePhase(GamePhase.InGame);
+                    }
+                    break;
+                case GamePhase.Reset:
+                    // As soon as scene is loaded, move to in game
+                    if (NetworkManager.loadingSceneAsync == null || NetworkManager.loadingSceneAsync.isDone)
+                    {
+                        GameManager.ChangePhase(GamePhase.Lobby);
+                    }
+                    break;
+            }
         }
 
         /// <summary>

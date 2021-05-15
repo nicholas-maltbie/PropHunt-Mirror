@@ -14,23 +14,21 @@ namespace Tests.EditMode.UI
         {
             GameObject testObj = new GameObject();
             ChangeGamePhaseButton buttonPhase = testObj.AddComponent<ChangeGamePhaseButton>();
-            GameManager gameManager = testObj.AddComponent<GameManager>();
-            gameManager.playerPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Tests/EditMode/TestPlayer.prefab");
-            Assert.Throws<System.InvalidOperationException>(() => gameManager.Start());
+            GameManager.playerPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Tests/EditMode/TestPlayer.prefab");
             // Test exiting lobby while in or not in lobby phase
-            GameManager.Instance.gamePhase = GamePhase.Lobby;
+            GameManager.ChangePhase(GamePhase.Lobby);
             buttonPhase.ExitLobby();
-            GameManager.Instance.gamePhase = GamePhase.Setup;
+            GameManager.ChangePhase(GamePhase.Setup);
             buttonPhase.ExitLobby();
             // Test exiting while in and not in game
-            GameManager.Instance.gamePhase = GamePhase.InGame;
+            GameManager.ChangePhase(GamePhase.InGame);
             buttonPhase.ExitGame();
-            GameManager.Instance.gamePhase = GamePhase.Lobby;
+            GameManager.ChangePhase(GamePhase.Lobby);
             buttonPhase.ExitGame();
             // Test exiting while in and not in score
-            GameManager.Instance.gamePhase = GamePhase.Score;
+            GameManager.ChangePhase(GamePhase.Score);
             buttonPhase.ExitScore();
-            GameManager.Instance.gamePhase = GamePhase.Lobby;
+            GameManager.ChangePhase(GamePhase.Lobby);
             buttonPhase.ExitScore();
 
             GameObject.DestroyImmediate(testObj);

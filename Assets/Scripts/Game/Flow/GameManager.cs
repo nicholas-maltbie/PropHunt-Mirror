@@ -47,60 +47,31 @@ namespace PropHunt.Game.Flow
     /// <summary>
     /// Game manager for managing phases of the game
     /// </summary>
-    public class GameManager : NetworkBehaviour
+    public static class GameManager
     {
         public static event EventHandler<GamePhaseChange> OnGamePhaseChange;
 
-        [SyncVar(hook = nameof(HandleChangePhase))]
-        public GamePhase gamePhase;
+        public static GamePhase gamePhase {get; private set; }
 
-        /// <summary>
-        /// How long have we been in the current phase
-        /// </summary>
-        public float phaseTime;
+        public static float phaseStart;
 
-        private CustomNetworkManager networkManager;
+        public static GameObject playerPrefab;
 
-        public GameObject playerPrefab;
+        public static IUnityService unityService = new UnityService();
 
-        public IUnityService unityService = new UnityService();
-
-        public INetworkService networkService = new NetworkService(null);
-
-        public static GameManager Instance;
-
-        public void Start()
+        public static void SetupHooks()
         {
-            if (GameManager.Instance == null)
-            {
-                GameManager.Instance = this;
-                gamePhase = GamePhase.Lobby;
-            }
-            else
-            {
-                return;
-            }
             CustomNetworkManager.OnPlayerConnect += HandlePlayerConnect;
             OnGamePhaseChange += HandleGamePhaseChange;
-
-            this.networkManager = GameObject.FindObjectOfType<CustomNetworkManager>();
-
-            if (!NetworkClient.prefabs.ContainsValue(playerPrefab))
-            {
-                NetworkClient.RegisterPrefab(playerPrefab);
-            }
-            DontDestroyOnLoad(gameObject);
         }
 
-        public void DisableGameManager()
+        public static void DisableHooks()
         {
-            UnityEngine.Debug.Log("Destorying Self");
             CustomNetworkManager.OnPlayerConnect -= HandlePlayerConnect;
             OnGamePhaseChange -= HandleGamePhaseChange;
-            Instance = null;
         }
 
-        public void HandlePlayerConnect(object sender, PlayerConnectEvent joinEvent)
+        public static void HandlePlayerConnect(object sender, PlayerConnectEvent joinEvent)
         {
             // If in game, spawn a player for them... debug behaviour yay
             if (gamePhase == GamePhase.InGame || gamePhase == GamePhase.Score)
@@ -111,56 +82,14 @@ namespace PropHunt.Game.Flow
             }
         }
 
-        public void HandleChangePhase(GamePhase previousPhase, GamePhase newPhase)
+        public static void ChangePhase(GamePhase newPhase)
         {
-            GamePhaseChange changeEvent = new GamePhaseChange(previousPhase, newPhase);
-            OnGamePhaseChange?.Invoke(this, changeEvent);
+            GamePhaseChange changeEvent = new GamePhaseChange(gamePhase, newPhase);
+            gamePhase = newPhase;
+            OnGamePhaseChange?.Invoke(null, changeEvent);
         }
 
-        public void Update()
-        {
-            if (!networkService.activeNetworkServer)
-            {
-                return;
-            }
-
-            // Increment current phase time
-            phaseTime += unityService.deltaTime;
-
-            switch (gamePhase)
-            {
-                // Do things differently based on phase
-                case GamePhase.Lobby:
-
-                    break;
-                case GamePhase.Setup:
-                    // Once loading is complete, go to InGame
-                    if (NetworkManager.loadingSceneAsync == null || NetworkManager.loadingSceneAsync.isDone)
-                    {
-                        gamePhase = GamePhase.InGame;
-                    }
-                    break;
-                case GamePhase.InGame:
-                    // Check for conditions to end in game phase
-                    //   i. Game timeout (time runs out)
-                    //  ii. Hunters win (enough props were caught)
-                    // iii. Props win (all props finished objectives)
-                    break;
-                case GamePhase.Score:
-                    // Display score screen to players
-                    //  End phase either when players have all hit continue or timeout has ocurred
-                    break;
-                case GamePhase.Reset:
-                    // Once laoding is complete, go to lobby
-                    if (NetworkManager.loadingSceneAsync == null || NetworkManager.loadingSceneAsync.isDone)
-                    {
-                        gamePhase = GamePhase.Lobby;
-                    }
-                    break;
-            }
-        }
-
-        public IEnumerator SpawnPlayerCharacter(NetworkConnection conn)
+        public static IEnumerator SpawnPlayerCharacter(NetworkConnection conn)
         {
             yield return null;
             while(!conn.isReady)
@@ -172,15 +101,12 @@ namespace PropHunt.Game.Flow
             NetworkServer.AddPlayerForConnection(conn, newPlayer);
         }
 
-        public void HandleGamePhaseChange(object sender, GamePhaseChange change)
+        public static void HandleGamePhaseChange(object sender, GamePhaseChange change)
         {
-            if (!networkService.activeNetworkServer)
-            {
-                return;
-            }
+            UnityEngine.Debug.Log($"Handling Game Phase Change: {change.next}");
 
             // Reset phase timer
-            phaseTime = 0;
+            phaseStart = unityService.time;
 
             // Handle whenever the game state changes
             switch (change.next)
@@ -192,7 +118,7 @@ namespace PropHunt.Game.Flow
                     break;
                 case GamePhase.Setup:
                     DebugChatLog.SendChatMessage(new ChatMessage("", "Entering Setup Phase"));
-                    networkManager.LoadGameScene();
+                    GameObject.FindObjectOfType<CustomNetworkManager>().LoadGameScene();
                     // Once loading is complete, go to InGame
                     break;
                 case GamePhase.InGame:
@@ -215,7 +141,7 @@ namespace PropHunt.Game.Flow
                     }
                     // Start loading the lobby scene
                     UnityEngine.Debug.Log("Resetting game state back to lobby");
-                    networkManager.LoadLobbyScene();
+                    GameObject.FindObjectOfType<CustomNetworkManager>().LoadLobbyScene();
                     // Once laoding is complete, go to lobby
                     break;
             }

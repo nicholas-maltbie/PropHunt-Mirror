@@ -45,10 +45,6 @@ namespace Tests.EditMode.Game.Flow
             LogAssert.ignoreFailingMessages = true;
             base.networkManager.Start();
             base.networkManager.Start();
-
-            // Verify delete behaviour
-            IEnumerator enumerator = base.networkManager.DestorySelf();
-            while (enumerator.MoveNext()) { }
         }
 
         [Test]
