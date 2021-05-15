@@ -15,7 +15,7 @@ namespace Tests.EditMode.UI
         {
             GameObject go = new GameObject();
             EnableOnHost enableOnHost = go.AddComponent<EnableOnHost>();
-            
+
             GameObject[] sampleObjects = new GameObject[3]{
                 new GameObject(),
                 new GameObject(),

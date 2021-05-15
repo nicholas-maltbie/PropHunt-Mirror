@@ -150,7 +150,7 @@ namespace Tests.EditMode.UI
             Assert.Throws<System.InvalidOperationException>(() => this.uiManager.Start());
 
             LoadScreenOnEnable loadOnEnable = new GameObject().AddComponent<LoadScreenOnEnable>();
-            
+
             Assert.IsTrue(this.uiManager.CurrentScreen == "Screen 1");
             loadOnEnable.selectedScreen = screen2;
 
