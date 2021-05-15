@@ -103,8 +103,6 @@ namespace PropHunt.Game.Flow
 
         public static void HandleGamePhaseChange(object sender, GamePhaseChange change)
         {
-            UnityEngine.Debug.Log($"Handling Game Phase Change: {change.next}");
-
             // Reset phase timer
             phaseStart = unityService.time;
 
@@ -140,7 +138,6 @@ namespace PropHunt.Game.Flow
                         NetworkServer.DestroyPlayerForConnection(conn);
                     }
                     // Start loading the lobby scene
-                    UnityEngine.Debug.Log("Resetting game state back to lobby");
                     GameObject.FindObjectOfType<CustomNetworkManager>().LoadLobbyScene();
                     // Once laoding is complete, go to lobby
                     break;
