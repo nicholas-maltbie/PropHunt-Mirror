@@ -70,13 +70,13 @@ namespace Tests.EditMode.Game.Flow
             base.networkManager.Update();
             LogAssert.Expect(LogType.Error, "ServerChangeScene empty scene name");
             GameManager.ChangePhase(GamePhase.Setup);
-            while(GameManager.gamePhase == GamePhase.Setup)
+            while (GameManager.gamePhase == GamePhase.Setup)
             {
                 base.networkManager.Update();
             }
             LogAssert.Expect(LogType.Error, "ServerChangeScene empty scene name");
             GameManager.ChangePhase(GamePhase.Reset);
-            while(GameManager.gamePhase == GamePhase.Reset)
+            while (GameManager.gamePhase == GamePhase.Reset)
             {
                 base.networkManager.Update();
             }

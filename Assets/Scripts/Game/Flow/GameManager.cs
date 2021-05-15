@@ -51,7 +51,7 @@ namespace PropHunt.Game.Flow
     {
         public static event EventHandler<GamePhaseChange> OnGamePhaseChange;
 
-        public static GamePhase gamePhase {get; private set; }
+        public static GamePhase gamePhase { get; private set; }
 
         public static float phaseStart;
 
@@ -92,7 +92,7 @@ namespace PropHunt.Game.Flow
         public static IEnumerator SpawnPlayerCharacter(NetworkConnection conn)
         {
             yield return null;
-            while(!conn.isReady)
+            while (!conn.isReady)
             {
                 yield return null;
             }
