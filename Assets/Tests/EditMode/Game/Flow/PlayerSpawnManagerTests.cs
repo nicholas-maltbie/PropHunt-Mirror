@@ -22,6 +22,9 @@ namespace Tests.EditMode.Game.Flow
             playerPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Tests/EditMode/TestPlayer.prefab");
             spawnManager.inGamePlayer = playerPrefab;
             spawnManager.lobbyPlayer = playerPrefab;
+            spawnManager.OnStartServer();
+            spawnManager.OnStartClient();
+            spawnManager.Start();
         }
 
         [TearDown]
@@ -30,6 +33,7 @@ namespace Tests.EditMode.Game.Flow
             LogAssert.ignoreFailingMessages = true;
             spawnManager.OnStopClient();
             spawnManager.OnStopServer();
+            spawnManager.OnDisable();
             base.TearDown();
             GameObject.DestroyImmediate(spawnManager.gameObject);
         }

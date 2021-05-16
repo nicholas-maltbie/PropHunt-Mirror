@@ -23,9 +23,9 @@ namespace Tests.EditMode.Game.Flow
             base.SetUp();
             sceneManager = new GameObject().AddComponent<GameSceneManager>();
             networkServiceMock = new Mock<INetworkService>();
-            sceneManager.newtworkService = networkServiceMock.Object;
             sceneManager.OnStartServer();
             sceneManager.Start();
+            sceneManager.newtworkService = networkServiceMock.Object;
             GameManager.ChangePhase(GamePhase.Disabled);
         }
 
