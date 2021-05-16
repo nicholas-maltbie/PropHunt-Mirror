@@ -1,11 +1,8 @@
-using Moq;
 using NUnit.Framework;
 using PropHunt.Character;
 using PropHunt.UI;
-using PropHunt.Utils;
 using UnityEngine;
 using UnityEngine.UI;
-using static PropHunt.UI.MenuController;
 
 namespace Tests.EditMode.UI
 {
@@ -37,7 +34,7 @@ namespace Tests.EditMode.UI
             this.playerNameUpdate.UpdatePlayerName();
             Assert.IsTrue(CharacterNameManagement.playerName == "TestName");
 
-            this.field.text = "TestName This Name Is Very Long";
+            this.field.text = "TestName This Name Is Very Long$$$$";
             this.playerNameUpdate.UpdatePlayerName();
             Assert.IsTrue(CharacterNameManagement.playerName != this.field.text);
         }

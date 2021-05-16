@@ -24,7 +24,7 @@ namespace PropHunt.Character
         /// <summary>
         /// Regex to filter out invalid parts of name ignoring trailing and leading whitespace
         /// </summary>
-        public static Regex filterPatternIgnoreWhitespace = new Regex("^|[^A-Za-z0-9\\x20]|$");
+        public static Regex filterPatternIgnoreWhitespace = new Regex("^[^A-Za-z0-9\\x20]$");
 
         /// <summary>
         /// Regex pattern to identify duplicate whitespaces

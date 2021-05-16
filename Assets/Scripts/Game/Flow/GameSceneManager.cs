@@ -35,6 +35,7 @@ namespace PropHunt.Game.Flow
         public override void OnStopServer()
         {
             GameManager.OnGamePhaseChange -= HandleGamePhaseChange;
+            GameManager.ChangePhase(GamePhase.Disabled);
         }
 
         public void HandleGamePhaseChange(object sender, GamePhaseChange change)

@@ -19,12 +19,19 @@ namespace PropHunt.Game.Flow
 
         public override void OnStartServer()
         {
+            UnityEngine.Debug.Log("Setting up spawn manager");
             CustomNetworkManager.OnPlayerConnect += HandlePlayerConnect;
             GameManager.OnGamePhaseChange += HandleGamePhaseChange;
         }
 
+        public void OnDisable()
+        {
+            OnStopServer();
+        }
+
         public override void OnStopServer()
         {
+            base.OnStopServer();
             CustomNetworkManager.OnPlayerConnect -= HandlePlayerConnect;
             GameManager.OnGamePhaseChange -= HandleGamePhaseChange;
         }

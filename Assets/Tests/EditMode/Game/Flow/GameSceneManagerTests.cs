@@ -19,21 +19,24 @@ namespace Tests.EditMode.Game.Flow
         [SetUp]
         public override void SetUp()
         {
+            LogAssert.ignoreFailingMessages = true;
             base.SetUp();
             sceneManager = new GameObject().AddComponent<GameSceneManager>();
-            sceneManager.Start();
             networkServiceMock = new Mock<INetworkService>();
             sceneManager.newtworkService = networkServiceMock.Object;
             sceneManager.OnStartServer();
+            sceneManager.Start();
+            GameManager.ChangePhase(GamePhase.Disabled);
         }
 
         [TearDown]
         public override void TearDown()
         {
             LogAssert.ignoreFailingMessages = true;
+            sceneManager.OnStopClient();
+            sceneManager.OnStopServer();
             base.TearDown();
             GameObject.DestroyImmediate(sceneManager.gameObject);
-            sceneManager.OnStopServer();
         }
 
         [Test]

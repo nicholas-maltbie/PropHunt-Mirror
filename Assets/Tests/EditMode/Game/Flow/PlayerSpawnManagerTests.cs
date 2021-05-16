@@ -22,19 +22,16 @@ namespace Tests.EditMode.Game.Flow
             playerPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Tests/EditMode/TestPlayer.prefab");
             spawnManager.inGamePlayer = playerPrefab;
             spawnManager.lobbyPlayer = playerPrefab;
-
-            spawnManager.OnStartClient();
-            spawnManager.OnStartServer();
         }
 
         [TearDown]
         public override void TearDown()
         {
             LogAssert.ignoreFailingMessages = true;
-            base.TearDown();
-            GameObject.DestroyImmediate(spawnManager.gameObject);
             spawnManager.OnStopClient();
             spawnManager.OnStopServer();
+            base.TearDown();
+            GameObject.DestroyImmediate(spawnManager.gameObject);
         }
 
         [Test]
