@@ -6,21 +6,12 @@ namespace PropHunt.UI
 {
     public class PlayerNameUpdate : MonoBehaviour
     {
-        public int maxLength = 16;
-
         public InputField field;
 
         public void UpdatePlayerName()
         {
-            string selectedName = CharacterNameManagement.GetFilteredName(field.text);
-            field.text = selectedName;
-
-            if (selectedName.Length > maxLength)
-            {
-                selectedName = selectedName.Substring(0, 16);
-            }
-
-            CharacterNameManagement.playerName = selectedName;
+            field.text = CharacterNameManagement.GetFilteredNameIgnoreWhitespace(field.text);
+            CharacterNameManagement.playerName = CharacterNameManagement.GetFilteredName(field.text);
         }
     }
 }

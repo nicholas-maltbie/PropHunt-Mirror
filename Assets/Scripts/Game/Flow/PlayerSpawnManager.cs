@@ -29,6 +29,11 @@ namespace PropHunt.Game.Flow
             GameManager.OnGamePhaseChange -= HandleGamePhaseChange;
         }
 
+        public void Start()
+        {
+            HandleGamePhaseChange(this, new GamePhaseChange(GameManager.gamePhase, GameManager.gamePhase));
+        }
+
         public void HandlePlayerConnect(object sender, PlayerConnectEvent joinEvent)
         {
             // If in game, spawn a player for them... debug behaviour yay
@@ -44,8 +49,7 @@ namespace PropHunt.Game.Flow
 
         public IEnumerator SpawnPlayerCharacter(NetworkConnection conn, GameObject playerPrefab)
         {
-            yield return null;
-            while (!conn.isReady)
+            if (!conn.isReady)
             {
                 yield return null;
             }

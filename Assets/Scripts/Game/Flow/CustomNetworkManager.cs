@@ -52,6 +52,11 @@ namespace PropHunt.Game.Flow
             DebugChatLog.SendChatMessage(new ChatMessage("", $"Player {conn.connectionId} connected to server"));
         }
 
+        public override void OnStartServer()
+        {
+            base.OnStartServer();
+        }
+
         public override void OnStartClient()
         {
             base.OnStartClient();

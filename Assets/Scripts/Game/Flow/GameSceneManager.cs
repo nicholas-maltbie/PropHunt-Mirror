@@ -29,7 +29,7 @@ namespace PropHunt.Game.Flow
         public override void OnStartServer()
         {
             GameManager.OnGamePhaseChange += HandleGamePhaseChange;
-            GameManager.ChangePhase(GamePhase.Lobby);
+            GameManager.ChangePhase(GamePhase.Reset);
         }
 
         public override void OnStopServer()

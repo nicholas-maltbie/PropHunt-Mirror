@@ -14,12 +14,17 @@ namespace PropHunt.Character
         /// <summary>
         /// Regex to check if a name is valid
         /// </summary>
-        public static Regex validNamePattern = new Regex("^[A-Za-z0-9][A-Za-z0-9\\s]{0,14}[A-Za-z0-9]$");
+        public static Regex validNamePattern = new Regex("^[A-Za-z0-9][A-Za-z0-9\\x20]{0,14}[A-Za-z0-9]$");
 
         /// <summary>
         /// Regex to filter out invalid parts of name
         /// </summary>
-        public static Regex filterPattern = new Regex("^\\s+|[^A-Za-z0-9\\s]|\\s+$");
+        public static Regex filterPattern = new Regex("^\\s+|[^A-Za-z0-9\\x20]|\\s+$");
+
+        /// <summary>
+        /// Regex to filter out invalid parts of name ignoring trailing and leading whitespace
+        /// </summary>
+        public static Regex filterPatternIgnoreWhitespace = new Regex("^|[^A-Za-z0-9\\x20]|$");
 
         /// <summary>
         /// Regex pattern to identify duplicate whitespaces
@@ -30,6 +35,15 @@ namespace PropHunt.Character
         /// name of the current local player
         /// </summary>
         public static string playerName = "Player";
+
+        /// <summary>
+        /// Is the current player name valid
+        /// </summary>
+        /// <returns>True if the name is valid, false otherwise</returns>
+        public static bool HasValidPlayerName()
+        {
+            return VerifyName(CharacterNameManagement.playerName);
+        }
 
         /// <summary>
         /// Get lookup of all names by player connection id
@@ -45,7 +59,7 @@ namespace PropHunt.Character
         }
 
         /// <summary>
-        /// Filters a given name using regex to remote trailing and leading whitespace, duplicate whitespace,
+        /// Filters a given name using regex to remove trailing and leading whitespace, duplicate whitespace,
         /// as well as any other invalid (non alpha numeric character) from the string.
         /// </summary>
         /// <param name="name">Name to filter</param>
@@ -53,6 +67,16 @@ namespace PropHunt.Character
         public static string GetFilteredName(string name)
         {
             return duplicateWhitespace.Replace(filterPattern.Replace(name, ""), name);
+        }
+
+        /// <summary>
+        /// Filters a given name using regex but does not modify trailing and leading whitespace.
+        /// </summary>
+        /// <param name="name">Name to filter</param>
+        /// <returns>Filtered name using filterPatternIgnoreWhitespace</returns>
+        public static string GetFilteredNameIgnoreWhitespace(string name)
+        {
+            return filterPatternIgnoreWhitespace.Replace(name, "");
         }
 
         /// <summary>

@@ -12,6 +12,7 @@ namespace PropHunt.Game.Flow
     /// </summary>
     public enum GamePhase
     {
+        Disabled,
         Lobby,
         Setup,
         InGame,
