@@ -59,7 +59,7 @@ namespace Tests.EditMode.Game.Flow
             this.networkManager.OnStopClient();
             this.networkManager.OnStopServer();
         }
-        
+
         [Test]
         public void TestHandleConnection()
         {

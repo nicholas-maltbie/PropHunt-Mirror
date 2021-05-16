@@ -51,7 +51,7 @@ namespace PropHunt.Character
         public static SortedDictionary<int, string> GetPlayerNames()
         {
             SortedDictionary<int, string> playerNames = new SortedDictionary<int, string>();
-            foreach(CharacterName name in GameObject.FindObjectsOfType<CharacterName>())
+            foreach (CharacterName name in GameObject.FindObjectsOfType<CharacterName>())
             {
                 playerNames[name.playerId] = name.characterName;
             }

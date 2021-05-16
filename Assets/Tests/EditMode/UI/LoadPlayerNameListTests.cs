@@ -45,7 +45,7 @@ namespace Tests.EditMode.UI
         public void TearDown()
         {
             GameObject.DestroyImmediate(this.characterNameList.gameObject);
-            foreach(CharacterName name in this.characterNames)
+            foreach (CharacterName name in this.characterNames)
             {
                 GameObject.DestroyImmediate(name.gameObject);
             }

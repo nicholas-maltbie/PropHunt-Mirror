@@ -10,7 +10,7 @@ namespace Tests.EditMode.UI
     public class PlayerNameUpdateTests
     {
         private InputField field;
-        private PlayerNameUpdate  playerNameUpdate;
+        private PlayerNameUpdate playerNameUpdate;
 
         [SetUp]
         public void Setup()
