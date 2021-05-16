@@ -25,6 +25,11 @@ namespace Tests.EditMode.Game.Flow
             networkManager.Awake();
 
             networkManager.StartHost();
+
+            if (!NetworkClient.ready)
+            {
+                NetworkClient.Ready();
+            }
         }
 
         [TearDown]

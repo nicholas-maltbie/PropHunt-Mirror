@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Mirror;
+using PropHunt.Utils;
 using UnityEngine;
 
 namespace PropHunt.Character
@@ -13,7 +14,17 @@ namespace PropHunt.Character
         /// <summary>
         /// Regex to check if a name is valid
         /// </summary>
-        public static Regex validNamePattern = new Regex("[a-zA-Z0-9]{2-16}");
+        public static Regex validNamePattern = new Regex("^[A-Za-z0-9][A-Za-z0-9\\s]{0,14}[A-Za-z0-9]$");
+
+        /// <summary>
+        /// Regex to filter out invalid parts of name
+        /// </summary>
+        public static Regex filterPattern = new Regex("^\\s+|[^A-Za-z0-9\\s]|\\s+$");
+
+        /// <summary>
+        /// Regex pattern to identify duplicate whitespaces
+        /// </summary>
+        public static Regex duplicateWhitespace = new Regex("\\s{2,}");
 
         /// <summary>
         /// name of the current local player
@@ -34,13 +45,24 @@ namespace PropHunt.Character
         }
 
         /// <summary>
+        /// Filters a given name using regex to remote trailing and leading whitespace, duplicate whitespace,
+        /// as well as any other invalid (non alpha numeric character) from the string.
+        /// </summary>
+        /// <param name="name">Name to filter</param>
+        /// <returns>Filtered name using filterPattern and duplicateWhitespace pattern</returns>
+        public static string GetFilteredName(string name)
+        {
+            return duplicateWhitespace.Replace(filterPattern.Replace(name, ""), name);
+        }
+
+        /// <summary>
         /// Verifying player name if it is valid, should only cotain letters A-Z,a-z and numbers 0-9
         /// </summary>
         /// <param name="name">Character name</param>
         /// <returns>If a given name is valid</returns>
         public static bool VerifyName(string name)
         {
-            return name.Length > 0 && validNamePattern.Match(name).Success;
+            return validNamePattern.Match(name).Success;
         }
     }
 
@@ -62,6 +84,11 @@ namespace PropHunt.Character
         public string characterName = "Player";
 
         /// <summary>
+        /// Network service for managing tests
+        /// </summary>
+        public INetworkService networkService;
+
+        /// <summary>
         /// Update a player name from a client with authority via command
         /// </summary>
         /// <param name="newName">New name to assign a player</param>
@@ -71,14 +98,19 @@ namespace PropHunt.Character
             characterName = newName;
         }
 
+        public void Awake()
+        {
+            networkService = new NetworkService(this);
+        }
+
         public void Start()
         {
-            if (isServer)
+            if (networkService.isServer)
             {
                 playerId = connectionToClient.connectionId;
             }
             // Synchronize state to server if local player
-            if (isLocalPlayer)
+            if (networkService.isLocalPlayer)
             {
                 CmdUpdatePlayerName(CharacterNameManagement.playerName);
             }

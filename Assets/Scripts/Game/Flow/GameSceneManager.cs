@@ -5,6 +5,7 @@ using System;
 using PropHunt.Environment.Sound;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using PropHunt.Utils;
 
 namespace PropHunt.Game.Flow
 {
@@ -18,9 +19,11 @@ namespace PropHunt.Game.Flow
         [Scene]
         public string gameScene;
 
+        public INetworkService newtworkService;
+
         public void Start()
         {
-            DontDestroyOnLoad(gameObject);
+            newtworkService = new NetworkService(this);
         }
 
         public override void OnStartServer()
@@ -61,7 +64,7 @@ namespace PropHunt.Game.Flow
         public void Update()
         {
             // Only run this on server
-            if (!NetworkServer.active)
+            if (!newtworkService.activeNetworkServer)
             {
                 return;
             }

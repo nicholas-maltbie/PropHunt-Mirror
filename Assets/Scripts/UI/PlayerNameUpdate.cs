@@ -12,14 +12,13 @@ namespace PropHunt.UI
 
         public void UpdatePlayerName()
         {
-            string selectedName = field.text.Trim();
+            string selectedName = CharacterNameManagement.GetFilteredName(field.text);
+            field.text = selectedName;
 
             if (selectedName.Length > maxLength)
             {
                 selectedName = selectedName.Substring(0, 16);
             }
-
-            UnityEngine.Debug.Log(selectedName);
 
             CharacterNameManagement.playerName = selectedName;
         }
