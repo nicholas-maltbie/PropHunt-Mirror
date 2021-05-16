@@ -1,4 +1,3 @@
-using System.Collections;
 using Mirror;
 using Mirror.Tests;
 using NUnit.Framework;
@@ -55,40 +54,6 @@ namespace Tests.EditMode.Game.Flow
             CustomNetworkManager.OnPlayerConnect += (object sender, PlayerConnectEvent connectEvent) => { connects++; };
             this.networkManager.OnServerReady(NetworkClient.connection);
             Assert.IsTrue(connects == 1);
-        }
-
-        [Test]
-        public void TestStateChangeNotServer()
-        {
-            NetworkServer.Shutdown();
-            base.networkManager.Update();
-        }
-
-        [Test]
-        public void TestStateChangeAsServer()
-        {
-            base.networkManager.Update();
-            LogAssert.Expect(LogType.Error, "ServerChangeScene empty scene name");
-            GameManager.ChangePhase(GamePhase.Setup);
-            while (GameManager.gamePhase == GamePhase.Setup)
-            {
-                base.networkManager.Update();
-            }
-            LogAssert.Expect(LogType.Error, "ServerChangeScene empty scene name");
-            GameManager.ChangePhase(GamePhase.Reset);
-            while (GameManager.gamePhase == GamePhase.Reset)
-            {
-                base.networkManager.Update();
-            }
-        }
-
-        [Test]
-        public void TestLoadScene()
-        {
-            LogAssert.Expect(LogType.Error, "ServerChangeScene empty scene name");
-            this.networkManager.LoadLobbyScene();
-            LogAssert.Expect(LogType.Error, "ServerChangeScene empty scene name");
-            this.networkManager.LoadGameScene();
         }
     }
 }

@@ -15,7 +15,6 @@ namespace Tests.EditMode.UI
         {
             GameObject testObj = new GameObject();
             ChangeGamePhaseButton buttonPhase = testObj.AddComponent<ChangeGamePhaseButton>();
-            GameManager.playerPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Tests/EditMode/TestPlayer.prefab");
             // Test exiting lobby while in or not in lobby phase
             GameManager.ChangePhase(GamePhase.Lobby);
             LogAssert.Expect(LogType.Error, "ServerChangeScene empty scene name");
