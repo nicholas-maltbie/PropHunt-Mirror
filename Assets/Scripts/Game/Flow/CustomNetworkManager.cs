@@ -42,7 +42,6 @@ namespace PropHunt.Game.Flow
 
         public override void OnServerReady(NetworkConnection conn)
         {
-            base.OnServerReady(conn);
             PlayerConnectEvent connectEvent = new PlayerConnectEvent(conn);
             OnPlayerConnect?.Invoke(this, connectEvent);
         }
@@ -65,6 +64,7 @@ namespace PropHunt.Game.Flow
         {
             base.OnStopClient();
             NetworkClient.UnregisterHandler<ChatMessage>();
+            NetworkClient.UnregisterHandler<SoundEffectEvent>();
         }
 
         public override void OnServerDisconnect(NetworkConnection conn)

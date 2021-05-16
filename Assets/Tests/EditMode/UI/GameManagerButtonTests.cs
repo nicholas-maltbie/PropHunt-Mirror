@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using PropHunt.Game.Flow;
 using PropHunt.UI;
+using Tests.EditMode.Game.Flow;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.TestTools;
@@ -8,7 +9,7 @@ using UnityEngine.TestTools;
 namespace Tests.EditMode.UI
 {
     [TestFixture]
-    public class GameManagerButtonTests : CustomNetworkManager
+    public class GameManagerButtonTests : CustomNetworkManagerTestBase
     {
         [Test]
         public void GamePhaseButtonTests()
@@ -17,7 +18,6 @@ namespace Tests.EditMode.UI
             ChangeGamePhaseButton buttonPhase = testObj.AddComponent<ChangeGamePhaseButton>();
             // Test exiting lobby while in or not in lobby phase
             GameManager.ChangePhase(GamePhase.Lobby);
-            LogAssert.Expect(LogType.Error, "ServerChangeScene empty scene name");
             buttonPhase.ExitLobby();
             GameManager.ChangePhase(GamePhase.Setup);
             buttonPhase.ExitLobby();
@@ -28,8 +28,6 @@ namespace Tests.EditMode.UI
             buttonPhase.ExitGame();
             // Test exiting while in and not in score
             GameManager.ChangePhase(GamePhase.Score);
-            LogAssert.Expect(LogType.Error, "ServerChangeScene empty scene name");
-            LogAssert.Expect(LogType.Error, "ServerChangeScene empty scene name");
             buttonPhase.ExitScore();
             GameManager.ChangePhase(GamePhase.Lobby);
             buttonPhase.ExitScore();

@@ -15,7 +15,9 @@ namespace Tests.EditMode.Game.Flow
         [SetUp]
         public virtual void SetUp()
         {
+#if UNITY_EDITOR
             var scene = UnityEditor.SceneManagement.EditorSceneManager.NewScene(UnityEditor.SceneManagement.NewSceneSetup.EmptyScene, UnityEditor.SceneManagement.NewSceneMode.Single);
+#endif
             GameObject go = new GameObject();
             Transport.activeTransport = go.AddComponent<MemoryTransport>();
             networkManager = go.AddComponent<CustomNetworkManager>();
@@ -23,8 +25,6 @@ namespace Tests.EditMode.Game.Flow
             networkManager.Awake();
 
             networkManager.StartHost();
-
-            NetworkClient.Ready();
         }
 
         [TearDown]
@@ -43,10 +43,18 @@ namespace Tests.EditMode.Game.Flow
         public void TestSingletonBehaviour()
         {
             LogAssert.ignoreFailingMessages = true;
-            base.networkManager.Awake();
-            base.networkManager.Awake();
+            this.networkManager.Awake();
         }
 
+        [Test]
+        public void TestEventFlow()
+        {
+            this.networkManager.OnStartClient();
+            this.networkManager.OnStartServer();
+            this.networkManager.OnStopClient();
+            this.networkManager.OnStopServer();
+        }
+        
         [Test]
         public void TestHandleConnection()
         {
