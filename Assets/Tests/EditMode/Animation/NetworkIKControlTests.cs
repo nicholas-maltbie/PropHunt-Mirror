@@ -22,6 +22,8 @@ namespace Tests.EditMode.Animation
             ikControl.Start();
             networkIKControl.controller = ikControl;
             networkIKControl.Awake();
+            networkIKControl.OnStartClient();
+            networkIKControl.OnStartServer();
             networkIKControl.networkService = networkServiceMock.Object;
 
             NetworkConnectionToClient connectionToClient = NetworkServer.connections[0];
