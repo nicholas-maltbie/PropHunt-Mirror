@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using Mirror;
 using UnityEngine;
 
@@ -9,6 +10,11 @@ namespace PropHunt.Character
     /// </summary>
     public static class CharacterNameManagement
     {
+        /// <summary>
+        /// Regex to check if a name is valid
+        /// </summary>
+        public static Regex validNamePattern = new Regex("[a-zA-Z0-9]{2-16}");
+
         /// <summary>
         /// name of the current local player
         /// </summary>
@@ -25,6 +31,16 @@ namespace PropHunt.Character
                 playerNames[name.playerId] = name.characterName;
             }
             return playerNames;
+        }
+
+        /// <summary>
+        /// Verifying player name if it is valid, should only cotain letters A-Z,a-z and numbers 0-9
+        /// </summary>
+        /// <param name="name">Character name</param>
+        /// <returns>If a given name is valid</returns>
+        public static bool VerifyName(string name)
+        {
+            return name.Length > 0 && validNamePattern.Match(name).Success;
         }
     }
 

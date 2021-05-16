@@ -10,6 +10,13 @@ namespace PropHunt.Game.Flow
 
         public GameObject lobbyPlayer;
 
+        public override void OnStartClient()
+        {
+            base.OnStartClient();
+            NetworkClient.RegisterPrefab(inGamePlayer);
+            NetworkClient.RegisterPrefab(lobbyPlayer);
+        }
+
         public override void OnStartServer()
         {
             CustomNetworkManager.OnPlayerConnect += HandlePlayerConnect;

@@ -12,7 +12,7 @@ namespace PropHunt.UI
 
         public void UpdatePlayerName()
         {
-            string selectedName = field.text;
+            string selectedName = field.text.Trim();
 
             if (selectedName.Length > maxLength)
             {
