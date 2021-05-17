@@ -18,6 +18,9 @@ namespace Tests.EditMode.UI
         [Test]
         public void TestToggleTransportSettingsChanges()
         {
+#if UNITY_EDITOR
+            var scene = UnityEditor.SceneManagement.EditorSceneManager.NewScene(UnityEditor.SceneManagement.NewSceneSetup.EmptyScene, UnityEditor.SceneManagement.NewSceneMode.Single);
+#endif
             // Create game object to hold our toggle transporter
             GameObject go = new GameObject();
             ToggleTransport toggle = go.AddComponent<ToggleTransport>();
@@ -44,21 +47,21 @@ namespace Tests.EditMode.UI
             toggle.Start();
 
             // Assert that the current mode matches the selected transport
-            Assert.IsTrue(Transport.activeTransport == kcpTransport);
+            Assert.IsTrue(Transport.activeTransport.GetComponent<KcpTransport>() != null);
 
             // Assert that the mode does not change when we update the mode to the current mode
             toggle.SetMultiplayerMode(toggle.currentMode);
-            Assert.IsTrue(Transport.activeTransport == kcpTransport);
+            Assert.IsTrue(Transport.activeTransport.GetComponent<KcpTransport>() != null);
 
             // Assert that mode can change when we chant to a new mode
             toggle.SetMultiplayerMode(MultiplayerMode.FizzySteamworks);
             Assert.IsTrue(toggle.currentMode == MultiplayerMode.FizzySteamworks);
-            Assert.IsTrue(Transport.activeTransport == fizzySteamworks);
+            Assert.IsTrue(Transport.activeTransport.GetComponent<FizzySteamworks>() != null);
 
             // Set multiplayer mode to KCP from string command
             toggle.SetMultiplayerMode(MultiplayerMode.KcpTransport, true);
             Assert.IsTrue(toggle.currentMode == MultiplayerMode.KcpTransport);
-            Assert.IsTrue(Transport.activeTransport == kcpTransport);
+            Assert.IsTrue(Transport.activeTransport.GetComponent<KcpTransport>() != null);
 
             // Cleanup created game objects
             GameObject.DestroyImmediate(go);
