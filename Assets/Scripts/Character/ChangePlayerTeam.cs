@@ -6,26 +6,42 @@ namespace PropHunt.Character
 {
     public class ChangePlayerTeam : NetworkBehaviour
     {
-
         public INetworkService networkService;
         public Team setTeam;
         public GameObject newPrefab;
 
-        public void Start()
+        public void Awake()
         {
             this.networkService = new NetworkService(this);
+        }
+
+        public override void OnStartClient()
+        {
             if (!NetworkClient.prefabs.ContainsValue(newPrefab))
             {
                 NetworkClient.RegisterPrefab(newPrefab);
             }
         }
 
+        public override void OnStopClient()
+        {
+            if (NetworkClient.prefabs.ContainsValue(newPrefab))
+            {
+                NetworkClient.UnregisterPrefab(newPrefab);
+            }
+        }
+
         public void OnTriggerEnter(Collider other)
         {
+            // Only change teams if running from server
+            if (!this.networkService.isServer)
+            {
+                return;
+            }
+
             var team = other.GetComponent<PlayerTeam>();
             var networkIdentity = other.GetComponent<NetworkIdentity>();
-            if (this.networkService.isServer &&
-                team != null && team.playerTeam != setTeam &&
+            if (team != null && team.playerTeam != setTeam &&
                 networkIdentity != null &&
                 networkIdentity.connectionToClient != null)
             {

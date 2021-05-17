@@ -43,12 +43,16 @@ namespace Tests.EditMode.Character
             this.changeTeam = go.AddComponent<ChangePlayerTeam>();
             this.changeTeam.setTeam = Team.Prop;
             this.changeTeam.newPrefab = playerPrefab;
+            this.changeTeam.Awake();
+            this.changeTeam.OnStartClient();
         }
 
         [TearDown]
         public void TearDown()
         {
             LogAssert.ignoreFailingMessages = true;
+            this.changeTeam.OnStopClient();
+
             manager.StopHost();
             // Destroy the game objects we created
             GameObject.DestroyImmediate(playerObj.gameObject);
@@ -61,7 +65,6 @@ namespace Tests.EditMode.Character
         public void TestPlayerChangeTeams()
         {
             LogAssert.ignoreFailingMessages = true;
-            this.changeTeam.Start();
             Mock<INetworkService> networkServiceMock = new Mock<INetworkService>();
             this.changeTeam.networkService = networkServiceMock.Object;
             networkServiceMock.Setup(e => e.isServer).Returns(true);
