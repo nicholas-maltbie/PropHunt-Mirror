@@ -35,10 +35,12 @@ namespace Tests.EditMode.UI
             FizzySteamworks fizzySteamworks = go.AddComponent<FizzySteamworks>();
 
             // Attach fake settings for transports to our toggle object
-            toggle.kcpTransportSettings = kcpTransport;
-            toggle.fizzySteamworksSettings = fizzySteamworks;
+            toggle.kcpTransportPrefab = kcpTransport.gameObject;
+            toggle.fizzySteamworksPrefab = fizzySteamworks.gameObject;
 
             // Test the start method for initial setup
+            toggle.Start();
+            // Test to ensure setup doesn't duplicate and cause errors
             toggle.Start();
 
             // Assert that the current mode matches the selected transport
