@@ -53,6 +53,17 @@ namespace Tests.EditMode.Character
         }
 
         [Test]
+        public void TestNotServer()
+        {
+            LogAssert.ignoreFailingMessages = true;
+            Mock<INetworkService> networkServiceMock = new Mock<INetworkService>();
+            this.changeTeam.networkService = networkServiceMock.Object;
+            networkServiceMock.Setup(e => e.isServer).Returns(false);
+            networkServiceMock.Setup(e => e.isClient).Returns(true);
+            this.changeTeam.OnTriggerEnter(this.playerObj.gameObject.AddComponent<BoxCollider>());
+        }
+
+        [Test]
         public void TestPlayerChangeTeams()
         {
             LogAssert.ignoreFailingMessages = true;
