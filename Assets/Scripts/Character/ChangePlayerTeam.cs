@@ -23,14 +23,6 @@ namespace PropHunt.Character
             }
         }
 
-        public override void OnStopClient()
-        {
-            if (NetworkClient.prefabs.ContainsValue(newPrefab))
-            {
-                NetworkClient.UnregisterPrefab(newPrefab);
-            }
-        }
-
         public void OnTriggerEnter(Collider other)
         {
             // Only change teams if running from server
