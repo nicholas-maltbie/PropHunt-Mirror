@@ -9803,7 +9803,7 @@ MonoBehaviour:
   - ProbeBox
   bakedProbeDataSizes: f4768600
   bakedDataSize: 8812276
-  bakedStatsFoldout: 0
+  bakedStatsFoldout: 1
   bakeToggle: 1
   currentStaticListenerNode: {fileID: 0}
 --- !u!20 &500060062
