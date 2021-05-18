@@ -77,6 +77,10 @@ namespace PropHunt.UI
             this.transportSettingsLookup[MultiplayerMode.KcpTransport].transform.parent = transform;
             this.transportSettingsLookup[MultiplayerMode.FizzySteamworks].transform.parent = transform;
 
+            // Set active state to false
+            this.transportSettingsLookup[MultiplayerMode.KcpTransport].gameObject.SetActive(false);
+            this.transportSettingsLookup[MultiplayerMode.FizzySteamworks].gameObject.SetActive(false);
+
             // Setup initial mode
             SetMultiplayerMode(this.currentMode, forceUpdate: true);
         }
