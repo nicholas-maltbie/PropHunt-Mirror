@@ -10471,6 +10471,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 176122825087899557, guid: fcbd6f431e688bd4cbbe3408d4fdd924, type: 3}
+      propertyPath: useAllProbeBoxes
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 176122825087899557, guid: fcbd6f431e688bd4cbbe3408d4fdd924, type: 3}
       propertyPath: bakedStatsFoldout
       value: 0
       objectReference: {fileID: 0}
