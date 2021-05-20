@@ -10471,6 +10471,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 176122825087899557, guid: fcbd6f431e688bd4cbbe3408d4fdd924, type: 3}
+      propertyPath: bakedDataSize
+      value: 8812276
+      objectReference: {fileID: 0}
+    - target: {fileID: 176122825087899557, guid: fcbd6f431e688bd4cbbe3408d4fdd924, type: 3}
       propertyPath: useAllProbeBoxes
       value: 1
       objectReference: {fileID: 0}
@@ -10481,6 +10485,22 @@ PrefabInstance:
     - target: {fileID: 176122825087899557, guid: fcbd6f431e688bd4cbbe3408d4fdd924, type: 3}
       propertyPath: probeBoxes.Array.size
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 176122825087899557, guid: fcbd6f431e688bd4cbbe3408d4fdd924, type: 3}
+      propertyPath: bakedProbeNames.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 176122825087899557, guid: fcbd6f431e688bd4cbbe3408d4fdd924, type: 3}
+      propertyPath: bakedProbeNames.Array.data[0]
+      value: ProbeBox
+      objectReference: {fileID: 0}
+    - target: {fileID: 176122825087899557, guid: fcbd6f431e688bd4cbbe3408d4fdd924, type: 3}
+      propertyPath: bakedProbeDataSizes.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 176122825087899557, guid: fcbd6f431e688bd4cbbe3408d4fdd924, type: 3}
+      propertyPath: bakedProbeDataSizes.Array.data[0]
+      value: 8812276
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fcbd6f431e688bd4cbbe3408d4fdd924, type: 3}
