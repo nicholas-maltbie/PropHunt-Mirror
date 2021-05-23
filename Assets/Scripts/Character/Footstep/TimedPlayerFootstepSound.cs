@@ -85,7 +85,7 @@ namespace PropHunt.Character.Footstep
                     soundType).soundId,
                 point = point,
                 pitchValue = Random.Range(minPitchRange, maxPitchRange),
-                volume = kcc.isSprinting ? sprintVolume : walkVolume,
+                volume = kcc.Sprinting ? sprintVolume : walkVolume,
                 mixerGroup = "Footsteps"
             };
             PlayFootstepSound(sfxEvent);
@@ -112,7 +112,7 @@ namespace PropHunt.Character.Footstep
             }
 
             // If the player is on the ground and not moving, update the elapsed walking time
-            if (!kcc.Falling && kcc.inputMovement.magnitude > 0)
+            if (!kcc.Falling && kcc.InputMovement.magnitude > 0)
             {
                 elapsedWalkingSilent += unityService.deltaTime;
             }
