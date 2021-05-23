@@ -153,7 +153,7 @@ namespace Tests.EditMode.Character.Footstep
             {
                 volume = 1.0f,
                 pitchValue = 1.0f,
-                sfxId = SoundEffectManager.Instance.soundEffectLibrary.GetSFXClipBySoundType(SoundType.Hit).soundId,
+                sfxId = SoundEffectManager.Instance.soundEffectLibrary.GetSFXClipBySoundType(SoundType.Footstep).soundId,
             });
             Assert.IsTrue(attached.audioSource.isPlaying);
         }
