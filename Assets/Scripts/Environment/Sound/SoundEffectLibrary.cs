@@ -166,7 +166,8 @@ namespace PropHunt.Environment.Sound
         Scrape,
         Roll,
         Footstep,
-        Misc
+        Misc,
+        PropTransformation,
     }
 
     /// <summary>

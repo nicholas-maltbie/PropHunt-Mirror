@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Mirror;
 using PropHunt.Character;
@@ -6,6 +7,25 @@ using UnityEngine;
 
 namespace PropHunt.Prop
 {
+    /// <summary>
+    /// Event describing a player changing their disguise
+    /// </summary>
+    public struct ChangeDisguiseEvent
+    {
+        /// <summary>
+        /// Previous disguise used by a player
+        /// </summary>
+        public string previousDisguise;
+        /// <summary>
+        /// Disguise the player is changing into
+        /// </summary>
+        public string nextDisguise;
+        /// <summary>
+        /// Player who 
+        /// </summary>
+        public GameObject player;
+    }
+
     /// <summary>
     /// Disguise information for hiding a player
     /// </summary>
@@ -32,6 +52,8 @@ namespace PropHunt.Prop
     /// </summary>
     public class PropDisguise : NetworkBehaviour
     {
+        public static event EventHandler<ChangeDisguiseEvent> OnChangeDisguise;
+
         [SyncVar(hook = nameof(SetDisguise))]
         public string selectedDisguise;
 
@@ -56,8 +78,15 @@ namespace PropHunt.Prop
         public void SetSelectedDisguise(GameObject targetProp)
         {
             Prop prop = targetProp.GetComponent<Prop>();
-            if (prop != null)
+            if (prop != null && selectedDisguise != prop.propName)
             {
+                ChangeDisguiseEvent changeDisguiseEvent = new ChangeDisguiseEvent
+                {
+                    previousDisguise = selectedDisguise,
+                    nextDisguise = prop.propName,
+                    player = gameObject,
+                };
+                OnChangeDisguise?.Invoke(this, changeDisguiseEvent);
                 selectedDisguise = prop.propName;
             }
         }

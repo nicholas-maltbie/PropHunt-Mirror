@@ -33,3 +33,7 @@ MonoBehaviour:
     soundType: 2
     audioClip: {fileID: 8300000, guid: 9dd1be827a78f2c43a56140282bb1d39, type: 3}
     soundId: scrape-glass-test-1
+  - soundMaterial: 4
+    soundType: 6
+    audioClip: {fileID: 8300000, guid: 8ca4436d0750ae743a654bf87ce0643e, type: 3}
+    soundId: prop-transformation-poof
