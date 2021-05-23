@@ -144,10 +144,10 @@ namespace Tests.PlayMode.Character
             yield return new WaitForFixedUpdate();
 
             // Setup delta time to be mocked at 1/60th of a second
-            unityServiceMock.Setup(e => e.fixedDeltaTime).Returns(1/60.0f);
+            unityServiceMock.Setup(e => e.fixedDeltaTime).Returns(1 / 60.0f);
             // Wait until player is "Standing on Ground"
             // (or a maximum of 10 seconds = 60 updates per second * 10 seconds = 600 updates)
-            for(int update = 0; update < 600 && !kcc.StandingOnGround; update++)
+            for (int update = 0; update < 600 && !kcc.StandingOnGround; update++)
             {
                 yield return new WaitForFixedUpdate();
                 yield return null;
@@ -155,7 +155,7 @@ namespace Tests.PlayMode.Character
             Assert.IsTrue(kcc.StandingOnGround);
             // Wait until player has stepped off the platform or not "Standing on Ground"
             // (or a maximum of 10 seconds = 60 updates per second * 10 seconds = 600 updates)
-            for(int update = 0; update < 600 && kcc.StandingOnGround; update++)
+            for (int update = 0; update < 600 && kcc.StandingOnGround; update++)
             {
                 yield return new WaitForFixedUpdate();
                 yield return null;
@@ -219,7 +219,7 @@ namespace Tests.PlayMode.Character
         [UnityTearDown]
         public override IEnumerator TearDown()
         {
-            for(int i = 0; i < stairObjects.Length; i++)
+            for (int i = 0; i < stairObjects.Length; i++)
             {
                 GameObject.DestroyImmediate(stairObjects[i]);
             }
