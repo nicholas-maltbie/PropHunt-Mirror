@@ -4,6 +4,7 @@ using Moq;
 using NUnit.Framework;
 using PropHunt.Character;
 using PropHunt.Utils;
+using Tests.Common.Utils;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
@@ -39,6 +40,8 @@ namespace Tests.PlayMode.Character
         [UnitySetUp]
         public virtual IEnumerator SetUp()
         {
+            SceneManager.LoadScene("EmptyScene", LoadSceneMode.Single);
+            yield return new WaitForSceneLoaded("EmptyScene", newTimeout: 10);
             // Start off by creating a basic platform
             this.floor = GameObject.CreatePrimitive(PrimitiveType.Cube);
             // Center the below zero
