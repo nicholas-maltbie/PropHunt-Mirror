@@ -110,7 +110,7 @@ namespace PropHunt.Character
         /// values between [0, 1] so values smaller than 1 create a positive
         /// curve and grater than 1 for a negative curve.
         /// </summary>
-        [Tooltip("Decrease in momentum when walking into objects (such as walls) at an angle as an exponential." + 
+        [Tooltip("Decrease in momentum when walking into objects (such as walls) at an angle as an exponential." +
         "Values between [0, 1] so values smaller than 1 create a positive curve and grater than 1 for a negative curve")]
         [SerializeField]
         public float anglePower = 0.5f;
@@ -145,6 +145,15 @@ namespace PropHunt.Character
         [Tooltip("Maximum height of step the player can step up")]
         [SerializeField]
         public float verticalSnapUp = 0.3f;
+
+        /// <summary>
+        /// Time in which the player can snap up or down steps even after starting to fall.
+        /// This property is useful to reduce the jerky stopping and moving effects when
+        /// going up or down cliffs.
+        /// </summary>
+        [Tooltip("Time in which the player can snap up or down steps even after starting to fall")]
+        [SerializeField]
+        public float snapBufferTime = 0.05f;
 
         [Header("Player Input")]
 
@@ -223,6 +232,11 @@ namespace PropHunt.Character
         public GameObject floor;
 
         /// <summary>
+        /// Amount of time that has elapsed since the player's last jump action
+        /// </summary>
+        private float elapsedSinceJump;
+
+        /// <summary>
         /// Get the current player velocity
         /// </summary>
         public Vector3 Velocity => velocity;
@@ -257,6 +271,16 @@ namespace PropHunt.Character
         /// ability to walk.
         /// </summary>
         public bool Falling => !StandingOnGround || angle > maxWalkAngle;
+
+        /// <summary>
+        /// Can a player snap down this frame, a player is only allowed to snap down
+        /// if they were standing on the ground this frame or was not falling within a given buffer time.
+        /// Additionally, a player must have not jumped within a small buffer time in order to
+        /// attempt the action of snapping down. This stops the player from teleporting into the ground right
+        /// as they start to jump.
+        /// </summary>
+        /// <returns>If a player is allowed to snap down</returns>
+        private bool CanSnapDown => (StandingOnGround || elapsedFalling <= snapBufferTime) && (elapsedSinceJump >= snapBufferTime);
 
         public void Start()
         {
@@ -323,6 +347,11 @@ namespace PropHunt.Character
             if (!Falling && attemptingJump)
             {
                 velocity = this.jumpVelocity * -gravity.normalized;
+                elapsedSinceJump = 0.0f;
+            }
+            else
+            {
+                elapsedSinceJump += deltaTime;
             }
 
             // If the player is standing on the ground, project their movement onto the ground plane
@@ -340,7 +369,7 @@ namespace PropHunt.Character
 
             // if the player was standing on the ground at the start of the frame and is not 
             //    trying to jump right now, snap them down to the ground
-            if (StandingOnGround && !attemptingJump)
+            if (CanSnapDown)
             {
                 SnapPlayerDown();
             }
@@ -436,7 +465,7 @@ namespace PropHunt.Character
             ColliderCastHit snapHit = colliderCast.CastSelf(directionAfterSnap.normalized, Mathf.Max(stepUpDepth, momentum.magnitude));
 
             // If they can move without instantly hitting something, then snap them up
-            if (!Falling && snapHit.distance > Epsilon && (!snapHit.hit || snapHit.distance > stepUpDepth))
+            if ((!Falling || elapsedFalling <= snapBufferTime) && snapHit.distance > Epsilon && (!snapHit.hit || snapHit.distance > stepUpDepth))
             {
                 // Project rest of movement onto plane perpendicular to gravity
                 transform.position = currentPosition;
