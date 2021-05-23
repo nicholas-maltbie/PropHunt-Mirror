@@ -48,7 +48,8 @@ namespace Tests.EditMode.Prop
         [Test]
         public void TestHandleTransformation()
         {
-            propTransformation.HandlePropDisguiseChange(this, new ChangeDisguiseEvent{
+            propTransformation.HandlePropDisguiseChange(this, new ChangeDisguiseEvent
+            {
                 player = this.propTransformation.gameObject
             });
             NetworkServer.Update();
