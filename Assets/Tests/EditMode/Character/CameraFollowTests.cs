@@ -37,6 +37,7 @@ namespace Tests.EditMode.Character
         {
             // Create a game object and setup camera follow component
             GameObject go = new GameObject();
+            var cameraController = go.AddComponent<CameraController>();
             this.cameraFollow = go.AddComponent<CameraFollow>();
             this.cameraFollow.Start();
             this.networkServiceMock = new Mock<INetworkService>();
@@ -59,7 +60,8 @@ namespace Tests.EditMode.Character
             cameraTargetGo.transform.position = new Vector3(0, 10, 0);
             cameraTargetGo.transform.rotation = Quaternion.Euler(0, 90, 0);
             this.cameraTransformTarget = cameraTargetGo.transform;
-            this.cameraFollow.cameraTransform = cameraTransformTarget;
+            cameraController.cameraTransform = cameraTransformTarget;
+            this.cameraFollow.cameraController = cameraController;
         }
 
         [TearDown]

@@ -4,7 +4,7 @@ using PropHunt.Environment.Sound;
 using PropHunt.Utils;
 using UnityEngine;
 
-namespace PropHunt.Character
+namespace PropHunt.Character.Footstep
 {
     /// <summary>
     /// Create footstep sounds based on player animation

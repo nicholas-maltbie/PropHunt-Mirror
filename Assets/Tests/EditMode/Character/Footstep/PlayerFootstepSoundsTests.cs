@@ -5,13 +5,14 @@ using Moq;
 using NUnit.Framework;
 using PropHunt.Animation;
 using PropHunt.Character;
+using PropHunt.Character.Footstep;
 using PropHunt.Environment.Sound;
 using PropHunt.Utils;
 using Tests.EditMode.Environment.Sound;
 using UnityEditor;
 using UnityEngine;
 
-namespace Tests.EditMode.Character
+namespace Tests.EditMode.Character.Footstep
 {
     /// <summary>
     /// Tests to verify behaviour of player footstep sound tests

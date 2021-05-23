@@ -4,7 +4,7 @@ using PropHunt.Environment.Sound;
 using PropHunt.Utils;
 using UnityEngine;
 
-namespace PropHunt.Character
+namespace PropHunt.Character.Footstep
 {
     [RequireComponent(typeof(KinematicCharacterController))]
     public class TimedPlayerFootstepSound : NetworkBehaviour
@@ -82,13 +82,13 @@ namespace PropHunt.Character
             {
                 sfxId = SoundEffectManager.Instance.soundEffectLibrary.GetSFXClipBySoundMaterialAndType(
                     GetSoundMaterial(ground),
-                    SoundType.Footstep).soundId,
+                    soundType).soundId,
                 point = point,
                 pitchValue = Random.Range(minPitchRange, maxPitchRange),
                 volume = kcc.isSprinting ? sprintVolume : walkVolume,
                 mixerGroup = "Footsteps"
             };
-            SoundEffectManager.CreateSoundEffectAtPoint(sfxEvent);
+            PlayFootstepSound(sfxEvent);
             if (this.networkService.isServer)
             {
                 RpcCreateFootstepSound(sfxEvent);
@@ -97,6 +97,11 @@ namespace PropHunt.Character
             {
                 CmdCreateFootstepSound(sfxEvent);
             }
+        }
+
+        public virtual void PlayFootstepSound(SoundEffectEvent sfxEvent)
+        {
+            SoundEffectManager.CreateSoundEffectAtPoint(sfxEvent);
         }
 
         public void Update()
@@ -136,7 +141,7 @@ namespace PropHunt.Character
             {
                 return;
             }
-            SoundEffectManager.CreateSoundEffectAtPoint(sfxEvent);
+            PlayFootstepSound(sfxEvent);
         }
     }
 }
