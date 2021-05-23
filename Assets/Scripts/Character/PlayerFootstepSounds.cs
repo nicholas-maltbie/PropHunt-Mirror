@@ -105,8 +105,6 @@ namespace PropHunt.Character
                 elapsedWalkingSilent = 0;
             }
 
-            UnityEngine.Debug.Log(elapsedWalkingSilent + " seconds walking silent");
-
             if (elapsedWalkingSilent >= maxFootstepSoundDelay)
             {
                 MakeFootstepAtPoint(transform.position, kcc.floor);

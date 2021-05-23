@@ -84,6 +84,7 @@ namespace Tests.PlayMode.Character
             this.networkServiceMock.Setup(e => e.isLocalPlayer).Returns(true);
             // Setup time passage (as headless function)
             this.unityServiceMock.Setup(e => e.deltaTime).Returns(() => Time.deltaTime);
+            this.unityServiceMock.Setup(e => e.fixedDeltaTime).Returns(() => Time.fixedDeltaTime);
         }
 
         [UnityTearDown]
@@ -128,6 +129,8 @@ namespace Tests.PlayMode.Character
         [UnityTest]
         public IEnumerator CoyoteTimeTest()
         {
+            // Simulate walking forward
+            unityServiceMock.Setup(e => e.GetAxis("Vertical")).Returns(1.0f);
             // Set the coyote time of the player to be 3 seconds for this test
             KinematicCharacterController kcc = player.GetComponent<KinematicCharacterController>();
 
@@ -185,6 +188,10 @@ namespace Tests.PlayMode.Character
         {
             yield return base.SetUp();
 
+            KinematicCharacterController kcc = base.player.GetComponent<KinematicCharacterController>();
+            kcc.verticalSnapUp = stepHeight * 2;
+            kcc.verticalSnapDown = stepHeight * 2;
+
             // Create stairs in front of the player
             // Stairs are made up of numSteps=12 steps spaced out by stepHeight=0.2 units with stepDepth=0.25 depth
             Vector3 direction = Vector3.forward;
@@ -206,12 +213,12 @@ namespace Tests.PlayMode.Character
                     stairObjects[step].transform.parent = stairObjects[0].transform;
                 }
             }
+            yield return new WaitForFixedUpdate();
         }
 
         [UnityTearDown]
         public override IEnumerator TearDown()
         {
-            yield return base.TearDown();
             for(int i = 0; i < stairObjects.Length; i++)
             {
                 GameObject.DestroyImmediate(stairObjects[i]);
