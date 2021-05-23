@@ -144,6 +144,21 @@ namespace Tests.EditMode.Character.Footstep
         }
 
         [Test]
+        public void TestPlayAttachedSound()
+        {
+            AttachedFootstepSound attached = footstepSounds.gameObject.AddComponent<AttachedFootstepSound>();
+            attached.audioSource = footstepSounds.gameObject.AddComponent<AudioSource>();
+
+            attached.PlayFootstepSound(new SoundEffectEvent
+            {
+                volume = 1.0f,
+                pitchValue = 1.0f,
+                sfxId = SoundEffectManager.Instance.soundEffectLibrary.GetSFXClipBySoundType(SoundType.Hit).soundId,
+            });
+            Assert.IsTrue(attached.audioSource.isPlaying);
+        }
+
+        [Test]
         public void TestHitGroundMiniumTimeFootstepSounds()
         {
             GameObject floor = new GameObject();

@@ -10,7 +10,7 @@ namespace PropHunt.Character.Footstep
         /// Audio source where sound effects are coming from
         /// </summary>
         [SerializeField]
-        private AudioSource audioSource;
+        public AudioSource audioSource;
 
         public override void PlayFootstepSound(SoundEffectEvent sfxEvent)
         {

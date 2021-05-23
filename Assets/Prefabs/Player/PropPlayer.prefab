@@ -139,7 +139,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  cameraTransform: {fileID: 8130394144415267709}
+  cameraController: {fileID: 0}
+  audioListener: {fileID: 0}
 --- !u!114 &4402717801493103246
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -310,27 +311,28 @@ MonoBehaviour:
   groundedDistance: 0.01
   groundCheckDistance: 10
   maxWalkAngle: 60
-  maxBounces: 5
   gravity: {x: 0, y: -20, z: 0}
-  velocity: {x: 0, y: 0, z: 0}
-  jumpVelocity: 8
-  attemptingJump: 0
-  maxPushSpeed: 10
-  pushDecay: 0.9
-  anglePower: 0.5
-  verticalSnapDown: 0.35
-  onGround: 0
-  stepUpDepth: 0.1
-  verticalSnapUp: 0.3
-  distanceToGround: 0
-  surfaceNormal: {x: 0, y: 0, z: 0}
-  floor: {fileID: 0}
-  angle: 0
   movementSpeed: 5
   sprintSpeed: 6.5
+  jumpVelocity: 8
+  maxBounces: 5
+  pushDecay: 0.9
+  anglePower: 0.5
+  maxPushSpeed: 10
+  verticalSnapDown: 0.35
+  stepUpDepth: 0.1
+  verticalSnapUp: 0.3
+  snapBufferTime: 0.05
   inputMovement: {x: 0, y: 0, z: 0}
+  attemptingJump: 0
   isSprinting: 0
   elapsedFalling: 0
+  velocity: {x: 0, y: 0, z: 0}
+  distanceToGround: 0
+  onGround: 0
+  angle: 0
+  surfaceNormal: {x: 0, y: 0, z: 0}
+  floor: {fileID: 0}
 --- !u!114 &3403938823917133484
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -552,7 +554,7 @@ AudioSource:
   m_GameObject: {fileID: 4653986574978292632}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -5889326568863306336, guid: 447bcbade0387f642bb6a6663dd979ce, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1

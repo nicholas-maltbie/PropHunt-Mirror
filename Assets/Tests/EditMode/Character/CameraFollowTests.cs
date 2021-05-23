@@ -76,6 +76,19 @@ namespace Tests.EditMode.Character
         }
 
         [Test]
+        public void TestFollowCharacterWithListener()
+        {
+            this.networkServiceMock.Setup(e => e.isLocalPlayer).Returns(true);
+            AudioListener listener = this.cameraFollow.gameObject.AddComponent<AudioListener>();
+            this.cameraFollow.audioListener = listener;
+            this.cameraFollow.LateUpdate();
+            Assert.IsTrue(this.mainCamera.transform.position == cameraTransformTarget.transform.position);
+            Assert.IsTrue(this.mainCamera.transform.rotation.eulerAngles == cameraTransformTarget.transform.rotation.eulerAngles);
+            // Assert.IsTrue(listener.transform.position == cameraTransformTarget.transform.position);
+            // Assert.IsTrue(listener.transform.rotation.eulerAngles == cameraTransformTarget.transform.rotation.eulerAngles);
+        }
+
+        [Test]
         public void TestCameraFollowNotLocal()
         {
             this.networkServiceMock.Setup(e => e.isLocalPlayer).Returns(false);
