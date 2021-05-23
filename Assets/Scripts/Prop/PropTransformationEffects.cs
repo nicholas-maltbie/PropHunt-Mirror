@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace PropHunt.Prop
 {
+    /// <summary>
+    /// Play sound effects whenever a prop transforms into a given object
+    /// </summary>
     public class PropTransformationEffects : MonoBehaviour
     {
         /// <summary>
@@ -39,10 +42,14 @@ namespace PropHunt.Prop
 
         public void HandlePropDisguiseChange(object sender, ChangeDisguiseEvent changeDisguise)
         {
+            string clipId = SoundEffectManager.Instance.soundEffectLibrary.HasSoundEffect(changeDisguise.transformationSoundMaterial, SoundType.PropTransformation) ?
+                SoundEffectManager.Instance.soundEffectLibrary.GetSFXClipBySoundMaterialAndType(
+                    changeDisguise.transformationSoundMaterial, SoundType.PropTransformation).soundId :
+                SoundEffectManager.Instance.soundEffectLibrary.GetSFXClipBySoundMaterialAndType(SoundMaterial.Misc, SoundType.PropTransformation).soundId;
             GameObject player = changeDisguise.player;
             SoundEffectManager.CreateNetworkedSoundEffectAtPoint(new SoundEffectEvent
             {
-                sfxId = SoundEffectManager.Instance.soundEffectLibrary.GetSFXClipBySoundType(SoundType.PropTransformation).soundId,
+                sfxId = clipId,
                 volume = sfxVolume,
                 pitchValue = Random.Range(minPitch, maxPitch),
                 point = player.transform.position

@@ -25,7 +25,7 @@ namespace Tests.EditMode.Prop
                 {
                     soundMaterial = SoundMaterial.Misc,
                     soundType = SoundType.PropTransformation,
-                    audioClip = AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/Sound/SFX/Misc/prop-transformation-poof.wav"),
+                    audioClip = AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/Sound/SFX/Misc/SFX_Poof.wav"),
                     soundId = "test-sound"
                 }
             }).ToArray();

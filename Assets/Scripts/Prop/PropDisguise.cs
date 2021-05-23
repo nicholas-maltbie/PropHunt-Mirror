@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using Mirror;
 using PropHunt.Character;
+using PropHunt.Environment.Sound;
 using PropHunt.Utils;
 using UnityEngine;
 
@@ -24,6 +25,10 @@ namespace PropHunt.Prop
         /// Player who 
         /// </summary>
         public GameObject player;
+        /// <summary>
+        /// Sound material associated with a given prop when transforming into the prop
+        /// </summary>
+        public SoundMaterial transformationSoundMaterial;
     }
 
     /// <summary>
@@ -85,6 +90,7 @@ namespace PropHunt.Prop
                     previousDisguise = selectedDisguise,
                     nextDisguise = prop.propName,
                     player = gameObject,
+                    transformationSoundMaterial = prop.GetTransformationSoundMaterial
                 };
                 OnChangeDisguise?.Invoke(this, changeDisguiseEvent);
                 selectedDisguise = prop.propName;
