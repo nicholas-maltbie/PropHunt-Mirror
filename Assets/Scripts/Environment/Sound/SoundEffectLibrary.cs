@@ -212,6 +212,7 @@ namespace PropHunt.Environment.Sound
         Footstep,
         Misc,
         PropTransformation,
+        Attack,
     }
 
     /// <summary>
