@@ -1,5 +1,8 @@
 
 using System;
+using Mirror;
+using PropHunt.Character;
+using PropHunt.Game.Communication;
 using UnityEngine;
 
 namespace PropHunt.Combat

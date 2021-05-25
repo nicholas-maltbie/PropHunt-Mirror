@@ -213,6 +213,7 @@ namespace PropHunt.Environment.Sound
         Misc,
         PropTransformation,
         Attack,
+        Death,
     }
 
     /// <summary>
