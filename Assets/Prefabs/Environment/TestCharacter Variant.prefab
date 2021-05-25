@@ -31,27 +31,6 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   playerTeam: 1
---- !u!114 &1262777989
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8327878735772046239}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  clientAuthority: 0
-  localPositionSensitivity: 0.01
-  localRotationSensitivity: 0.01
-  localScaleSensitivity: 0.01
-  compressRotation: 0
-  interpolateScale: 1
-  syncScale: 1
 --- !u!1001 &8242875181121786415
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -61,7 +40,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 141303580758704560, guid: 43af7b604365faf46825395d5dd0e183, type: 3}
       propertyPath: m_Name
-      value: TestCharacter
+      value: TestCharacter Variant
       objectReference: {fileID: 0}
     - target: {fileID: 922749790837466559, guid: 43af7b604365faf46825395d5dd0e183, type: 3}
       propertyPath: m_RootOrder

@@ -28,6 +28,13 @@ namespace PropHunt.Combat
         private LayerMask raycastMask = ~0;
 
         /// <summary>
+        /// Radius of attack made by player
+        /// </summary>
+        [Tooltip("Radius of attack when casting sphere in front of player")]
+        [SerializeField]
+        private float attackRadius = 0.05f;
+
+        /// <summary>
         /// The team this player can make ranged attacks upon
         /// </summary>
         [Tooltip("Which team this player can shoot at")]
@@ -72,7 +79,7 @@ namespace PropHunt.Combat
         /// </summary>
         /// <returns></returns>
         public bool GetTarget(out RaycastHit hit) =>
-            cameraController.RaycastFromCameraBase(Mathf.Infinity, raycastMask, QueryTriggerInteraction.Ignore, out hit);
+            cameraController.SpherecastFromCameraBase(Mathf.Infinity, raycastMask, attackRadius, QueryTriggerInteraction.Ignore, out hit);
 
         /// <summary>
         /// Command to attack a given game object. Hit object should be computed client side
@@ -97,7 +104,7 @@ namespace PropHunt.Combat
         public void Update()
         {
             // Assert that the player has a target
-            if (networkService.isLocalPlayer && unityService.GetButtonDown("Fire1") && CanAttack)
+            if (PlayerInputManager.playerMovementState == PlayerInputState.Allow && networkService.isLocalPlayer && unityService.GetButtonDown("Fire1") && CanAttack)
             {
                 GetTarget(out RaycastHit hit);
                 GameObject target = null;
