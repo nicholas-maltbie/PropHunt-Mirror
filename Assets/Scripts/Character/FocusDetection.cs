@@ -40,17 +40,17 @@ namespace PropHunt.Character
         /// What the player is looking at
         /// </summary>
         public GameObject focus;
-    
+
         /// <summary>
         /// How far away the hit from the spherecast is
         /// </summary>
         public float currentHitDistance;
-    
+
         /// <summary>
         /// What does view interaction able to hit
         /// </summary>
         public LayerMask viewLayermask = ~0;
-    
+
         /// <summary>
         /// How does view intearaction interact with triggers
         /// </summary>

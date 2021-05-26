@@ -41,7 +41,7 @@ namespace PropHunt.Combat
             CharacterName targetName = attack.target.GetComponent<CharacterName>();
 
             DebugChatLog.SendChatMessage(new ChatMessage("", $"Player {sourceName.characterName} attacked {targetName.characterName}"));
-            SoundEffectManager.CreateNetworkedSoundEffectAtPoint(targetName.transform.position, SoundMaterial.Misc, SoundType.Death, 
+            SoundEffectManager.CreateNetworkedSoundEffectAtPoint(targetName.transform.position, SoundMaterial.Misc, SoundType.Death,
                 UnityEngine.Random.Range(0.8f, 1.2f));
 
             attack.target.transform.position = respawnLocation;
