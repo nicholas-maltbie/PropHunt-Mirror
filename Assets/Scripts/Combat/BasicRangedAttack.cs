@@ -104,7 +104,8 @@ namespace PropHunt.Combat
         public void Update()
         {
             // Assert that the player has a target
-            if (PlayerInputManager.playerMovementState == PlayerInputState.Allow && networkService.isLocalPlayer && unityService.GetButtonDown("Fire1") && CanAttack)
+            if (PlayerInputManager.playerMovementState == PlayerInputState.Allow &&
+                networkService.isLocalPlayer && unityService.GetButtonDown("Fire1") && CanAttack)
             {
                 GetTarget(out RaycastHit hit);
                 GameObject target = null;
