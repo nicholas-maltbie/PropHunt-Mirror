@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace PropHunt.UI.Load
+namespace PropHunt.UI
 {
     /// <summary>
     /// Simple class to set cursor state when the menu loads

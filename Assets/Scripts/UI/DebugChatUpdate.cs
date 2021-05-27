@@ -3,7 +3,7 @@ using PropHunt.Game.Communication;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace PropHunt.UI.Chat
+namespace PropHunt.UI
 {
     public class DebugChatUpdate : MonoBehaviour
     {

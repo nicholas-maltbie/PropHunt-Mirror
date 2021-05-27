@@ -5,7 +5,7 @@ using PropHunt.Utils;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace PropHunt.UI.Actions
+namespace PropHunt.UI
 {
     /// <summary>
     /// Actions to control the network manager via UI buttons
