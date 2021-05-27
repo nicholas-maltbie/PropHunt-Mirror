@@ -26,21 +26,22 @@ namespace PropHunt.UI.Actions
 
             int resX = int.Parse(match.Groups[1].Value);
             int resY = int.Parse(match.Groups[2].Value);
-            if (match.Groups.Count > 2)
+            if (int.TryParse(match.Groups[4].Value, out int update))
             {
-                int update = int.Parse(match.Groups[4].Value);
                 Screen.SetResolution(resX, resY, Screen.fullScreenMode, update);
+                UnityEngine.Debug.Log($"Setting screen resolution to {resX}x{resY} with update {update}");
             }
             else
             {
                 Screen.SetResolution(resX, resY, Screen.fullScreenMode);
+                UnityEngine.Debug.Log($"Setting screen resolution to {resX}x{resY}");
             }
         }
 
         public void SetFullScreenMode()
         {
             FullScreenMode mode = FullScreenMode.ExclusiveFullScreen;
-            string selectedMode = windowedDropdown.options[windowedDropdown.value].text;
+            string selectedMode = windowedDropdown.options[windowedDropdown.value].text.Trim();
             if (selectedMode == "Fullscreen")
             {
                 mode = FullScreenMode.ExclusiveFullScreen;
