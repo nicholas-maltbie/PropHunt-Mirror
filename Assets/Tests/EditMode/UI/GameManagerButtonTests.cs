@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using PropHunt.Game.Flow;
-using PropHunt.UI;
+using PropHunt.UI.Actions;
 using Tests.EditMode.Game.Flow;
 using UnityEditor;
 using UnityEngine;
