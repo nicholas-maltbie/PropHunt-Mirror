@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +13,29 @@ namespace PropHunt.UI.Actions
         ///  2 - Borderless Fullscreen
         /// </summary>
         public Dropdown windowedDropdown;
+
+        public Dropdown resolutionDropdown;
+
+        public const string resolutionParser = @"(\d+)[^\d](\d+)(\s*\*\s*(\d+)\s*)?";
+
+        public void SetScreenResolution()
+        {
+            string selectedResolution = resolutionDropdown.options[resolutionDropdown.value].text.Trim();
+
+            Match match = Regex.Match(selectedResolution, resolutionParser);
+
+            int resX = int.Parse(match.Groups[1].Value);
+            int resY = int.Parse(match.Groups[2].Value);
+            if (match.Groups.Count > 2)
+            {
+                int update = int.Parse(match.Groups[4].Value);
+                Screen.SetResolution(resX, resY, Screen.fullScreenMode, update);
+            }
+            else
+            {
+                Screen.SetResolution(resX, resY, Screen.fullScreenMode);
+            }
+        }
 
         public void SetFullScreenMode()
         {

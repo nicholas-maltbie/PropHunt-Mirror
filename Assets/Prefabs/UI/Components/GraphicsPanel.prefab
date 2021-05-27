@@ -653,7 +653,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d249e55146ceda943b652b4324346b2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropdown: {fileID: 8670199110371449520}
+  windowedDropdown: {fileID: 8670199110371449520}
+  resolutionDropdown: {fileID: 3771984801857942824}
 --- !u!1 &2357361737322626579
 GameObject:
   m_ObjectHideFlags: 0
@@ -874,7 +875,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 803680251495754728}
         m_TargetAssemblyTypeName: PropHunt.UI.Actions.ChangeScreenActions, PropHunt
-        m_MethodName: SetWindowResolution
+        m_MethodName: SetScreenResolution
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
