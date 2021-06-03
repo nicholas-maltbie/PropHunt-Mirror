@@ -72,6 +72,16 @@ namespace PropHunt.UI
         /// </summary>
         private Dictionary<string, GameObject> screenLookup;
 
+        /// <summary>
+        /// Sequence of all screens used by the player
+        /// </summary>
+        private LinkedList<string> screenSequence = new LinkedList<string>();
+
+        /// <summary>
+        /// Maximum number of screen changes that can be saved
+        /// </summary>
+        public int maxScreenHistory = 100;
+
         public IEnumerator DestorySelf()
         {
             yield return null;
@@ -116,6 +126,7 @@ namespace PropHunt.UI
                 if (idx == this.initialScreen)
                 {
                     this.CurrentScreen = screenName;
+                    screenSequence.AddLast(screenName);
                     this.screenLookup[screenName].SetActive(true);
                 }
                 else
@@ -162,6 +173,13 @@ namespace PropHunt.UI
                 return;
             }
 
+            // Append to current screen sequence
+            screenSequence.AddLast(screenName);
+            while (screenSequence.Count > maxScreenHistory)
+            {
+                screenSequence.RemoveFirst();
+            }
+
             GameObject currentlyDisplayed = this.screenLookup[this.CurrentScreen];
             GameObject newDisplay = this.screenLookup[screenName];
 
@@ -176,6 +194,23 @@ namespace PropHunt.UI
 
             // invoke screen change event
             UIManager.ScreenChangeOccur?.Invoke(this, changeEvent);
+        }
+
+        public static void PreviousScreen(object sender)
+        {
+            // Check to make sure that there are at least two elements in the sequence
+            if (UIManager.Instance.screenSequence.Count < 2)
+            {
+                return;
+            }
+            // Remove the last element
+            UIManager.Instance.screenSequence.RemoveLast();
+            // Get the new target sequence
+            string previous = UIManager.Instance.screenSequence.Last.Value;
+            // Cleanup the sequence to re-create opening this screen
+            UIManager.Instance.screenSequence.RemoveLast();
+            UIManager.RequestNewScreen(sender, previous);
+
         }
 
         /// <summary>

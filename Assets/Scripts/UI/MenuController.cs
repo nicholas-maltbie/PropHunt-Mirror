@@ -10,6 +10,30 @@ namespace PropHunt.UI
     public class MenuController : MonoBehaviour
     {
         /// <summary>
+        /// Various supported menu operations
+        /// </summary>
+        public enum MenuOperation
+        {
+            Previous
+        }
+
+        /// <summary>
+        /// Serialize container to perform a menu operation whenever a player gives an input
+        /// </summary>
+        [System.Serializable]
+        public class InputScreenOperation
+        {
+            /// <summary>
+            /// Input to listen to from the player, listen to button down event
+            /// </summary>
+            public string input;
+            /// <summary>
+            /// Operation to perform when the player presses this input as a button down
+            /// </summary>
+            public MenuOperation operation;
+        }
+
+        /// <summary>
         /// Serialize container to change screen whenever a player gives an input
         /// </summary>
         [System.Serializable]
@@ -31,6 +55,11 @@ namespace PropHunt.UI
         public List<InputScreenChange> screenChangeInputs = new List<InputScreenChange>();
 
         /// <summary>
+        /// Input screen change operations for this menu
+        /// </summary>
+        public List<InputScreenOperation> screenChangeOperations = new List<InputScreenOperation>();
+
+        /// <summary>
         /// Unity service for parsing player inputs
         /// </summary>
         public IUnityService unityService = new UnityService();
@@ -44,6 +73,26 @@ namespace PropHunt.UI
                     SetScreen(change.menu);
                 }
             }
+            foreach (InputScreenOperation change in this.screenChangeOperations)
+            {
+                if (unityService.GetButtonDown(change.input))
+                {
+                    switch(change.operation)
+                    {
+                        case MenuOperation.Previous:
+                            PreviousScreen();
+                            break;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Requests go to the previous screen
+        /// </summary>
+        public void PreviousScreen()
+        {
+            UIManager.PreviousScreen(this);
         }
 
         /// <summary>
