@@ -55,7 +55,7 @@ namespace PropHunt.UI
         /// <summary>
         /// Various screens to add into the scene
         /// </summary>
-        public List<Canvas> screenPrefabs;
+        public List<Canvas> screenPrefabs = new List<Canvas>();
 
         /// <summary>
         /// Index of the first screen to show
@@ -81,6 +81,16 @@ namespace PropHunt.UI
         /// Maximum number of screen changes that can be saved
         /// </summary>
         public int maxScreenHistory = 100;
+
+        /// <summary>
+        /// Clear out history of all visited screens (except for current screen)
+        /// </summary>
+        public void ClearHistory()
+        {
+            string current = screenSequence.Last.Value;
+            screenSequence.Clear();
+            screenSequence.AddLast(current);
+        }
 
         public IEnumerator DestorySelf()
         {
@@ -143,6 +153,7 @@ namespace PropHunt.UI
 
         public void OnDestroy()
         {
+            UIManager.Instance = null;
             UIManager.RequestScreenChange -= this.HandleScreenRequest;
         }
 

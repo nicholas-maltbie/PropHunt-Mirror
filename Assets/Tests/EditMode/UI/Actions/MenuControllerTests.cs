@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Moq;
 using NUnit.Framework;
 using PropHunt.UI;
@@ -24,6 +25,11 @@ namespace Tests.EditMode.UI
         private MenuController menuController;
 
         /// <summary>
+        /// UIManager for managing previous screens
+        /// </summary>
+        private UIManager uiManager;
+
+        /// <summary>
         /// Current screen
         /// </summary>
         private string currentScreen;
@@ -32,7 +38,11 @@ namespace Tests.EditMode.UI
         public void Setup()
         {
             this.menuControllerObject = new GameObject();
+            this.uiManager = this.menuControllerObject.AddComponent<UIManager>();
             this.menuController = this.menuControllerObject.AddComponent<MenuController>();
+
+            this.uiManager.screenPrefabs = new List<Canvas>(new Canvas[]{menuControllerObject.AddComponent<Canvas>()});
+            Assert.Throws<System.InvalidOperationException>(() => this.uiManager.Start());
 
             // Listen to requested screen change events
             UIManager.RequestScreenChange += (object source, RequestScreenChangeEventArgs args) =>
@@ -45,6 +55,7 @@ namespace Tests.EditMode.UI
         public void TearDown()
         {
             // Cleanup game object
+            this.uiManager.OnDestroy();
             GameObject.DestroyImmediate(this.menuControllerObject);
         }
 
@@ -82,6 +93,40 @@ namespace Tests.EditMode.UI
             Assert.IsTrue(this.currentScreen == "input_change_screen");
 
             GameObject.DestroyImmediate(holderObject);
+        }
+
+        [Test]
+        public void TestOperationOnInput()
+        {
+            // Setup a list of supported screens
+
+            InputScreenOperation operation = new InputScreenOperation();
+            operation.input = "Cancel";
+            operation.operation = MenuOperation.Previous;
+            this.menuController.screenChangeOperations.Add(operation);
+
+            // Make a history of two screen operations
+            GameObject previousScreen = new GameObject();
+            previousScreen.name = "previous_screen";
+            this.menuController.SetScreen(previousScreen);
+            GameObject nextScreen = new GameObject();
+            nextScreen.name = "next_screen";
+            
+            // Reset UI manager's screen list
+            this.uiManager.OnDestroy();
+            this.uiManager.screenPrefabs = new List<Canvas>(new Canvas[]{previousScreen.AddComponent<Canvas>(), nextScreen.AddComponent<Canvas>()});
+            Assert.Throws<System.InvalidOperationException>(() => this.uiManager.Start());
+
+            this.menuController.SetScreen(nextScreen);
+
+            Mock<IUnityService> unityServiceMock = new Mock<IUnityService>();
+            menuController.unityService = unityServiceMock.Object;
+            unityServiceMock.Setup(e => e.GetButtonDown("Cancel")).Returns(true);
+            this.menuController.Update();
+            Assert.IsTrue(this.currentScreen == "previous_screen");
+
+            GameObject.DestroyImmediate(previousScreen);
+            GameObject.DestroyImmediate(nextScreen);
         }
     }
 }
