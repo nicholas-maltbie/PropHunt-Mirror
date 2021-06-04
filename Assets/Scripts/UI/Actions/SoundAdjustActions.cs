@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
@@ -7,13 +8,6 @@ namespace PropHunt.UI.Actions
 {
     public class SoundAdjustActions : MonoBehaviour
     {
-        public static bool setupAudio;
-        
-        private const string soundVolumePrefixPlayerPrefKey = "SoundVolume_";
-
-        float minVolume = -80;
-        float maxVolume = 20;
-
         public AudioMixerSettingsGroup[] settingsGroups;
 
         [Serializable]
@@ -21,18 +15,6 @@ namespace PropHunt.UI.Actions
         {
             public AudioMixerGroup mixerGroup;
             public Slider slider;
-            public float currentVolume;
-            public bool isMuted;
-        }
-
-        public float GetSliderValue(float volumeLevel)
-        {
-            return (volumeLevel - minVolume) / (maxVolume - minVolume);
-        }
-
-        public float GetVolumeLevel(float sliderPosition)
-        {
-            return sliderPosition * (maxVolume - minVolume) + minVolume;
         }
 
         public void Start()
@@ -42,20 +24,19 @@ namespace PropHunt.UI.Actions
             {
                 AudioMixerSettingsGroup settingsGroup = settingsGroups[i];
                 AudioMixerGroup group = settingsGroup.mixerGroup;
-                string soundKey = soundVolumePrefixPlayerPrefKey + settingsGroup.mixerGroup.name;
+                string soundKey = LoadAudioMixerLevels.soundVolumePrefixPlayerPrefKey + settingsGroup.mixerGroup.name;
 
-                // Load audio settings from disk
-                settingsGroup.currentVolume = PlayerPrefs.GetFloat(soundKey, 0);
-                group.audioMixer.SetFloat($"{group.name} Volume", settingsGroup.currentVolume);
+                settingsGroup.mixerGroup.audioMixer.GetFloat($"{group.name} Volume", out float startingVolume);
                 // Set the slider to match the saved value
-                settingsGroup.slider.SetValueWithoutNotify(GetSliderValue(settingsGroup.currentVolume));
+                settingsGroup.slider.SetValueWithoutNotify(
+                    LoadAudioMixerLevels.GetSliderValue(startingVolume));
                 // Update saved and current value on player input
                 settingsGroup.slider.onValueChanged.AddListener(value => 
                 {
-                    settingsGroup.currentVolume = GetVolumeLevel(value);
-                    group.audioMixer.SetFloat($"{group.name} Volume", settingsGroup.currentVolume);
+                    float currentVolume = LoadAudioMixerLevels.GetVolumeLevel(value);
+                    group.audioMixer.SetFloat($"{group.name} Volume", currentVolume);
 #if !UNITY_EDITOR
-                    PlayerPrefs.SetFloat(soundKey, settingsGroup.currentVolume);
+                    PlayerPrefs.SetFloat(soundKey, currentVolume);
 #endif
                 });
             }

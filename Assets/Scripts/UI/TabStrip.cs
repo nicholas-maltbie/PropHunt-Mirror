@@ -52,7 +52,14 @@ namespace PropHunt.UI
             return Array.IndexOf(TabCollection, currentTabPair);
         }
 
-        protected void OnEnable(){
+        protected void Start()
+        {
+            for (var i = 0; i < TabCollection.Length; i++)
+            {
+                //Storing the current value of i in a locally scoped variable.
+                var index = i;
+                TabCollection[index].TabButton.onClick.AddListener(new UnityAction(() => PickTab(index)));
+            }
             //Initialize all tabs to an unpicked state
             for (var i = 0; i < TabCollection.Length; i++)
             {
@@ -67,16 +74,6 @@ namespace PropHunt.UI
                 index = 0;
                 CurrentTabIndex = index.Value;
                 SetTabState(CurrentTabIndex, true);
-            }
-        }
-
-        protected void Start()
-        {
-            for (var i = 0; i < TabCollection.Length; i++)
-            {
-                //Storing the current value of i in a locally scoped variable.
-                var index = i;
-                TabCollection[index].TabButton.onClick.AddListener(new UnityAction(() => PickTab(index)));
             }
         }
     }

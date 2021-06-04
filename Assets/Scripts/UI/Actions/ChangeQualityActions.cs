@@ -6,10 +6,20 @@ using UnityEngine.UI;
 
 namespace PropHunt.UI.Actions
 {
+    /// <summary>
+    /// Class to setup dropdown that controls various quality level 
+    /// selection and save settings between player session loadings
+    /// </summary>
     public class ChangeQualityActions : MonoBehaviour
     {
-        private const string qualityLevelPlayerPrefKey = "qualityLevel";
+        /// <summary>
+        /// String key to save quality level under
+        /// </summary>
+        public const string qualityLevelPlayerPrefKey = "qualityLevel";
 
+        /// <summary>
+        /// Dropdown that modifies the quality level
+        /// </summary>
         public Dropdown qualityDropdown;
 
         public void Awake()
@@ -26,6 +36,10 @@ namespace PropHunt.UI.Actions
             qualityDropdown.onValueChanged.AddListener(OnQualityLevelChange);
         }
 
+        /// <summary>
+        /// Quality level change event
+        /// </summary>
+        /// <param name="level"></param>
         public void OnQualityLevelChange(int level)
         {
             QualitySettings.SetQualityLevel(level);
