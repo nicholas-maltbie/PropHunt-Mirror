@@ -81,7 +81,6 @@ namespace PropHunt.UI.Actions
 
         public void Awake()
         {
-            
             if (!setupDisplay)
             {
                 LoadSettings();
@@ -192,6 +191,11 @@ namespace PropHunt.UI.Actions
 #else
             Screen.SetResolution(currentResolution.width, currentResolution.height, currentFullScreen, currentResolution.refreshRate);
             // Then set target monitor
+            // This will be added in 2021.2 so will have that to look forward to in future
+            // Example: https://github.com/Unity-Technologies/DesktopSamples/tree/master/MoveWindowSample
+            //   Screen.MoveMainWindowTo(display, targetCoordinates);
+            // Related forum thread https://forum.unity.com/threads/switch-monitor-at-runtime.501336/
+            // Will update and add feature since it should be released soon
 
             PlayerPrefs.SetInt(resolutionWidthPlayerPrefKey, currentResolution.width);
             PlayerPrefs.SetInt(resolutionHeightPlayerPrefKey, currentResolution.height);
