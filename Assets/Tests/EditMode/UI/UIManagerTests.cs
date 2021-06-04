@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
 using PropHunt.UI;
+using PropHunt.UI.Events;
 using UnityEngine;
 using UnityEngine.TestTools;
 

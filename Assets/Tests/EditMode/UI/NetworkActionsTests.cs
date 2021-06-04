@@ -1,6 +1,6 @@
 using Moq;
 using NUnit.Framework;
-using PropHunt.UI;
+using PropHunt.UI.Actions;
 using UnityEngine;
 using System.Collections;
 using UnityEngine.TestTools;

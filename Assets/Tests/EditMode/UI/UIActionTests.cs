@@ -1,6 +1,8 @@
 ﻿using NUnit.Framework;
 using PropHunt.Character;
 using PropHunt.UI;
+using PropHunt.UI.Actions;
+using PropHunt.UI.Events;
 using UnityEngine;
 
 namespace Tests.EditMode.UI
