@@ -5,7 +5,7 @@ using PropHunt.UI.Actions;
 using PropHunt.UI.Events;
 using UnityEngine;
 
-namespace Tests.EditMode.UI
+namespace Tests.EditMode.UI.Actions
 {
     /// <summary>
     /// Tests for various UI Actions such as connect, disconnect, quit game actions

@@ -3,7 +3,7 @@ using PropHunt.UI.Actions;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Tests.EditMode.UI
+namespace Tests.EditMode.UI.Actions
 {
     [TestFixture]
     public class ChangeQualityActionsTests

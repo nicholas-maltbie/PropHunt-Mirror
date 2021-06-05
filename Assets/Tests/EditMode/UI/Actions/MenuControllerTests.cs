@@ -6,7 +6,7 @@ using PropHunt.Utils;
 using UnityEngine;
 using static PropHunt.UI.MenuController;
 
-namespace Tests.EditMode.UI
+namespace Tests.EditMode.UI.Actions
 {
     /// <summary>
     /// Tests for Menu Controller Tests

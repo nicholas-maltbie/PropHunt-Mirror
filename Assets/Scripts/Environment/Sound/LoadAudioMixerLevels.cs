@@ -1,42 +1,22 @@
-using System;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.Audio;
-using UnityEngine.UI;
 
-namespace PropHunt.UI.Actions
+namespace PropHunt.Environment.Sound
 {
+    /// <summary>
+    /// Load audio mixer levels from player preferences on startup
+    /// </summary>
     public class LoadAudioMixerLevels : MonoBehaviour
-    {        
+    {
+        /// <summary>
+        /// Key to store volume under
+        /// </summary>
         public const string soundVolumePrefixPlayerPrefKey = "SoundVolume_";
-        public const float minVolume = -20;
-        public const float maxVolume = 10;
 
-        public const float mutedVolume = -80f;
-
+        /// <summary>
+        /// Mixer groups to load volume for (if one is saved)
+        /// </summary>
         public AudioMixerGroup[] mixerGroups;
-
-        public static float GetSliderValue(float volumeLevel)
-        {
-            if (volumeLevel == mutedVolume || volumeLevel < minVolume)
-            {
-                return 0.0f;
-            }
-            if (volumeLevel > maxVolume)
-            {
-                return 1.0f;
-            }
-            return Mathf.Pow((volumeLevel - minVolume) / (maxVolume - minVolume), 2.0f);
-        }
-
-        public static float GetVolumeLevel(float sliderPosition)
-        {
-            if (sliderPosition == 0.0f)
-            {
-                return mutedVolume;
-            }
-            return Mathf.Pow(sliderPosition, 0.5f) * (maxVolume - minVolume) + minVolume;
-        }
 
         public void Start()
         {
@@ -44,7 +24,9 @@ namespace PropHunt.UI.Actions
             foreach(AudioMixerGroup mixerGroup in mixerGroups)
             {
                 string soundKey = soundVolumePrefixPlayerPrefKey + mixerGroup.name;
-                mixerGroup.audioMixer.SetFloat($"{mixerGroup.name} Volume", PlayerPrefs.GetFloat(soundKey, 0));
+                string parameter = $"{mixerGroup.name} Volume";
+                mixerGroup.audioMixer.GetFloat(parameter, out float defaultVolume);
+                mixerGroup.audioMixer.SetFloat(parameter, PlayerPrefs.GetFloat(soundKey, defaultVolume));
             }
         }
     }

@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 namespace PropHunt.UI.Actions
 {
+    /// <summary>
+    /// Change screen actions to modify resolution and quality settings
+    /// </summary>
     public class ChangeScreenActions : MonoBehaviour
     {
         private const string resolutionWidthPlayerPrefKey = "ResolutionWidth";
@@ -35,21 +38,53 @@ namespace PropHunt.UI.Actions
         /// </summary>
         public Toggle vsyncToggle;
 
+        /// <summary>
+        /// Has the display been setup from saved settings
+        /// </summary>
         public static bool setupDisplay = false;
 
+        /// <summary>
+        /// Name of fullscreen mode
+        /// </summary>
         public const string fullScreenModeName = "FullScreen";
+        /// <summary>
+        /// Name of windowed mode
+        /// </summary>
         public const string windowedModeName = "Windowed";
+        /// <summary>
+        /// Name of borderless window mode
+        /// </summary>
         public const string borderlessWindowModeName = "Borderless Windowed";
 
-        private FullScreenMode currentFullScreen;
-        private Resolution currentResolution;
+        /// <summary>
+        /// Currently selected fullscreen mode
+        /// </summary>
+        public FullScreenMode currentFullScreen { get; private set; }
+        /// <summary>
+        /// Currently selected resolution
+        /// </summary>
+        public Resolution currentResolution;
+        /// <summary>
+        /// Set of supported screen resolutions
+        /// </summary>
         private Resolution[] resolutions;
-        private int currentDisplay;
+        /// <summary>
+        /// Currently selected display
+        /// </summary>
+        public int currentDisplay { get; private set; }
 
+        /// <summary>
+        /// Text associated with dropdown window for 
+        /// </summary>
         public static readonly List<string> windowedDropdownText = new List<string>(
             new string[] { fullScreenModeName, windowedModeName, borderlessWindowModeName });
 
-        public int GetFullScreenModeDropdownIndex(FullScreenMode mode)
+        /// <summary>
+        /// Get the fullscreen mode integer based on a selected fullscreen mode
+        /// </summary>
+        /// <param name="mode">Fullscreen mode to load</param>
+        /// <returns>Index of fullscreen mode in the windowed dropdown selector</returns>
+        public static int GetFullScreenModeDropdownIndex(FullScreenMode mode)
         {
             switch (mode)
             {
@@ -64,7 +99,12 @@ namespace PropHunt.UI.Actions
             }
         }
 
-        public FullScreenMode GetFullScreenMode(string selectedMode)
+        /// <summary>
+        /// Get the selected fullscreen mode from a selected fullscreen name
+        /// </summary>
+        /// <param name="selectedMode">Name of selected mode</param>
+        /// <returns>Fullscreen mode associated with this name</returns>
+        public static FullScreenMode GetFullScreenMode(string selectedMode)
         {
             switch (selectedMode)
             {
@@ -81,6 +121,7 @@ namespace PropHunt.UI.Actions
 
         public void Awake()
         {
+            // Load settings if it hasn't already been configured
             if (!setupDisplay)
             {
                 LoadSettings();
@@ -93,6 +134,9 @@ namespace PropHunt.UI.Actions
             SetupVsyncToggle();
         }
 
+        /// <summary>
+        /// Setup the dropdown for the fullscreen settings
+        /// </summary>
         private void SetupFullScreenDropdown()
         {
             windowedDropdown.ClearOptions();
@@ -102,12 +146,18 @@ namespace PropHunt.UI.Actions
             windowedDropdown.RefreshShownValue();
         }
 
+        /// <summary>
+        /// Setup the vsync toggle
+        /// </summary>
         private void SetupVsyncToggle()
         {
             vsyncToggle.SetIsOnWithoutNotify(QualitySettings.vSyncCount == 1);
             vsyncToggle.onValueChanged.AddListener(SetVsync);
         }
 
+        /// <summary>
+        /// Setup the dropdown for the display settings
+        /// </summary>
         private void SetupDisplayDropdown()
         {
             displayDropdown.ClearOptions();
@@ -117,6 +167,9 @@ namespace PropHunt.UI.Actions
             displayDropdown.RefreshShownValue();
         }
 
+        /// <summary>
+        /// Refresh the list of resolutions from the Screen settings
+        /// </summary>
         private void RefreshResolutionDropdown()
         {
             this.resolutions = Screen.resolutions.OrderBy(i => new Tuple<int, int>(-i.width, -i.height)).ToArray();
@@ -138,12 +191,18 @@ namespace PropHunt.UI.Actions
             resolutionDropdown.RefreshShownValue();
         }
 
+        /// <summary>
+        /// Setup the resolution dropdown on initial startup
+        /// </summary>
         private void SetupResolutionDropdown()
         {
             RefreshResolutionDropdown();
             resolutionDropdown.onValueChanged.AddListener(SetResolution);
         }
 
+        /// <summary>
+        /// Load saved settings from player preferences
+        /// </summary>
         private void LoadSettings()
         {
             currentResolution = new Resolution();

@@ -52,7 +52,7 @@ namespace PropHunt.UI
             return Array.IndexOf(TabCollection, currentTabPair);
         }
 
-        protected void Start()
+        public void Start()
         {
             for (var i = 0; i < TabCollection.Length; i++)
             {

@@ -11,7 +11,7 @@ using Mirror.Tests;
 using UnityEngine.UI;
 using PropHunt.Character;
 
-namespace Tests.EditMode.UI
+namespace Tests.EditMode.UI.Actions
 {
     /// <summary>
     /// Tests for various NetworkActionsController in the UI to manage and manipulate the network manager from

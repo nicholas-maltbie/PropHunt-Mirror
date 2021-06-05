@@ -6,7 +6,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-namespace Tests.EditMode.UI
+namespace Tests.EditMode.UI.Actions
 {
     [TestFixture]
     public class GameManagerButtonTests : CustomNetworkManagerTestBase
