@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -11,6 +12,13 @@ namespace PropHunt.UI.Actions
     /// </summary>
     public class ChangeScreenActions : MonoBehaviour
     {
+        public struct ScreenSettingsGroup
+        {
+            public Resolution resolution;
+            public FullScreenMode fullScreenMode;
+            public int monitor;
+        }
+        
         private const string resolutionWidthPlayerPrefKey = "ResolutionWidth";
         private const string resolutionHeightPlayerPrefKey = "ResolutionHeight";
         private const string resolutionRefreshRatePlayerPrefKey = "RefreshRate";
@@ -72,6 +80,36 @@ namespace PropHunt.UI.Actions
         /// Currently selected display
         /// </summary>
         public int currentDisplay { get; private set; }
+
+        /// <summary>
+        /// Settings panel (disabled when confirming operations)
+        /// </summary>
+        public CanvasGroup settingsPage;
+
+        /// <summary>
+        /// Confirmation panel (enabled when confirming operations)
+        /// </summary>
+        public CanvasGroup confirmPanel;
+
+        /// <summary>
+        /// Settings menu controller (disable when the confirmation dialog is open)
+        /// </summary>
+        public MenuController settingsMenuController;
+
+        /// <summary>
+        /// Accept confirm dialog button
+        /// </summary>
+        public Button confirmDialogYes;
+
+        /// <summary>
+        /// Reject confirm dialog button
+        /// </summary>
+        public Button confirmDialogNo;
+
+        /// <summary>
+        /// Text for the confirm dialog information
+        /// </summary>
+        public Text confirmDialogText;
 
         /// <summary>
         /// Text associated with dropdown window for 
@@ -161,7 +199,9 @@ namespace PropHunt.UI.Actions
         private void SetupDisplayDropdown()
         {
             displayDropdown.ClearOptions();
-            displayDropdown.AddOptions(Enumerable.Range(1, Display.displays.Length).Select(i => $"Monitor {i}").ToList());
+            displayDropdown.AddOptions(
+                Enumerable.Range(1, Display.displays.Length)
+                .Select(i => $"Monitor {i}").ToList());
             displayDropdown.onValueChanged.AddListener(SetMonitor);
             displayDropdown.value = currentDisplay < Display.displays.Length ? currentDisplay : 0;
             displayDropdown.RefreshShownValue();
@@ -179,7 +219,8 @@ namespace PropHunt.UI.Actions
             {
                 string option = resolutions[i].width + " x " + resolutions[i].height;
                 options.Add(option);
-                if (Mathf.Approximately(resolutions[i].width, currentResolution.width) && Mathf.Approximately(resolutions[i].height, currentResolution.height))
+                if (Mathf.Approximately(resolutions[i].width, currentResolution.width)
+                    && Mathf.Approximately(resolutions[i].height, currentResolution.height))
                 {
                     currentResolutionIndex = i;
                 }
@@ -187,8 +228,90 @@ namespace PropHunt.UI.Actions
 
             resolutionDropdown.ClearOptions();
             resolutionDropdown.AddOptions(options);
-            resolutionDropdown.value = currentResolutionIndex;
+            resolutionDropdown.SetValueWithoutNotify(currentResolutionIndex);
             resolutionDropdown.RefreshShownValue();
+        }
+
+        public IEnumerator OpenConfirmChangesDialog(int timeout = 15)
+        {
+            return OpenConfirmChangesDialog(new ScreenSettingsGroup
+            {
+                resolution = currentResolution,
+                fullScreenMode = currentFullScreen,
+                monitor = currentDisplay
+            }, timeout);
+        }
+
+        public IEnumerator OpenConfirmChangesDialog(ScreenSettingsGroup previousSettings,
+            int timeout = 15)
+        {
+            // Disable the current panel
+            settingsPage.interactable = false;
+            settingsPage.alpha = 0.8f;
+            // Change to confirm graphics screen
+            confirmPanel.interactable = true;
+            confirmPanel.alpha = 1.0f;
+
+            // Wait for the user to answer (either by button or by timeout)
+            bool answered = false;
+            // Add listeners to yes and no buttons on confirm dialog
+            confirmDialogYes.onClick.AddListener(() => {
+                CloseConfirmChangesDialog(false, previousSettings);
+                answered = true;
+            });
+            confirmDialogNo.onClick.AddListener(() => {
+                CloseConfirmChangesDialog(true, previousSettings);
+                answered = true;
+            });
+            // Don't allow the user to exit the settings panel until this is confirmed
+            settingsMenuController.allowInputChanges = false;
+
+            // Wait for timeout... or exit early if the user has answered the question
+            for (int i = timeout; i >= 0 && !answered; i--)
+            {
+                // Update the shown value
+                confirmDialogText.text = i.ToString();
+                // Wait for a second
+                yield return new WaitForSeconds(1.0f);
+            }
+
+            // If they timed out, close the confirm dialog and revert the settings
+            if (!answered)
+            {
+                CloseConfirmChangesDialog(true, previousSettings);
+            }
+            // Remove listeners from the confirm dialog
+            confirmDialogYes.onClick.RemoveAllListeners();
+            confirmDialogNo.onClick.RemoveAllListeners();
+            // Reset the settings panel controls to allow user to leave panel
+            settingsMenuController.allowInputChanges = true;
+        }
+
+        private void CloseConfirmChangesDialog(bool revert, ScreenSettingsGroup previousSettings)
+        {
+            if (revert)
+            {
+                // Revert to previous settings
+                currentResolution = previousSettings.resolution;
+                currentFullScreen = previousSettings.fullScreenMode;
+                currentDisplay = previousSettings.monitor;
+                // Change display to match selected settings
+                UpdateDisplayInfo();
+
+                // Refresh all shown values in dropdowns
+                RefreshResolutionDropdown();
+                windowedDropdown.SetValueWithoutNotify(GetFullScreenModeDropdownIndex(currentFullScreen));
+                windowedDropdown.RefreshShownValue();
+                displayDropdown.SetValueWithoutNotify(currentDisplay);
+                displayDropdown.RefreshShownValue();
+            }
+            // Close the confirm dialog
+            // Enable the settings panel
+            settingsPage.interactable = true;
+            settingsPage.alpha = 1.0f;
+            // Close the confirm panel
+            confirmPanel.interactable = false;
+            confirmPanel.alpha = 0.0f;
         }
 
         /// <summary>
@@ -224,23 +347,32 @@ namespace PropHunt.UI.Actions
 
         public void SetResolution(int resolutionIndex)
         {
+            IEnumerator confirm = OpenConfirmChangesDialog();
+
             currentResolution = resolutions[resolutionIndex];
             UpdateDisplayInfo();
+            StartCoroutine(confirm);
         }
 
         public void SetFullScreen(int fullScreenIndex)
         {
+            IEnumerator confirm = OpenConfirmChangesDialog();
+
             currentFullScreen = GetFullScreenMode(windowedDropdown.options[windowedDropdown.value].text.Trim());
             UpdateDisplayInfo();
+            StartCoroutine(confirm);
         }
 
         public void SetMonitor(int targetMonitor)
         {
+            IEnumerator confirm = OpenConfirmChangesDialog();
+
             this.currentDisplay = targetMonitor;
             UpdateDisplayInfo();
 
             // Update the dropdowns for resolution based on new screen
             RefreshResolutionDropdown();
+            StartCoroutine(confirm);
         }
 
         public void UpdateDisplayInfo()

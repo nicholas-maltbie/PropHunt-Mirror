@@ -64,8 +64,18 @@ namespace PropHunt.UI
         /// </summary>
         public IUnityService unityService = new UnityService();
 
+        /// <summary>
+        /// Can this menu controller allow for input to change screens
+        /// </summary>
+        public bool allowInputChanges = true;
+
         public void Update()
         {
+            if (!allowInputChanges)
+            {
+                return;
+            }
+
             foreach (InputScreenChange change in this.screenChangeInputs)
             {
                 if (unityService.GetButtonDown(change.input))
@@ -92,6 +102,11 @@ namespace PropHunt.UI
         /// </summary>
         public void PreviousScreen()
         {
+            if (!allowInputChanges)
+            {
+                return;
+            }
+
             UIManager.PreviousScreen(this);
         }
 
@@ -101,6 +116,11 @@ namespace PropHunt.UI
         /// <param name="screenPrefab">Screen prefab to switch to</param>
         public void SetScreen(GameObject screenPrefab)
         {
+            if (!allowInputChanges)
+            {
+                return;
+            }
+
             this.SetScreen(screenPrefab.name);
         }
 
@@ -110,6 +130,11 @@ namespace PropHunt.UI
         /// <param name="name">Name of new screen to display</param>
         public void SetScreen(string name)
         {
+            if (!allowInputChanges)
+            {
+                return;
+            }
+
             UIManager.RequestNewScreen(this, name);
         }
     }
