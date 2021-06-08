@@ -180,7 +180,7 @@ namespace PropHunt.UI.Actions
             windowedDropdown.ClearOptions();
             windowedDropdown.AddOptions(windowedDropdownText);
             windowedDropdown.onValueChanged.AddListener(SetFullScreen);
-            windowedDropdown.value = GetFullScreenModeDropdownIndex(currentFullScreen);
+            windowedDropdown.SetValueWithoutNotify(GetFullScreenModeDropdownIndex(currentFullScreen));
             windowedDropdown.RefreshShownValue();
         }
 
@@ -203,7 +203,7 @@ namespace PropHunt.UI.Actions
                 Enumerable.Range(1, Display.displays.Length)
                 .Select(i => $"Monitor {i}").ToList());
             displayDropdown.onValueChanged.AddListener(SetMonitor);
-            displayDropdown.value = currentDisplay < Display.displays.Length ? currentDisplay : 0;
+            displayDropdown.SetValueWithoutNotify(currentDisplay < Display.displays.Length ? currentDisplay : 0);
             displayDropdown.RefreshShownValue();
         }
 
@@ -246,9 +246,11 @@ namespace PropHunt.UI.Actions
             int timeout = 15)
         {
             // Disable the current panel
+            settingsPage.blocksRaycasts = false;
             settingsPage.interactable = false;
             settingsPage.alpha = 0.8f;
             // Change to confirm graphics screen
+            confirmPanel.blocksRaycasts = true;
             confirmPanel.interactable = true;
             confirmPanel.alpha = 1.0f;
 
@@ -308,9 +310,11 @@ namespace PropHunt.UI.Actions
             // Close the confirm dialog
             // Enable the settings panel
             settingsPage.interactable = true;
+            settingsPage.blocksRaycasts = true;
             settingsPage.alpha = 1.0f;
             // Close the confirm panel
             confirmPanel.interactable = false;
+            confirmPanel.blocksRaycasts = false;
             confirmPanel.alpha = 0.0f;
         }
 

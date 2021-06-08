@@ -96,6 +96,33 @@ namespace Tests.EditMode.UI.Actions
         }
 
         [Test]
+        public void TestBlockedChange()
+        {
+            GameObject holderObject = new GameObject();
+            holderObject.name = "default_screen";
+            this.menuController.SetScreen(holderObject);
+            holderObject.name = "input_change_screen";
+            // Assert cannot change screen when disallowed
+            this.menuController.allowInputChanges = false;
+
+            InputScreenChange change = new InputScreenChange();
+            change.input = "Cancel";
+            change.menu = holderObject;
+            this.menuController.screenChangeInputs.Add(change);
+
+            Mock<IUnityService> unityServiceMock = new Mock<IUnityService>();
+            menuController.unityService = unityServiceMock.Object;
+            unityServiceMock.Setup(e => e.GetButtonDown("Cancel")).Returns(true);
+            this.menuController.Update();
+            Assert.IsFalse(this.currentScreen == "input_change_screen");
+
+            this.menuController.PreviousScreen();
+            this.menuController.SetScreen("input_change_screen");
+
+            GameObject.DestroyImmediate(holderObject);
+        }
+
+        [Test]
         public void TestOperationOnInput()
         {
             // Setup a list of supported screens

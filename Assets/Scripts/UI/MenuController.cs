@@ -116,11 +116,6 @@ namespace PropHunt.UI
         /// <param name="screenPrefab">Screen prefab to switch to</param>
         public void SetScreen(GameObject screenPrefab)
         {
-            if (!allowInputChanges)
-            {
-                return;
-            }
-
             this.SetScreen(screenPrefab.name);
         }
 
