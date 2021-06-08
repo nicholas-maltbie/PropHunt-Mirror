@@ -41,7 +41,7 @@ namespace Tests.EditMode.UI.Actions
             this.uiManager = this.menuControllerObject.AddComponent<UIManager>();
             this.menuController = this.menuControllerObject.AddComponent<MenuController>();
 
-            this.uiManager.screenPrefabs = new List<Canvas>(new Canvas[]{menuControllerObject.AddComponent<Canvas>()});
+            this.uiManager.screenPrefabs = new List<Canvas>(new Canvas[] { menuControllerObject.AddComponent<Canvas>() });
             Assert.Throws<System.InvalidOperationException>(() => this.uiManager.Start());
 
             // Listen to requested screen change events
@@ -138,10 +138,10 @@ namespace Tests.EditMode.UI.Actions
             this.menuController.SetScreen(previousScreen);
             GameObject nextScreen = new GameObject();
             nextScreen.name = "next_screen";
-            
+
             // Reset UI manager's screen list
             this.uiManager.OnDestroy();
-            this.uiManager.screenPrefabs = new List<Canvas>(new Canvas[]{previousScreen.AddComponent<Canvas>(), nextScreen.AddComponent<Canvas>()});
+            this.uiManager.screenPrefabs = new List<Canvas>(new Canvas[] { previousScreen.AddComponent<Canvas>(), nextScreen.AddComponent<Canvas>() });
             Assert.Throws<System.InvalidOperationException>(() => this.uiManager.Start());
 
             this.menuController.SetScreen(nextScreen);

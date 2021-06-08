@@ -21,7 +21,7 @@ namespace PropHunt.Environment.Sound
         public void Start()
         {
             // Setup sliders
-            foreach(AudioMixerGroup mixerGroup in mixerGroups)
+            foreach (AudioMixerGroup mixerGroup in mixerGroups)
             {
                 string soundKey = soundVolumePrefixPlayerPrefKey + mixerGroup.name;
                 string parameter = $"{mixerGroup.name} Volume";

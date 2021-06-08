@@ -87,7 +87,7 @@ namespace PropHunt.UI
             {
                 if (unityService.GetButtonDown(change.input))
                 {
-                    switch(change.operation)
+                    switch (change.operation)
                     {
                         case MenuOperation.Previous:
                             PreviousScreen();

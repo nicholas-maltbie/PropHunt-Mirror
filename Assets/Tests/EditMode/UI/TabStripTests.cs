@@ -44,11 +44,11 @@ namespace Tests.EditMode.UI
         public void TearDown()
         {
             GameObject.DestroyImmediate(this.tabStrip.gameObject);
-            foreach(Button button in tabSelectors)
+            foreach (Button button in tabSelectors)
             {
                 GameObject.DestroyImmediate(button.gameObject);
             }
-            foreach(CanvasGroup group in tabPanels)
+            foreach (CanvasGroup group in tabPanels)
             {
                 GameObject.DestroyImmediate(group.gameObject);
             }

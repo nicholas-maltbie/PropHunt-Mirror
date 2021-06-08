@@ -85,7 +85,7 @@ namespace PropHunt.UI.Actions
         public void Start()
         {
             // Setup sliders
-            for(int i = 0; i < settingsGroups.Length; i++)
+            for (int i = 0; i < settingsGroups.Length; i++)
             {
                 AudioMixerSettingsGroup settingsGroup = settingsGroups[i];
                 AudioMixerGroup group = settingsGroup.mixerGroup;
@@ -95,7 +95,7 @@ namespace PropHunt.UI.Actions
                 // Set the slider to match the saved value
                 settingsGroup.slider.SetValueWithoutNotify(GetSliderValue(startingVolume));
                 // Update saved and current value on player input
-                settingsGroup.slider.onValueChanged.AddListener(value => 
+                settingsGroup.slider.onValueChanged.AddListener(value =>
                 {
                     float currentVolume = GetVolumeLevel(value);
                     group.audioMixer.SetFloat($"{group.name} Volume", currentVolume);

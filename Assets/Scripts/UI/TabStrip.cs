@@ -22,7 +22,7 @@ namespace PropHunt.UI
         public Sprite TabIconPicked;
         public Sprite TabIconDefault;
         public Button DefaultTab;
-        
+
         public int CurrentTabIndex { get; private set; }
 
         protected void SetTabState(int index, bool picked)
@@ -71,7 +71,7 @@ namespace PropHunt.UI
                 var index = FindTabIndex(DefaultTab);
                 //If tab is invalid, instead default to the first tab.
                 if (index == null)
-                index = 0;
+                    index = 0;
                 CurrentTabIndex = index.Value;
                 SetTabState(CurrentTabIndex, true);
             }

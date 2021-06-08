@@ -18,7 +18,7 @@ namespace PropHunt.UI.Actions
             public FullScreenMode fullScreenMode;
             public int monitor;
         }
-        
+
         private const string resolutionWidthPlayerPrefKey = "ResolutionWidth";
         private const string resolutionHeightPlayerPrefKey = "ResolutionHeight";
         private const string resolutionRefreshRatePlayerPrefKey = "RefreshRate";
@@ -257,11 +257,13 @@ namespace PropHunt.UI.Actions
             // Wait for the user to answer (either by button or by timeout)
             bool answered = false;
             // Add listeners to yes and no buttons on confirm dialog
-            confirmDialogYes.onClick.AddListener(() => {
+            confirmDialogYes.onClick.AddListener(() =>
+            {
                 CloseConfirmChangesDialog(false, previousSettings);
                 answered = true;
             });
-            confirmDialogNo.onClick.AddListener(() => {
+            confirmDialogNo.onClick.AddListener(() =>
+            {
                 CloseConfirmChangesDialog(true, previousSettings);
                 answered = true;
             });

@@ -15,7 +15,7 @@ namespace Tests.EditMode.UI.Actions
             // Setup the object
             var loadAudioLevels = new GameObject().AddComponent<LoadAudioMixerLevels>();
             AudioMixer audioMixer = AssetDatabase.LoadAssetAtPath<AudioMixer>("Assets/Sound/Settings/AudioMixer.mixer");
-            loadAudioLevels.mixerGroups = new AudioMixerGroup[1]{audioMixer.FindMatchingGroups("Master")[0]};
+            loadAudioLevels.mixerGroups = new AudioMixerGroup[1] { audioMixer.FindMatchingGroups("Master")[0] };
 
             // Test setup
             loadAudioLevels.Start();

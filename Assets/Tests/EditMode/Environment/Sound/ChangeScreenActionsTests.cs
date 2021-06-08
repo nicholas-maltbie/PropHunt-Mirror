@@ -95,7 +95,7 @@ namespace Tests.EditMode.UI.Actions
             // Create a confirm dialog
             IEnumerator confirm = this.changeScreen.OpenConfirmChangesDialog();
             // Wait for timeout and confirm revert
-            while (confirm.MoveNext());
+            while (confirm.MoveNext()) ;
 
             // Wait for timeout but interrupt early by clicking the yes button
             confirm = this.changeScreen.OpenConfirmChangesDialog();
@@ -105,7 +105,7 @@ namespace Tests.EditMode.UI.Actions
             // end early by cancel
             this.changeScreen.confirmDialogYes.onClick?.Invoke();
             // Finish the co-routine
-            while(confirm.MoveNext());
+            while (confirm.MoveNext()) ;
 
             // Wait for timeout but interrupt early by clicking the no button
             confirm = this.changeScreen.OpenConfirmChangesDialog();
@@ -115,7 +115,7 @@ namespace Tests.EditMode.UI.Actions
             // end early by cancel
             this.changeScreen.confirmDialogNo.onClick?.Invoke();
             // Finish the co-routine
-            while(confirm.MoveNext());
+            while (confirm.MoveNext()) ;
         }
     }
 }
