@@ -19,7 +19,7 @@ namespace Tests.EditMode.UI.Actions
         public void SetUp()
         {
             GameObject go = new GameObject();
-            ChangeScreenActions.setupDisplay = false;
+            ScreenLoading.setupDisplay = false;
             changeScreen = go.AddComponent<ChangeScreenActions>();
 
             // Setup dropdowns
@@ -78,11 +78,11 @@ namespace Tests.EditMode.UI.Actions
             ChangeScreenActions.GetFullScreenModeDropdownIndex(FullScreenMode.MaximizedWindow);
             ChangeScreenActions.GetFullScreenModeDropdownIndex(FullScreenMode.Windowed);
 
-            Assert.IsTrue(ChangeScreenActions.GetFullScreenMode(ChangeScreenActions.fullScreenModeName)
+            Assert.IsTrue(ChangeScreenActions.GetFullScreenMode(ScreenLoading.fullScreenModeName)
                 == FullScreenMode.ExclusiveFullScreen);
-            Assert.IsTrue(ChangeScreenActions.GetFullScreenMode(ChangeScreenActions.windowedModeName)
+            Assert.IsTrue(ChangeScreenActions.GetFullScreenMode(ScreenLoading.windowedModeName)
                 == FullScreenMode.Windowed);
-            Assert.IsTrue(ChangeScreenActions.GetFullScreenMode(ChangeScreenActions.borderlessWindowModeName)
+            Assert.IsTrue(ChangeScreenActions.GetFullScreenMode(ScreenLoading.borderlessWindowModeName)
                 == FullScreenMode.FullScreenWindow);
             Assert.IsTrue(ChangeScreenActions.GetFullScreenMode("other")
                 == FullScreenMode.ExclusiveFullScreen);

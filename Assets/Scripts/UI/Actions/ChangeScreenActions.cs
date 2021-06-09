@@ -8,6 +8,39 @@ using UnityEngine.UI;
 namespace PropHunt.UI.Actions
 {
     /// <summary>
+    /// Screen loading status information
+    /// </summary>
+    public static class ScreenLoading
+    {
+        /// <summary>
+        /// Name of fullscreen mode
+        /// </summary>
+        public const string fullScreenModeName = "FullScreen";
+
+        /// <summary>
+        /// Name of windowed mode
+        /// </summary>
+        public const string windowedModeName = "Windowed";
+
+        /// <summary>
+        /// Name of borderless window mode
+        /// </summary>
+        public const string borderlessWindowModeName = "Borderless Windowed";
+
+        /// <summary>
+        /// Has the display been setup from saved settings
+        /// </summary>
+        public static bool setupDisplay = false;
+
+        /// <summary>
+        /// Windowed states 
+        /// </summary>
+        public static readonly string[] windowedDropdownText = { fullScreenModeName, windowedModeName, borderlessWindowModeName };
+
+
+    }
+
+    /// <summary>
     /// Change screen actions to modify resolution and quality settings
     /// </summary>
     public class ChangeScreenActions : MonoBehaviour
@@ -45,24 +78,6 @@ namespace PropHunt.UI.Actions
         /// Toggle to control vysnc settings
         /// </summary>
         public Toggle vsyncToggle;
-
-        /// <summary>
-        /// Has the display been setup from saved settings
-        /// </summary>
-        public static bool setupDisplay = false;
-
-        /// <summary>
-        /// Name of fullscreen mode
-        /// </summary>
-        public const string fullScreenModeName = "FullScreen";
-        /// <summary>
-        /// Name of windowed mode
-        /// </summary>
-        public const string windowedModeName = "Windowed";
-        /// <summary>
-        /// Name of borderless window mode
-        /// </summary>
-        public const string borderlessWindowModeName = "Borderless Windowed";
 
         /// <summary>
         /// Currently selected fullscreen mode
@@ -112,20 +127,15 @@ namespace PropHunt.UI.Actions
         public Text confirmDialogText;
 
         /// <summary>
-        /// Text associated with dropdown window for 
-        /// </summary>
-        public static readonly string[] windowedDropdownText = { fullScreenModeName, windowedModeName, borderlessWindowModeName };
-
-        /// <summary>
         /// Get the fullscreen mode integer based on a selected fullscreen mode
         /// </summary>
         /// <param name="mode">Fullscreen mode to load</param>
         /// <returns>Index of fullscreen mode in the windowed dropdown selector</returns>
         public static int GetFullScreenModeDropdownIndex(FullScreenMode mode)
         {
-            for (int i = 0; i < windowedDropdownText.Length; i++)
+            for (int i = 0; i < ScreenLoading.windowedDropdownText.Length; i++)
             {
-                if (GetFullScreenMode(windowedDropdownText[i]) == mode)
+                if (GetFullScreenMode(ScreenLoading.windowedDropdownText[i]) == mode)
                 {
                     return i;
                 }
@@ -142,11 +152,11 @@ namespace PropHunt.UI.Actions
         {
             switch (selectedMode)
             {
-                case fullScreenModeName:
+                case ScreenLoading.fullScreenModeName:
                     return FullScreenMode.ExclusiveFullScreen;
-                case windowedModeName:
+                case ScreenLoading.windowedModeName:
                     return FullScreenMode.Windowed;
-                case borderlessWindowModeName:
+                case ScreenLoading.borderlessWindowModeName:
                     return FullScreenMode.FullScreenWindow;
                 default:
                     return FullScreenMode.ExclusiveFullScreen;
@@ -156,7 +166,7 @@ namespace PropHunt.UI.Actions
         public void Awake()
         {
             // Load settings if it hasn't already been configured
-            if (!setupDisplay)
+            if (!ScreenLoading.setupDisplay)
             {
                 LoadSettings();
             }
@@ -174,7 +184,7 @@ namespace PropHunt.UI.Actions
         private void SetupFullScreenDropdown()
         {
             windowedDropdown.ClearOptions();
-            windowedDropdown.AddOptions(windowedDropdownText.ToList());
+            windowedDropdown.AddOptions(ScreenLoading.windowedDropdownText.ToList());
             windowedDropdown.onValueChanged.AddListener(SetFullScreen);
             windowedDropdown.SetValueWithoutNotify(GetFullScreenModeDropdownIndex(currentFullScreen));
             windowedDropdown.RefreshShownValue();
