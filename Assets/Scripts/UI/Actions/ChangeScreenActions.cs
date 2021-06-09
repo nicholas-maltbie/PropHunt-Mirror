@@ -213,7 +213,11 @@ namespace PropHunt.UI.Actions
         private void RefreshResolutionDropdown()
         {
             this.resolutions = Screen.resolutions.OrderBy(i => new Tuple<int, int>(-i.width, -i.height)).ToArray();
-            this.resolutions = this.resolutions.Length == 0 ? new Resolution[] { new Resolution { width = 1920, height = 1080, refreshRate = 60 } } : this.resolutions;
+            // Default resolutions if none are provided
+            this.resolutions = this.resolutions.Length == 0 ? new Resolution[] {
+                new Resolution { width = 1920, height = 1080, refreshRate = 60 },
+                new Resolution { width = 1280, height = 720, refreshRate = 60 }
+            } : this.resolutions;
             List<string> options = new List<string>();
             int currentResolutionIndex = 0;
             for (int i = 0; i < resolutions.Length; i++)
