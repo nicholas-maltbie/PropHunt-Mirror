@@ -114,8 +114,7 @@ namespace PropHunt.UI.Actions
         /// <summary>
         /// Text associated with dropdown window for 
         /// </summary>
-        public static readonly List<string> windowedDropdownText = new List<string>(
-            new string[] { fullScreenModeName, windowedModeName, borderlessWindowModeName });
+        public static readonly string[] windowedDropdownText = { fullScreenModeName, windowedModeName, borderlessWindowModeName };
 
         /// <summary>
         /// Get the fullscreen mode integer based on a selected fullscreen mode
@@ -124,17 +123,14 @@ namespace PropHunt.UI.Actions
         /// <returns>Index of fullscreen mode in the windowed dropdown selector</returns>
         public static int GetFullScreenModeDropdownIndex(FullScreenMode mode)
         {
-            switch (mode)
+            for (int i = 0; i < windowedDropdownText.Length; i++)
             {
-                case FullScreenMode.ExclusiveFullScreen:
-                    return windowedDropdownText.IndexOf(fullScreenModeName);
-                case FullScreenMode.Windowed:
-                    return windowedDropdownText.IndexOf(windowedModeName);
-                case FullScreenMode.FullScreenWindow:
-                    return windowedDropdownText.IndexOf(borderlessWindowModeName);
-                default:
-                    return 0;
+                if (GetFullScreenMode(windowedDropdownText[i]) == mode)
+                {
+                    return i;
+                }
             }
+            return 0;
         }
 
         /// <summary>
@@ -178,7 +174,7 @@ namespace PropHunt.UI.Actions
         private void SetupFullScreenDropdown()
         {
             windowedDropdown.ClearOptions();
-            windowedDropdown.AddOptions(windowedDropdownText);
+            windowedDropdown.AddOptions(windowedDropdownText.ToList());
             windowedDropdown.onValueChanged.AddListener(SetFullScreen);
             windowedDropdown.SetValueWithoutNotify(GetFullScreenModeDropdownIndex(currentFullScreen));
             windowedDropdown.RefreshShownValue();
