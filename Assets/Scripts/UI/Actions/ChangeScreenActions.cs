@@ -219,21 +219,20 @@ namespace PropHunt.UI.Actions
                 new Resolution { width = 1280, height = 720, refreshRate = 60 }
             } : this.resolutions;
             List<string> options = new List<string>();
-            int currentResolutionIndex = 0;
             for (int i = 0; i < resolutions.Length; i++)
             {
                 string option = resolutions[i].width + " x " + resolutions[i].height;
                 options.Add(option);
-                if (Mathf.Approximately(resolutions[i].width, currentResolution.width)
+                // Set selected resolution to current (or element 0 if not specificed)
+                if (i == 0 || Mathf.Approximately(resolutions[i].width, currentResolution.width)
                     && Mathf.Approximately(resolutions[i].height, currentResolution.height))
                 {
-                    currentResolutionIndex = i;
+                    resolutionDropdown.SetValueWithoutNotify(i);
                 }
             }
 
             resolutionDropdown.ClearOptions();
             resolutionDropdown.AddOptions(options);
-            resolutionDropdown.SetValueWithoutNotify(currentResolutionIndex);
             resolutionDropdown.RefreshShownValue();
         }
 
