@@ -235,8 +235,6 @@ namespace PropHunt.UI
         /// <param name="name">Name of new screen to show</param>
         public static void RequestNewScreen(object sender, string name)
         {
-            UnityEngine.Debug.Log($"New screen {name} requested from {sender}");
-
             RequestScreenChangeEventArgs request = new RequestScreenChangeEventArgs();
             request.newScreen = name;
             UIManager.RequestScreenChange?.Invoke(sender, request);

@@ -2,6 +2,8 @@ using Mirror;
 using PropHunt.Character;
 using PropHunt.Utils;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using static PropHunt.Controls.InputSystem;
 
 namespace PropHunt.Character
 {
@@ -288,24 +290,6 @@ namespace PropHunt.Character
             this.colliderCast = GetComponent<ColliderCast>();
         }
 
-        public void Update()
-        {
-            if (!networkService.isLocalPlayer)
-            {
-                // exit from update if this is not the local player
-                return;
-            }
-            // Get palyer input on a frame by frame basis
-            // TODO: Update movement inputs
-            // inputMovement = new Vector3(unityService.GetAxis("Horizontal"), 0, unityService.GetAxis("Vertical"));
-            // Normalize movement vector to be a max of 1 if greater than one
-            inputMovement = inputMovement.magnitude > 1 ? inputMovement / inputMovement.magnitude : inputMovement;
-
-            // Get other movemen inputs
-            // this.attemptingJump = unityService.GetButton("Jump");
-            // this.isSprinting = unityService.GetButton("Sprint");
-        }
-
         public void FixedUpdate()
         {
             if (!networkService.isLocalPlayer)
@@ -563,6 +547,23 @@ namespace PropHunt.Character
                 bounces++;
             }
             // We're done, player was moved as part of loop
+        }
+
+        public void OnMove(InputAction.CallbackContext context)
+        {
+            Vector2 movement = context.ReadValue<Vector2>();
+            inputMovement = new Vector3(movement.x, 0, movement.y);
+            inputMovement = inputMovement.magnitude > 1 ? inputMovement / inputMovement.magnitude : inputMovement;
+        }
+
+        public void OnJump(InputAction.CallbackContext context)
+        {
+            attemptingJump = context.ReadValueAsButton();
+        }
+
+        public void OnSprint(InputAction.CallbackContext context)
+        {
+            isSprinting = context.ReadValueAsButton();
         }
     }
 }

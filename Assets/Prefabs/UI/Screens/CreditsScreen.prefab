@@ -903,7 +903,7 @@ MonoBehaviour:
     m_ActionName: Player/Fire[/Mouse/leftButton]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: e687c0d6-34a3-464f-ac65-7130773a2a44
+    m_ActionId: fb8d5e39-01f1-46e5-98de-be5b1d1f8f23
     m_ActionName: Player/Look[/Mouse/delta]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 

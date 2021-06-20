@@ -3,6 +3,7 @@ using PropHunt.Character;
 using PropHunt.Environment.Sound;
 using PropHunt.Utils;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace PropHunt.Combat
 {
@@ -73,9 +74,12 @@ namespace PropHunt.Combat
         /// </summary>
         private bool attacking;
 
-        public void Attack()
+        /// <summary>
+        /// Tell the player to attempt to attack this frame
+        /// </summary>
+        public void Attack(InputAction.CallbackContext context)
         {
-            attacking = true;
+            attacking = context.ReadValueAsButton();
         }
 
         public void Start()
@@ -114,7 +118,7 @@ namespace PropHunt.Combat
         public void Update()
         {
             // Assert that the player has a target
-            if (PlayerInputManager.playerMovementState == PlayerInputState.Allow &&
+            if (Character.PlayerInputManager.playerMovementState == PlayerInputState.Allow &&
                 networkService.isLocalPlayer && attacking && CanAttack)
             {
                 GetTarget(out RaycastHit hit);
@@ -139,9 +143,9 @@ namespace PropHunt.Combat
                     previousAttack = unityService.time;
                     CmdAttackAction(target);
                 }
-            }
 
-            attacking = false;
+                attacking = false;
+            }
         }
 
         [Command]

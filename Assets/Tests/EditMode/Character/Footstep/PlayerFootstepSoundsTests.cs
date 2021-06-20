@@ -121,7 +121,6 @@ namespace Tests.EditMode.Character.Footstep
             this.footstepSounds.networkService = this.networkServiceMock.Object;
             this.playerKcc.networkService = this.networkServiceMock.Object;
             this.playerKcc.unityService = this.unityServiceMock.Object;
-            this.playerKcc.Update();
             this.footstepSounds.Update();
             this.footstepSounds.maxFootstepSoundDelay = 1.5f;
             playerKcc.onGround = true;

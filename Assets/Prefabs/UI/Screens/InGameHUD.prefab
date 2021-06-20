@@ -325,11 +325,11 @@ MonoBehaviour:
     m_ActionName: Player/Fire[/Mouse/leftButton]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: e687c0d6-34a3-464f-ac65-7130773a2a44
+    m_ActionId: fb8d5e39-01f1-46e5-98de-be5b1d1f8f23
     m_ActionName: Player/Look[/Mouse/delta]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: ec7b6413-89f4-4e39-afe2-357a70fde8a3
+  m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!1 &8373712913536383167

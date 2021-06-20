@@ -2,6 +2,7 @@
 using PropHunt.Utils;
 using PropHunt.Environment;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace PropHunt.Character
 {
@@ -61,9 +62,12 @@ namespace PropHunt.Character
         /// </summary>
         public bool interacting { get; private set; }
 
-        public void Interact()
+        /// <summary>
+        /// Interact with object the player is looking at
+        /// </summary>
+        public void Interact(InputAction.CallbackContext context)
         {
-            interacting = true;
+            interacting = context.ReadValueAsButton();
         }
 
         /// <summary> Start is called before the first frame update</summary>
