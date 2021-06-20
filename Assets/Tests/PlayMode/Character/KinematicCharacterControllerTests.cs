@@ -115,7 +115,8 @@ namespace Tests.PlayMode.Character
         {
             Vector3 start = base.player.transform.position;
             // Simulate walking forward
-            unityServiceMock.Setup(e => e.GetAxis("Vertical")).Returns(1.0f);
+            // TODO: Update input values
+            // unityServiceMock.Setup(e => e.GetAxis("Vertical")).Returns(1.0f);
             yield return new WaitForSeconds(3);
 
             Vector3 end = base.player.transform.position;
@@ -130,7 +131,8 @@ namespace Tests.PlayMode.Character
         public IEnumerator CoyoteTimeTest()
         {
             // Simulate walking forward
-            unityServiceMock.Setup(e => e.GetAxis("Vertical")).Returns(1.0f);
+            // TODO: Update input values
+            // unityServiceMock.Setup(e => e.GetAxis("Vertical")).Returns(1.0f);
             // Set the coyote time of the player to be 3 seconds for this test
             KinematicCharacterController kcc = player.GetComponent<KinematicCharacterController>();
 
@@ -232,7 +234,8 @@ namespace Tests.PlayMode.Character
         {
             Vector3 start = base.player.transform.position;
             // Simulate walking forward
-            unityServiceMock.Setup(e => e.GetAxis("Vertical")).Returns(1.0f);
+            // TODO: Update input values
+            // unityServiceMock.Setup(e => e.GetAxis("Vertical")).Returns(1.0f);
             // So, steps start at (0, 0, 3), have a total depth of stepDepth = 0.25 and 12 steps
             // Total time to walk up steps should be (1 + 0.25 * 12) / speed
             float timeToScale = (stairsStart.magnitude + stepDepth * numSteps) / player.GetComponent<KinematicCharacterController>().movementSpeed;

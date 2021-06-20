@@ -56,6 +56,16 @@ namespace PropHunt.Character
         /// </summary>
         public QueryTriggerInteraction focusTriggerInteraction;
 
+        /// <summary>
+        /// Is the player attempting to interact with anything
+        /// </summary>
+        public bool interacting { get; private set; }
+
+        public void Interact()
+        {
+            interacting = true;
+        }
+
         /// <summary> Start is called before the first frame update</summary>
         public void Start()
         {
@@ -108,7 +118,7 @@ namespace PropHunt.Character
                 }
                 currentHitDistance = hit.distance - cameraDistance;
                 // If player interacts with what they're looking at
-                if (unityService.GetButtonDown("Interact") && focus.GetComponent<Interactable>() != null)
+                if (interacting && focus.GetComponent<Interactable>() != null)
                 {
                     InteractWithObject(focus, gameObject);
                 }

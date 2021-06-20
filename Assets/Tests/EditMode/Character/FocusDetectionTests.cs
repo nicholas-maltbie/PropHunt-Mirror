@@ -147,7 +147,8 @@ namespace Tests.EditMode.Character
             // Set local player state to true
             this.networkServiceMock.Setup(e => e.isLocalPlayer).Returns(true);
             // Allow player to interact with box
-            this.unityServiceMock.Setup(e => e.GetButtonDown("Interact")).Returns(true);
+            // TODO: Update Input values for interact
+            // this.unityServiceMock.Setup(e => e.GetButtonDown("Interact")).Returns(true);
             this.networkServiceMock.Setup(e => e.isServer).Returns(true);
             InteractTest testInteract = this.focusTarget.AddComponent<InteractTest>();
             // Wait a frame to update the physics world and load colliders

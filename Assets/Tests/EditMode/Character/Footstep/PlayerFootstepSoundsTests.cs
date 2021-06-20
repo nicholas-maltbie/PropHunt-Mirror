@@ -115,7 +115,8 @@ namespace Tests.EditMode.Character.Footstep
             // Test making a footstep sound
             this.unityServiceMock.Setup(e => e.deltaTime).Returns(1.0f);
             this.unityServiceMock.Setup(e => e.fixedDeltaTime).Returns(1.0f);
-            this.unityServiceMock.Setup(e => e.GetAxis("Vertical")).Returns(1.0f);
+            // TODO: Update vertical axis
+            // this.unityServiceMock.Setup(e => e.GetAxis("Vertical")).Returns(1.0f);
             this.footstepSounds.unityService = this.unityServiceMock.Object;
             this.footstepSounds.networkService = this.networkServiceMock.Object;
             this.playerKcc.networkService = this.networkServiceMock.Object;

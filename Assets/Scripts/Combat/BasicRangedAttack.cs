@@ -68,6 +68,16 @@ namespace PropHunt.Combat
         /// <returns>True if the player can attack, false otherwise</returns>
         public bool CanAttack => (unityService.time - previousAttack) >= attackCooldown;
 
+        /// <summary>
+        /// Is the player attacking this frame
+        /// </summary>
+        private bool attacking;
+
+        public void Attack()
+        {
+            attacking = true;
+        }
+
         public void Start()
         {
             networkService = new NetworkService(this);
@@ -105,7 +115,7 @@ namespace PropHunt.Combat
         {
             // Assert that the player has a target
             if (PlayerInputManager.playerMovementState == PlayerInputState.Allow &&
-                networkService.isLocalPlayer && unityService.GetButtonDown("Fire1") && CanAttack)
+                networkService.isLocalPlayer && attacking && CanAttack)
             {
                 GetTarget(out RaycastHit hit);
                 GameObject target = null;
@@ -130,6 +140,8 @@ namespace PropHunt.Combat
                     CmdAttackAction(target);
                 }
             }
+
+            attacking = false;
         }
 
         [Command]

@@ -296,13 +296,14 @@ namespace PropHunt.Character
                 return;
             }
             // Get palyer input on a frame by frame basis
-            inputMovement = new Vector3(unityService.GetAxis("Horizontal"), 0, unityService.GetAxis("Vertical"));
+            // TODO: Update movement inputs
+            // inputMovement = new Vector3(unityService.GetAxis("Horizontal"), 0, unityService.GetAxis("Vertical"));
             // Normalize movement vector to be a max of 1 if greater than one
             inputMovement = inputMovement.magnitude > 1 ? inputMovement / inputMovement.magnitude : inputMovement;
 
             // Get other movemen inputs
-            this.attemptingJump = unityService.GetButton("Jump");
-            this.isSprinting = unityService.GetButton("Sprint");
+            // this.attemptingJump = unityService.GetButton("Jump");
+            // this.isSprinting = unityService.GetButton("Sprint");
         }
 
         public void FixedUpdate()

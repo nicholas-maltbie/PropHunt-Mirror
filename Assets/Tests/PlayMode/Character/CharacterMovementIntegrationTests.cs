@@ -21,7 +21,8 @@ namespace Tests.PlayMode.Character
 
             // Simulate the movement of the character
             Mock<IUnityService> unityServiceMock = new Mock<IUnityService>();
-            unityServiceMock.Setup(e => e.GetAxis("Vertical")).Returns(1.0f);
+            // TODO: Update input values
+            // unityServiceMock.Setup(e => e.GetAxis("Vertical")).Returns(1.0f);
             unityServiceMock.Setup(e => e.deltaTime).Returns(() => Time.deltaTime);
             unityServiceMock.Setup(e => e.fixedDeltaTime).Returns(() => Time.fixedDeltaTime);
             characterMovement.unityService = unityServiceMock.Object;

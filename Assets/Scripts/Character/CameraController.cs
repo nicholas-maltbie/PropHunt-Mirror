@@ -151,10 +151,11 @@ namespace PropHunt.Character
             // Only allow rotation if player is allowed to move
             if (PlayerInputManager.playerMovementState == PlayerInputState.Allow)
             {
-                yawChange = rotationRate * deltaTime * unityService.GetAxis("Mouse X");
-                yaw += yawChange;
-                pitch += rotationRate * deltaTime * -1 * unityService.GetAxis("Mouse Y");
-                zoomChange = zoomSpeed * deltaTime * -1 * unityService.GetAxis("Mouse ScrollWheel");
+                // TODO: Update movement inputs
+                // yawChange = rotationRate * deltaTime * unityService.GetAxis("Mouse X");
+                // yaw += yawChange;
+                // pitch += rotationRate * deltaTime * -1 * unityService.GetAxis("Mouse Y");
+                // zoomChange = zoomSpeed * deltaTime * -1 * unityService.GetAxis("Mouse ScrollWheel");
             }
             // Clamp rotation of camera between minimum and maximum specified pitch
             pitch = Mathf.Clamp(pitch, minPitch, maxPitch);

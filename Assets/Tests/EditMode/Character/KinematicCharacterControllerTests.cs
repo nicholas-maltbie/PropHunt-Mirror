@@ -58,7 +58,8 @@ namespace Tests.EditMode.Prop
         {
             this.networkServiceMock.Setup(e => e.isLocalPlayer).Returns(true);
             this.kcc.gameObject.AddComponent<Rigidbody>();
-            this.unityServiceMock.Setup(e => e.GetAxis("Vertical")).Returns(1.0f);
+            // TODO: Update input values for vertical
+            // this.unityServiceMock.Setup(e => e.GetAxis("Vertical")).Returns(1.0f);
             this.kcc.Update();
             this.kcc.FixedUpdate();
             Assert.IsTrue(this.kcc.transform.position == Vector3.zero);
@@ -75,7 +76,8 @@ namespace Tests.EditMode.Prop
         [Test]
         public void TestDenyMovement()
         {
-            this.unityServiceMock.Setup(e => e.GetAxis("Vertical")).Returns(1.0f);
+            // TODO: Update input values for vertical
+            // this.unityServiceMock.Setup(e => e.GetAxis("Vertical")).Returns(1.0f);
 
             PlayerInputManager.playerMovementState = PlayerInputState.Deny;
             this.networkServiceMock.Setup(e => e.isLocalPlayer).Returns(true);
@@ -95,13 +97,15 @@ namespace Tests.EditMode.Prop
         public void TestMapMovementFromInput()
         {
             this.networkServiceMock.Setup(e => e.isLocalPlayer).Returns(true);
-            this.unityServiceMock.Setup(e => e.GetAxis("Horizontal")).Returns(1.0f);
-            this.unityServiceMock.Setup(e => e.GetAxis("Vertical")).Returns(1.0f);
+            // TODO: Update input values
+            // this.unityServiceMock.Setup(e => e.GetAxis("Horizontal")).Returns(1.0f);
+            // this.unityServiceMock.Setup(e => e.GetAxis("Vertical")).Returns(1.0f);
             this.kcc.Update();
             Assert.IsTrue(this.kcc.InputMovement.magnitude <= 1.0f);
             Assert.IsTrue(this.kcc.InputMovement.x == this.kcc.InputMovement.z);
-            this.unityServiceMock.Setup(e => e.GetAxis("Horizontal")).Returns(1.0f);
-            this.unityServiceMock.Setup(e => e.GetAxis("Vertical")).Returns(0.0f);
+            // TODO: Update input values
+            // this.unityServiceMock.Setup(e => e.GetAxis("Horizontal")).Returns(1.0f);
+            // this.unityServiceMock.Setup(e => e.GetAxis("Vertical")).Returns(0.0f);
             this.kcc.Update();
             Assert.IsTrue(this.kcc.InputMovement.magnitude <= 1.0f);
             Assert.IsTrue(this.kcc.InputMovement.x == 1.0f);
@@ -128,7 +132,8 @@ namespace Tests.EditMode.Prop
             Assert.IsFalse(this.kcc.Falling);
 
             // Allow player to attempt to jump
-            unityServiceMock.Setup(e => e.GetButton("Jump")).Returns(true);
+            // TODO: Update input values
+            // unityServiceMock.Setup(e => e.GetButton("Jump")).Returns(true);
             this.kcc.Update();
             this.kcc.FixedUpdate();
 
