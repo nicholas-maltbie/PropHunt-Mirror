@@ -749,6 +749,12 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Empty",
+            "id": "e3360053-ab72-4e0e-a096-838eb7499cf9",
+            "actions": [],
+            "bindings": []
         }
     ],
     "controlSchemes": []

@@ -764,6 +764,12 @@ namespace PropHunt.Controls
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Empty"",
+            ""id"": ""e3360053-ab72-4e0e-a096-838eb7499cf9"",
+            ""actions"": [],
+            ""bindings"": []
         }
     ],
     ""controlSchemes"": []
@@ -788,6 +794,8 @@ namespace PropHunt.Controls
             m_UI_RightClick = m_UI.FindAction("RightClick", throwIfNotFound: true);
             m_UI_TrackedDevicePosition = m_UI.FindAction("TrackedDevicePosition", throwIfNotFound: true);
             m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
+            // Empty
+            m_Empty = asset.FindActionMap("Empty", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -1011,6 +1019,31 @@ namespace PropHunt.Controls
             }
         }
         public UIActions @UI => new UIActions(this);
+
+        // Empty
+        private readonly InputActionMap m_Empty;
+        private IEmptyActions m_EmptyActionsCallbackInterface;
+        public struct EmptyActions
+        {
+            private @InputSystem m_Wrapper;
+            public EmptyActions(@InputSystem wrapper) { m_Wrapper = wrapper; }
+            public InputActionMap Get() { return m_Wrapper.m_Empty; }
+            public void Enable() { Get().Enable(); }
+            public void Disable() { Get().Disable(); }
+            public bool enabled => Get().enabled;
+            public static implicit operator InputActionMap(EmptyActions set) { return set.Get(); }
+            public void SetCallbacks(IEmptyActions instance)
+            {
+                if (m_Wrapper.m_EmptyActionsCallbackInterface != null)
+                {
+                }
+                m_Wrapper.m_EmptyActionsCallbackInterface = instance;
+                if (instance != null)
+                {
+                }
+            }
+        }
+        public EmptyActions @Empty => new EmptyActions(this);
         public interface IPlayerActions
         {
             void OnMove(InputAction.CallbackContext context);
@@ -1032,6 +1065,9 @@ namespace PropHunt.Controls
             void OnRightClick(InputAction.CallbackContext context);
             void OnTrackedDevicePosition(InputAction.CallbackContext context);
             void OnTrackedDeviceOrientation(InputAction.CallbackContext context);
+        }
+        public interface IEmptyActions
+        {
         }
     }
 }

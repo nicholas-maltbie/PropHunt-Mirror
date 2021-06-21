@@ -558,7 +558,7 @@ namespace PropHunt.Character
 
         public void OnJump(InputAction.CallbackContext context)
         {
-            attemptingJump = context.ReadValueAsButton();
+            attemptingJump =  (PlayerInputManager.playerMovementState == PlayerInputState.Allow) && context.ReadValueAsButton();
         }
 
         public void OnSprint(InputAction.CallbackContext context)
