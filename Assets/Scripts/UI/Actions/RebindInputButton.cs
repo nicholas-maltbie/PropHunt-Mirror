@@ -6,6 +6,8 @@ namespace PropHunt.UI.Actions
 {
     public class RebindInputButton : MonoBehaviour
     {
+        public const string inputMappingPlayerPrefPrefix = "Input Mapping";
+
         public InputActionReference inputAction = null;
         public Text bindingDisplayNameText = null;
         public Button startRebinding = null;
@@ -18,6 +20,18 @@ namespace PropHunt.UI.Actions
             InputControlPath.ToHumanReadableString(
                 inputAction.action.bindings[0].effectivePath,
                 InputControlPath.HumanReadableStringOptions.OmitDevice);
+
+        public string InputMappingKey => $"{inputMappingPlayerPrefPrefix} {inputAction.action.name}";
+
+        public void Awake()
+        {
+            // Load the default mapping saved to the file
+            string inputMapping = PlayerPrefs.GetString(InputMappingKey, string.Empty);
+            if (!string.IsNullOrEmpty(inputMapping))
+            {
+                inputAction.action.ApplyBindingOverride(inputMapping);
+            }
+        }
 
         public void Start()
         {
@@ -34,8 +48,11 @@ namespace PropHunt.UI.Actions
             inputAction.action.Disable();
             inputAction.action.actionMap.Disable();
             rebindingOperation = inputAction.action.PerformInteractiveRebinding(0)
-                .WithControlsExcluding("Mouse")
+                .WithControlsExcluding("<Pointer>/position") // Don't bind to mouse position
+                .WithControlsExcluding("<Pointer>/delta")    // To avoid accidental input from mouse motion
+                .WithCancelingThrough("<Keyboard>/escape")
                 .OnMatchWaitForAnother(0.1f)
+                .WithTimeout(5.0f)
                 .OnComplete(operation => RebindComplete())
                 .Start();
         }
@@ -44,11 +61,13 @@ namespace PropHunt.UI.Actions
         {
             foreach(PlayerInput input in GameObject.FindObjectsOfType<PlayerInput>())
             {
-                input.actions.FindAction(inputAction.name).ApplyBindingOverride(0, inputAction.action.bindings[0]);
+                input.actions.FindAction(inputAction.name).ApplyBindingOverride(0, inputAction.action.bindings[0].overridePath);
             }
 
             bindingDisplayNameText.text = GetKeyReadableName();
             rebindingOperation.Dispose();
+
+            PlayerPrefs.SetString(InputMappingKey, inputAction.action.bindings[0].overridePath);
 
             startRebinding.gameObject.SetActive(true);
             waitingForInputObject.SetActive(false);
