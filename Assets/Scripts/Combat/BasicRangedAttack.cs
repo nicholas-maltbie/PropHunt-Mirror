@@ -72,7 +72,7 @@ namespace PropHunt.Combat
         /// <summary>
         /// Is the player attacking this frame
         /// </summary>
-        private bool attacking;
+        public bool attacking;
 
         /// <summary>
         /// Tell the player to attempt to attack this frame

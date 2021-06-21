@@ -108,8 +108,8 @@ namespace Tests.EditMode.Combat
             // Assert that we can attack at start
             Assert.IsTrue(this.attack.CanAttack);
             // Attempt to attack, then assert that cooldown has kicked in
-            // TODO: Update input values
-            // this.unityServiceMock.Setup(e => e.GetButtonDown("Fire1")).Returns(true);
+            this.attack.Attack(new UnityEngine.InputSystem.InputAction.CallbackContext());
+            this.attack.attacking = true;
             this.attack.Update();
             Assert.IsTrue(attackCount == 1);
             Assert.IsFalse(this.attack.CanAttack);
@@ -144,8 +144,7 @@ namespace Tests.EditMode.Combat
             // Assert that we can attack at start
             Assert.IsTrue(attack.CanAttack);
             // Attempt to attack, then assert that cooldown has kicked in
-            // TODO: Update input values
-            // unityServiceMock.Setup(e => e.GetButtonDown("Fire1")).Returns(true);
+            attack.attacking = true;
             attack.Update();
 
             yield return null;

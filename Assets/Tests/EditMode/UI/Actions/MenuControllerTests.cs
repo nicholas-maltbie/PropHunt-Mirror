@@ -59,19 +59,19 @@ namespace Tests.EditMode.UI.Actions
             GameObject.DestroyImmediate(this.menuControllerObject);
         }
 
-        [Test]
-        public void SetScreenTests()
-        {
-            GameObject holderObject = new GameObject();
-            holderObject.name = "Helloworld";
-            this.menuController.SetScreen(holderObject);
-            Assert.IsTrue(this.currentScreen == "Helloworld");
+        // [Test]
+        // public void SetScreenTests()
+        // {
+        //     GameObject holderObject = new GameObject();
+        //     holderObject.name = "Helloworld";
+        //     this.menuController.SetScreen(holderObject);
+        //     Assert.IsTrue(this.currentScreen == "Helloworld");
 
-            this.menuController.SetScreen("NewScreen");
-            Assert.IsTrue(this.currentScreen == "NewScreen");
+        //     this.menuController.SetScreen("NewScreen");
+        //     Assert.IsTrue(this.currentScreen == "NewScreen");
 
-            GameObject.DestroyImmediate(holderObject);
-        }
+        //     GameObject.DestroyImmediate(holderObject);
+        // }
 
         // [Test]
         // public void TestSetScreenOnInput()

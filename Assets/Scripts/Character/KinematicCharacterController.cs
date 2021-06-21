@@ -163,14 +163,14 @@ namespace PropHunt.Character
         /// </summary>
         [Tooltip("Current input movement provided by the player")]
         [SerializeField]
-        private Vector3 inputMovement;
+        public Vector3 inputMovement;
 
         /// <summary>
         /// Is the player attempting to jump
         /// </summary>
         [Tooltip("Current jump input from the player")]
         [SerializeField]
-        private bool attemptingJump;
+        public bool attemptingJump;
 
         /// <summary>
         /// Is the player sprinting

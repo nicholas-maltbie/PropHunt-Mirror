@@ -60,7 +60,7 @@ namespace PropHunt.Character
         /// <summary>
         /// Is the player attempting to interact with anything
         /// </summary>
-        public bool interacting { get; private set; }
+        public bool interacting;
 
         /// <summary>
         /// Interact with object the player is looking at
