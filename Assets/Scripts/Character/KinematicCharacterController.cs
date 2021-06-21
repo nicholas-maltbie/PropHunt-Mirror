@@ -3,7 +3,6 @@ using PropHunt.Character;
 using PropHunt.Utils;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static PropHunt.Controls.InputSystem;
 
 namespace PropHunt.Character
 {
