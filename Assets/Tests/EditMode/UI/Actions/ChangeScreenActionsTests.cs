@@ -99,7 +99,7 @@ namespace Tests.EditMode.UI.Actions
                 new Resolution{width = 20, height = 40, refreshRate = 10},
             };
             Resolution[] filtered = ChangeScreenActions.FilterResolutions(resolutions);
-            Assert.IsTrue(resolutions.Length <= filtered.Length);
+            Assert.IsTrue(resolutions.Length > filtered.Length);
         }
 
         [Test]
