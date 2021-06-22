@@ -152,7 +152,7 @@ namespace Tests.EditMode.Character
             this.networkServiceMock.Setup(e => e.isLocalPlayer).Returns(true);
             // Allow player to interact with box
             var keyboard = InputSystem.AddDevice<Keyboard>();
-            
+
             // Simulate pressing the interact button
             this.focusDetection.Interact(new InputAction.CallbackContext());
             this.focusDetection.interacting = true;

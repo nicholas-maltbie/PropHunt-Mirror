@@ -14,7 +14,7 @@ namespace PropHunt.UI.Actions
         public GameObject waitingForInputObject = null;
         public MenuController menuController;
 
-        public InputActionRebindingExtensions.RebindingOperation rebindingOperation;
+        public InputActionRebindingExtensions.RebindingOperation rebindingOperation { get; private set; }
 
         private string GetKeyReadableName() =>
             InputControlPath.ToHumanReadableString(
@@ -60,7 +60,7 @@ namespace PropHunt.UI.Actions
         public void RebindComplete()
         {
             string overridePath = inputAction.action.bindings[0].overridePath;
-            foreach(PlayerInput input in GameObject.FindObjectsOfType<PlayerInput>())
+            foreach (PlayerInput input in GameObject.FindObjectsOfType<PlayerInput>())
             {
                 InputAction action = input.actions.FindAction(inputAction.name);
                 if (action != null) action.ApplyBindingOverride(0, overridePath);

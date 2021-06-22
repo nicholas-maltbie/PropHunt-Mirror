@@ -50,7 +50,7 @@ namespace Tests.EditMode.UI.Actions
             this.menuController.actionDelay = -10.0f;
 
             this.screenNames = new string[10];
-            for(int i = 0; i < screenNames.Length; i++)
+            for (int i = 0; i < screenNames.Length; i++)
             {
                 this.screenNames[i] = "Screen " + i.ToString();
                 GameObject screen = new GameObject();
