@@ -63,7 +63,7 @@ namespace Tests.EditMode.UI.Actions
 
             ScriptableObject.DestroyImmediate(inputActionAsset);
         }
-        
+
         [Test]
         public void TestRebindCompositeInputSettings()
         {
