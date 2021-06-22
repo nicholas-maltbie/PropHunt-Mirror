@@ -52,6 +52,9 @@ namespace PropHunt.UI.Actions
                 (PlayerInputManager.maximumMouseSensitivity - PlayerInputManager.minimumMouseSensitivity) + PlayerInputManager.minimumMouseSensitivity;
         }
 
+        /// <summary>
+        /// Load saved values during startup
+        /// </summary>
         public void Awake()
         {
             PlayerInputManager.mouseSensitivity = PlayerPrefs.GetFloat(mouseSensitivityPlayerPref, 1.0f);
@@ -60,9 +63,7 @@ namespace PropHunt.UI.Actions
             slider.onValueChanged.AddListener(value =>
             {
                 PlayerInputManager.mouseSensitivity = GetMouseSensitivity(value);
-#if !UNITY_EDITOR
                 PlayerPrefs.SetFloat(mouseSensitivityPlayerPref, PlayerInputManager.mouseSensitivity);
-#endif
             });
         }
     }
