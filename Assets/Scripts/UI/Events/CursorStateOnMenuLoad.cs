@@ -17,7 +17,7 @@ namespace PropHunt.UI.Events
         /// </summary>
         public bool cursorVisible = true;
 
-        public void OnEnable()
+        public void OnScreenLoaded()
         {
             Cursor.lockState = cursorLockMode;
             Cursor.visible = cursorVisible;

@@ -13,7 +13,7 @@ namespace PropHunt.UI.Events
         /// </summary>
         public PlayerInputState playerInputState = PlayerInputState.Allow;
 
-        public void OnEnable()
+        public void OnScreenLoaded()
         {
             PlayerInputManager.playerMovementState = this.playerInputState;
         }

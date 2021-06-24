@@ -24,7 +24,7 @@ namespace Tests.EditMode.UI
 
             enableOnHost.enableOnHost = sampleObjects;
 
-            enableOnHost.OnEnable();
+            enableOnHost.OnScreenLoaded();
 
             Assert.IsTrue(sampleObjects[0].activeSelf == false);
             Assert.IsTrue(sampleObjects[1].activeSelf == false);

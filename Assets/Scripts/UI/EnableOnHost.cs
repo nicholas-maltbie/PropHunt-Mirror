@@ -10,7 +10,7 @@ namespace PropHunt.UI
     {
         public GameObject[] enableOnHost;
 
-        public void OnEnable()
+        public void OnScreenLoaded()
         {
             bool isHost = NetworkServer.active;
             foreach (GameObject go in enableOnHost)

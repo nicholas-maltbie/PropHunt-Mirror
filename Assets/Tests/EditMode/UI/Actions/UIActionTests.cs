@@ -45,7 +45,7 @@ namespace Tests.EditMode.UI.Actions
             // set current state
             PlayerInputManager.playerMovementState = PlayerInputState.Allow;
             // Check to ensure will set to selected state when enabled
-            menuLoadMovementState.OnEnable();
+            menuLoadMovementState.OnScreenLoaded();
             Assert.IsTrue(menuLoadMovementState.playerInputState == PlayerInputState.Deny);
         }
 
@@ -60,7 +60,7 @@ namespace Tests.EditMode.UI.Actions
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
             // Check to ensure cursor state has been properly updated after enabling this component
-            cursorStateOnMenuLoad.OnEnable();
+            cursorStateOnMenuLoad.OnScreenLoaded();
             Assert.IsTrue(Cursor.lockState == CursorLockMode.None);
             Assert.IsTrue(Cursor.visible == true);
         }

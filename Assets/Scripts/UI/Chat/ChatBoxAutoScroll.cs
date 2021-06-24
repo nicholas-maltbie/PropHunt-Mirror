@@ -27,7 +27,7 @@ namespace PropHunt.UI.Chat
             yield return null;
         }
 
-        public void OnEnable()
+        public void OnScreenLoaded()
         {
             StartCoroutine(SetScroll(ChatBoxAutoScroll.scrollPosition));
         }

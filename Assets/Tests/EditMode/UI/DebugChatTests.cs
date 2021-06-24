@@ -40,7 +40,7 @@ namespace Tests.EditMode.UI
         public void TestDebugChatHandleMessages()
         {
             DebugChatLog.AddLocalMessage(new ChatMessage("source", "test"));
-            chatUpdate.OnEnable();
+            chatUpdate.OnScreenLoaded();
             Assert.IsTrue(text.text == DebugChatLog.GetChatLog());
             DebugChatLog.ClearChatLog();
             Assert.IsTrue(text.text == "");

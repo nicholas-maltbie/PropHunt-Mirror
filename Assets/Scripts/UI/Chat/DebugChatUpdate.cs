@@ -10,7 +10,7 @@ namespace PropHunt.UI.Chat
         public Text text;
         public Scrollbar bar;
 
-        public void OnEnable()
+        public void OnScreenLoaded()
         {
             UpdateText();
             DebugChatLog.DebugChatEvents += HandleEvent;
