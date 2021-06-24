@@ -223,7 +223,7 @@ MonoBehaviour:
     m_ActionName: Player/Look[/Mouse/delta]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: Player
+  m_DefaultActionMap: 4699242b-012b-4d60-a82f-7809ec226f9d
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!225 &4795890211778059004
