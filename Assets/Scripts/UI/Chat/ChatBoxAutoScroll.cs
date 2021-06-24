@@ -31,5 +31,10 @@ namespace PropHunt.UI.Chat
         {
             StartCoroutine(SetScroll(ChatBoxAutoScroll.scrollPosition));
         }
+
+        public void OnScreenUnloaded()
+        {
+            
+        }
     }
 }

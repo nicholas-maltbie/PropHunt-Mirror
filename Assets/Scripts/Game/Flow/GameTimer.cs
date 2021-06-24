@@ -21,7 +21,7 @@ namespace PropHunt.Game.Flow
         public IUnityService unityService = new UnityService();
 
         /// <summary>
-        /// Amount of time that has passed since the timer started
+        /// Amount of time in seconds that has passed since the timer started
         /// </summary>
         [SyncVar]
         [SerializeField]
@@ -47,7 +47,7 @@ namespace PropHunt.Game.Flow
         /// <summary>
         /// What is the time remaining in this timer
         /// </summary>
-        public TimeSpan Remaining => Finished ? TimeSpan.FromSeconds(length - elapsed) : TimeSpan.Zero;
+        public TimeSpan Remaining => Finished ? TimeSpan.Zero : TimeSpan.FromSeconds(length - elapsed);
 
         /// <summary>
         /// Get a human readable version of the time remaining time in the timer
@@ -55,7 +55,7 @@ namespace PropHunt.Game.Flow
         public string GetTime()
         {
             TimeSpan remaining = Remaining;
-            return remaining.Minutes > 0 ? remaining.ToString(@"mm\:ss") : remaining.ToString(@"mm\:ss\:fff");
+            return remaining.Minutes > 0 ? remaining.ToString(@"mm\:ss") : remaining.ToString(@"ss\.f");
         }
 
         /// <summary>

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5660222951667944539}
   m_Layer: 0
   m_Name: GameTimer
-  m_TagString: Untagged
+  m_TagString: GamePhaseTimer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -63,3 +63,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  elapsed: 0
+  length: 0

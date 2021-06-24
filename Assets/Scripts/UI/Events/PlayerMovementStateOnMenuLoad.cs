@@ -17,5 +17,10 @@ namespace PropHunt.UI.Events
         {
             PlayerInputManager.playerMovementState = this.playerInputState;
         }
+
+        public void OnScreenUnloaded()
+        {
+            
+        }
     }
 }

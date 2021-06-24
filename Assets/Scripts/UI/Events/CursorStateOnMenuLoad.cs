@@ -22,5 +22,10 @@ namespace PropHunt.UI.Events
             Cursor.lockState = cursorLockMode;
             Cursor.visible = cursorVisible;
         }
+
+        public void OnScreenUnloaded()
+        {
+            
+        }
     }
 }

@@ -18,5 +18,10 @@ namespace PropHunt.UI
                 go.SetActive(isHost);
             }
         }
+
+        public void OnScreenUnloaded()
+        {
+            
+        }
     }
 }

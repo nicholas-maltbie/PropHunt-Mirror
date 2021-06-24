@@ -51,6 +51,14 @@ namespace PropHunt.UI
             {
                 playerInput.DeactivateInput();
             }
+            foreach (IScreenComponent screenComponent in gameObject.GetComponents<IScreenComponent>())
+            {
+                screenComponent.OnScreenUnloaded();
+            }
+            foreach (IScreenComponent screenComponent in gameObject.GetComponentsInChildren<IScreenComponent>())
+            {
+                screenComponent.OnScreenUnloaded();
+            }
         }
     }
 }

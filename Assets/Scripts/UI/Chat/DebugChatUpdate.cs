@@ -16,6 +16,11 @@ namespace PropHunt.UI.Chat
             DebugChatLog.DebugChatEvents += HandleEvent;
         }
 
+        public void OnScreenUnloaded()
+        {
+            
+        }
+
         public void OnDisable()
         {
             DebugChatLog.DebugChatEvents -= HandleEvent;
