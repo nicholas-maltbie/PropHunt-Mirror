@@ -204,4 +204,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd92a647c4d9b7c44a6c1765919aeb51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  thresholds:
+  - time: 60
+    textColor: {r: 0.5754717, g: 0, b: 0, a: 1}
+  - time: 10
+    textColor: {r: 1, g: 0, b: 0, a: 1}
+  defaultColor: {r: 0, g: 0, b: 0, a: 1}
   timerText: {fileID: 5947688050210112063}
