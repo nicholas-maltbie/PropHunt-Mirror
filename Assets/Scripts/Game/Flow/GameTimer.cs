@@ -18,7 +18,7 @@ namespace PropHunt.Game.Flow
         /// <summary>
         /// Unity service for managing unity static operations
         /// </summary>
-        public IUnityService unityService;
+        public IUnityService unityService = new UnityService();
 
         /// <summary>
         /// Amount of time that has passed since the timer started
@@ -75,7 +75,7 @@ namespace PropHunt.Game.Flow
             this.elapsed = 0.0f;
             Running = true;
         }
-        
+
         /// <summary>
         /// Pauses but saves the current elapsed time of a timer
         /// </summary>
@@ -84,7 +84,7 @@ namespace PropHunt.Game.Flow
         {
             Running = false;
         }
-        
+
         /// <summary>
         /// Resumes a timer's operation
         /// </summary>
