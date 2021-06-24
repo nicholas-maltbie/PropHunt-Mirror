@@ -47,6 +47,7 @@ namespace Tests.EditMode.UI.Actions
             // Check to ensure will set to selected state when enabled
             menuLoadMovementState.OnScreenLoaded();
             Assert.IsTrue(menuLoadMovementState.playerInputState == PlayerInputState.Deny);
+            menuLoadMovementState.OnScreenUnloaded();
         }
 
         [Test]
@@ -63,6 +64,7 @@ namespace Tests.EditMode.UI.Actions
             cursorStateOnMenuLoad.OnScreenLoaded();
             Assert.IsTrue(Cursor.lockState == CursorLockMode.None);
             Assert.IsTrue(Cursor.visible == true);
+            cursorStateOnMenuLoad.OnScreenUnloaded();
         }
 
         [Test]

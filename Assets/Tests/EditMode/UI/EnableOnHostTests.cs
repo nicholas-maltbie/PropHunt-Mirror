@@ -34,6 +34,8 @@ namespace Tests.EditMode.UI
             GameObject.DestroyImmediate(sampleObjects[0]);
             GameObject.DestroyImmediate(sampleObjects[1]);
             GameObject.DestroyImmediate(sampleObjects[2]);
+
+            enableOnHost.OnScreenUnloaded();
         }
     }
 }

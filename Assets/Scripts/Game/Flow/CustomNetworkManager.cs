@@ -61,7 +61,7 @@ namespace PropHunt.Game.Flow
         public override void OnStartClient()
         {
             // Register timer prefab if it is not already registered
-            if (!NetworkClient.prefabs.ContainsValue(timerPrefab.gameObject))
+            if (timerPrefab != null && !NetworkClient.prefabs.ContainsValue(timerPrefab.gameObject))
             {
                 NetworkClient.RegisterPrefab(timerPrefab.gameObject);
             }

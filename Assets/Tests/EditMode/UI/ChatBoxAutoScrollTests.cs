@@ -53,6 +53,7 @@ namespace Tests.EditMode.UI
 
             ChatBoxAutoScroll.scrollPosition = 1.0f;
             this.chatBoxAuto.OnScreenLoaded();
+            this.chatBoxAuto.OnScreenUnloaded();
             yield return null;
             // yield return null;
             // Assert.IsTrue(scrollbar.value == 1.0f);

@@ -33,6 +33,7 @@ namespace Tests.EditMode.UI
         public void TearDown()
         {
             // Cleanup game object
+            chatUpdate.OnScreenUnloaded();
             GameObject.DestroyImmediate(this.debugChat);
         }
 
