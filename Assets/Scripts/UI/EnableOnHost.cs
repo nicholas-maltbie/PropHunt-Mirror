@@ -21,7 +21,7 @@ namespace PropHunt.UI
 
         public void OnScreenUnloaded()
         {
-            
+
         }
     }
 }

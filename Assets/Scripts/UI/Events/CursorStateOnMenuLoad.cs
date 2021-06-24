@@ -25,7 +25,7 @@ namespace PropHunt.UI.Events
 
         public void OnScreenUnloaded()
         {
-            
+
         }
     }
 }

@@ -34,7 +34,7 @@ namespace PropHunt.UI.Chat
 
         public void OnScreenUnloaded()
         {
-            
+
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Tests.EditMode.UI
         public void SetUp()
         {
             // Setup timer object
-            timerGo = new GameObject();;
+            timerGo = new GameObject(); ;
             timer = timerGo.AddComponent<GameTimer>();
             timerGo.tag = GameTimerDisplay.gamePhaseTimerTag;
 
@@ -32,7 +32,7 @@ namespace Tests.EditMode.UI
             timerDisplay.defaultColor = Color.black;
             timerDisplay.timerText = displayGo.AddComponent<Text>();
             timerDisplay.thresholds = new List<TimerColorChangeThreshold>();
-            timerDisplay.thresholds.Add(new TimerColorChangeThreshold{time = 4.0f, textColor= Color.red});
+            timerDisplay.thresholds.Add(new TimerColorChangeThreshold { time = 4.0f, textColor = Color.red });
             // Test setup behaviour
             timerDisplay.Start();
             timerDisplay.OnScreenLoaded();

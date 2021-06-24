@@ -51,7 +51,7 @@ namespace Tests.EditMode.Game.Flow
             Assert.IsTrue(timer.Running);
             Assert.IsFalse(timer.Finished);
             // Wait until timer finishes
-            for(int i = 0; i < 3; i++)
+            for (int i = 0; i < 3; i++)
             {
                 timer.Update();
                 Assert.IsTrue(timer.Running);
@@ -62,7 +62,7 @@ namespace Tests.EditMode.Game.Flow
             timer.PauseTimer();
             Assert.IsFalse(timer.Running);
             Assert.IsFalse(timer.Finished);
-            for(int i = 0; i < 20; i++)
+            for (int i = 0; i < 20; i++)
             {
                 timer.Update();
                 Assert.IsFalse(timer.Running);
@@ -89,7 +89,7 @@ namespace Tests.EditMode.Game.Flow
             Assert.IsTrue(timer.Running);
             Assert.IsFalse(timer.Finished);
             // Wait until timer finishes (10 updates/seconds)
-            for(int i = 0; i < 9; i++)
+            for (int i = 0; i < 9; i++)
             {
                 timer.Update();
                 Assert.IsTrue(timer.Running);

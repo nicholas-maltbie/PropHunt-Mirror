@@ -37,7 +37,7 @@ namespace Tests.EditMode.UI
 
             // Test setup screen
             screen.SetupScreen(uiInputModule);
-            
+
             screen.DisplayScreen();
             // assert that sub components are loaded
             Assert.That(attachedComponent.loaded, Is.EqualTo(1));

@@ -18,7 +18,7 @@ namespace PropHunt.UI.Chat
 
         public void OnScreenUnloaded()
         {
-            
+
         }
 
         public void OnDisable()
