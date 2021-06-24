@@ -6,7 +6,7 @@ namespace PropHunt.UI
     /// <summary>
     /// Simple class to enable a game object(s) when on host (or disable if not on host)
     /// </summary>
-    public class EnableOnHost : MonoBehaviour
+    public class EnableOnHost : MonoBehaviour, IScreenComponent
     {
         public GameObject[] enableOnHost;
 

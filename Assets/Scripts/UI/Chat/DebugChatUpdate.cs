@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace PropHunt.UI.Chat
 {
-    public class DebugChatUpdate : MonoBehaviour
+    public class DebugChatUpdate : MonoBehaviour, IScreenComponent
     {
         public Text text;
         public Scrollbar bar;

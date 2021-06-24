@@ -32,6 +32,14 @@ namespace PropHunt.UI
             {
                 playerInput.ActivateInput();
             }
+            foreach (IScreenComponent screenComponent in gameObject.GetComponents<IScreenComponent>())
+            {
+                screenComponent.OnScreenLoaded();
+            }
+            foreach (IScreenComponent screenComponent in gameObject.GetComponentsInChildren<IScreenComponent>())
+            {
+                screenComponent.OnScreenLoaded();
+            }
         }
 
         public void HideScreen()

@@ -5,7 +5,7 @@ namespace PropHunt.UI.Events
     /// <summary>
     /// Simple class to set cursor state when the menu loads
     /// </summary>
-    public class CursorStateOnMenuLoad : MonoBehaviour
+    public class CursorStateOnMenuLoad : MonoBehaviour, IScreenComponent
     {
         /// <summary>
         /// Lock state of cursor when loading this screen

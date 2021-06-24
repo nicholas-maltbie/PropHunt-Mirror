@@ -213,7 +213,6 @@ namespace PropHunt.UI
 
             currentScreen.HideScreen();
             nextScreen.DisplayScreen();
-            nextScreen.SendMessage("OnScreenLoaded", SendMessageOptions.DontRequireReceiver);
 
             ScreenChangeEventArgs changeEvent = new ScreenChangeEventArgs();
             changeEvent.oldScreen = this.CurrentScreen;

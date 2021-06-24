@@ -24,12 +24,14 @@ namespace PropHunt.Game.Flow
         /// Amount of time that has passed since the timer started
         /// </summary>
         [SyncVar]
+        [SerializeField]
         private float elapsed;
 
         /// <summary>
         /// Amount of time that the timer will run for (in seconds)
         /// </summary>
         [SyncVar]
+        [SerializeField]
         private float length;
 
         /// <summary>
