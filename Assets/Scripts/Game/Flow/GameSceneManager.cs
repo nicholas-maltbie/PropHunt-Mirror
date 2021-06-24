@@ -49,6 +49,7 @@ namespace PropHunt.Game.Flow
             {
                 this.gamePhaseTimer.StopTimer();
                 NetworkServer.Destroy(this.gamePhaseTimer.gameObject);
+                this.gamePhaseTimer = null;
             }
         }
 
@@ -64,6 +65,23 @@ namespace PropHunt.Game.Flow
 
         public void HandleGamePhaseChange(object sender, GamePhaseChange change)
         {
+            // Cleanpu from previous game state
+            switch (change.previous)
+            {
+                // Do things differently based on the new phase
+                case GamePhase.Lobby:
+                    break;
+                case GamePhase.Setup:
+                    break;
+                case GamePhase.InGame:
+                    ClearTimer();
+                    break;
+                case GamePhase.Score:
+                    ClearTimer();
+                    break;
+                case GamePhase.Reset:
+                    break;
+            }
             // Handle whenever the game state changes
             switch (change.next)
             {
