@@ -37,12 +37,14 @@ namespace PropHunt.UI.Actions
         /// </summary>
         public void UpdatePlayerName()
         {
-            if (field.text.Length > CharacterNameManagement.MaxNameLength)
+            string name = field.text;
+            if (name.Length > CharacterNameManagement.MaxNameLength)
             {
-                field.SetTextWithoutNotify(field.text.Substring(0, CharacterNameManagement.MaxNameLength));
+                name = name.Substring(0, CharacterNameManagement.MaxNameLength);
+                field.SetTextWithoutNotify(name);
             }
-            field.SetTextWithoutNotify(CharacterNameManagement.GetFilteredNameIgnoreWhitespace(field.text));
-            CharacterNameManagement.playerName = CharacterNameManagement.GetFilteredName(field.text);
+            field.SetTextWithoutNotify(CharacterNameManagement.GetFilteredNameIgnoreWhitespace(name));
+            CharacterNameManagement.playerName = CharacterNameManagement.GetFilteredName(name);
             // Save updated player name
             PlayerPrefs.SetString(playerNamePlayerPrefKey, CharacterNameManagement.playerName);
         }

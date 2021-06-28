@@ -139,11 +139,19 @@ namespace PropHunt.Character
         /// Events that occur on the server whenever a player changes their name
         /// </summary>
         public static EventHandler<PlayerNameChange> OnPlayerNameChange;
-        
+
         /// <summary>
         /// Lookup of player name by conneciton Id
         /// </summary>
         public static Dictionary<int, string> playerNameLookup = new Dictionary<int, string>();
+
+        /// <summary>
+        /// Resets player name lookup table
+        /// </summary>
+        public static void ResetPlayerNameLookup()
+        {
+            playerNameLookup = new Dictionary<int, string>();
+        }
 
         /// <summary>
         /// Id associated with this player
