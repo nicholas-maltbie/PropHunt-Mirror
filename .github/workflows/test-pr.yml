@@ -63,11 +63,11 @@ jobs:
             -coverageOptions "generateBadgeReport;generateHtmlReport;assemblyFilters:-Assembly*,-Mirror*,-Tests*,-SimpleWebTransport,-Telepathy,-kcp2k,-QuickOutline,-PropHunt.Controls;pathFilters:-*/Assets/Mirror/*,-*/Assets/Controls/*,-*/Assets/SteamAudio/*,-*/Assets/Tests/*"
             -nographics
 
-      - name: Upload Results
-        uses: actions/upload-artifact@v1
-        with:
-          name: Test results for ${{ matrix.testMode }}
-          path: ${{ steps.tests.outputs.artifactsPath }}
+      # - name: Upload Results
+      #   uses: actions/upload-artifact@v1
+      #   with:
+      #     name: Test results for ${{ matrix.testMode }}
+      #     path: ${{ steps.tests.outputs.artifactsPath }}
       
       - name: Find Coverage
         id: coverage
