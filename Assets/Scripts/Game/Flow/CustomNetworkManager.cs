@@ -5,6 +5,7 @@ using System;
 using PropHunt.Environment.Sound;
 using System.Collections;
 using PropHunt.Character;
+using System.Collections.Generic;
 
 namespace PropHunt.Game.Flow
 {
@@ -20,6 +21,8 @@ namespace PropHunt.Game.Flow
 
     public class CustomNetworkManager : NetworkManager
     {
+        private Dictionary<int, string> playerNameLookup;
+
         public static event EventHandler<PlayerConnectEvent> OnPlayerConnect;
 
         public static CustomNetworkManager Instance;
@@ -40,12 +43,15 @@ namespace PropHunt.Game.Flow
                 return;
             }
 
+            CharacterName.OnPlayerNameChange += SetPlayerName;
+
             base.Awake();
         }
 
         public void OnDestory()
         {
             Instance = null;
+            CharacterName.OnPlayerNameChange -= SetPlayerName;
         }
 
         public override void OnServerReady(NetworkConnection conn)
@@ -62,6 +68,11 @@ namespace PropHunt.Game.Flow
                 StartCoroutine(SendJoinMessage(conn));
             }
             base.OnServerConnect(conn);
+        }
+
+        public void SetPlayerName(object sender, PlayerNameChange nameChange)
+        {
+            playerNameLookup[nameChange.connId] = nameChange.newName;
         }
 
         public IEnumerator SendJoinMessage(NetworkConnection conn)
@@ -95,7 +106,7 @@ namespace PropHunt.Game.Flow
         public override void OnStartServer()
         {
             base.OnStartServer();
-            CharacterName.ResetPlayerNameLookup();
+            playerNameLookup = new Dictionary<int, string>();
         }
 
         public override void OnStartClient()
@@ -122,8 +133,8 @@ namespace PropHunt.Game.Flow
         public override void OnServerDisconnect(NetworkConnection conn)
         {
             string playerName =
-                CharacterName.playerNameLookup.ContainsKey(conn.connectionId) ?
-                CharacterName.playerNameLookup[conn.connectionId] : "Player" + conn.connectionId;
+                playerNameLookup.ContainsKey(conn.connectionId) ?
+                playerNameLookup[conn.connectionId] : "Player" + conn.connectionId;
             DebugChatLog.SendChatMessage(new ChatMessage("", $"{playerName} disconnected from server"));
             base.OnServerDisconnect(conn);
         }

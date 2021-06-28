@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Mirror;
+using PropHunt.Game.Flow;
 using PropHunt.Utils;
 using UnityEngine;
 
@@ -141,19 +142,6 @@ namespace PropHunt.Character
         public static EventHandler<PlayerNameChange> OnPlayerNameChange;
 
         /// <summary>
-        /// Lookup of player name by conneciton Id
-        /// </summary>
-        public static Dictionary<int, string> playerNameLookup = new Dictionary<int, string>();
-
-        /// <summary>
-        /// Resets player name lookup table
-        /// </summary>
-        public static void ResetPlayerNameLookup()
-        {
-            playerNameLookup = new Dictionary<int, string>();
-        }
-
-        /// <summary>
         /// Id associated with this player
         /// </summary>
         [SyncVar]
@@ -179,8 +167,6 @@ namespace PropHunt.Character
         {
             PlayerNameChange changeEvent = new PlayerNameChange(characterName, newName, playerId);
             characterName = newName;
-            // Save player name
-            playerNameLookup[networkService.connectionToClient.connectionId] = newName;
             // Send an event for this change event
             OnPlayerNameChange?.Invoke(this, changeEvent);
         }
