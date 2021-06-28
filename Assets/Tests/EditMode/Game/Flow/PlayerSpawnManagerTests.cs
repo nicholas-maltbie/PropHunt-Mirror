@@ -16,7 +16,7 @@ namespace Tests.EditMode.Game.Flow
 
         [SetUp]
         public override void SetUp()
-        {   
+        {
             base.SetUp();
             spawnManager = new GameObject().AddComponent<PlayerSpawnManager>();
             playerPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Tests/EditMode/TestPlayer.prefab");

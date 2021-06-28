@@ -98,7 +98,7 @@ namespace Tests.EditMode.Game.Flow
             var connectHandler = this.networkManager.SendJoinMessage(playerConn);
             // Do NOT send a custom join message of name change
             // Finish timeout
-            while(connectHandler.MoveNext());
+            while (connectHandler.MoveNext()) ;
         }
     }
 }
